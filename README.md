@@ -1,10 +1,10 @@
 # Pet Battle
 ## Future
 ### Feature
-- Custom Game
+- Custom Game (x vs y Battle)
 - Map Effect
-- Special Skill System
 - CP System
+- Special Skill System
 - AP System
 - ATB System
 - PvP Offline
