@@ -1,7 +1,6 @@
 # Pet Battle
 ## Future
 ### Feature
-- Custom Game (x vs y Battle)
 - Map Effect
 - CP System
 - Special Skill System
@@ -10,6 +9,7 @@
 - PvP Offline
 ## Demo Version
 ### Feature
+- Custom Game (x vs y Battle) [Halloween Edition]
 - 1 v 1 Battle 
 - 2 v 2 Battle
 - 3 v 3 Battle
