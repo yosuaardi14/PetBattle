@@ -151,6 +151,29 @@
 			}
 		}
 
+		public static function addMouseEventClick(obj:*, callback:*):*
+		{
+			obj.addEventListener(MouseEvent.CLICK, callback);
+		}
+
+		public static function removeMouseEventClick(obj:*, callback:*):*
+		{
+			obj.removeEventListener(MouseEvent.CLICK, callback);
+		}
+
+		public static function hasMouseEventClick(obj:*):Boolean
+		{
+			return obj.hasEventListener(MouseEvent.CLICK);
+		}
+
+		public static function removeChildIfExistAt(obj:*, index:int):*
+		{
+			if (obj.numChildren > index)
+			{
+				obj.removeChildAt(index);
+			}
+		}
+
 	}
 
 }
