@@ -1,22 +1,40 @@
 # Pet Battle
-## Future
-### Feature
-- Map Effect
+## Feature
+### Future
+#### In Game
+- Map Effect System
 - CP System
 - Special Skill System
 - AP System
 - ATB System
-- PvP Offline
-## Demo Version
-### Feature
-- Custom Game (x vs y Battle) [Halloween Edition]
+#### Game Mode
+- Tournament Battle (Offline)
+- PvP (Offline)
+### All Edition 
+- Custom Game (x vs y Battle)
+- 1 v 1 Battle 
+- 2 v 2 Battle
+- 3 v 3 Battle
+- 20 Characters
+- 12 Map
+- Control Party
+### Halloween Edition
+- Custom Game (x vs y Battle)
+- 1 v 1 Battle 
+- 2 v 2 Battle
+- 3 v 3 Battle
+- 13 Characters
+- 12 Map
+- Control Party
+### Demo Version
 - 1 v 1 Battle 
 - 2 v 2 Battle
 - 3 v 3 Battle
 - 10 Characters
 - 12 Map
 - Control Party
-### Effect 
+#
+## Effect 
 Chance not implemented
 - ### Direct Buff
 - [x] oil_bottle 
@@ -34,7 +52,7 @@ Chance not implemented
 - [x] bunny_frenzy : Frenzy (Buff but has side effect)
 - [x] pet_energize : Energize
 - [x] guard : Guard
-- [ ] pet_heal : (HP + x%)
+- [x] pet_heal : (HP + x%)
 - ### Overturn Debuff
 - [x] bundle : Restriction
 - [x] dismantle : Dismantle
