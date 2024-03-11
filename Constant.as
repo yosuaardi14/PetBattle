@@ -10,26 +10,36 @@
         public static const MAX_CHAR_IN_GAME:uint = 14;
 
         public static const PET_LIST:Array = [
-                "bird_1",
-                "toad_1",
-                "bunny_easter_free",
+                "bird_1", "toad_1",
                 "raccoon_1",
-                "hedgehog_1",
-                "cat_4",
-                "wolf_0",
-                "bat_1",
-                "bat_2",
-                "bat_3",
-                "pet_157",
-                "fox_2",
-                "pet_155",
-                "pet_165",
-                "pumpkin_1",
-                "pumpkin_2",
-                "pet_154",
-                "pet_194",
-                "pet_210",
-                "pet_211",
+                "hedgehog_1", "cat_4", "wolf_0",
+
+                "bat_1", "bat_2", "bat_3",
+                "pet_157", "fox_2",
+                "pet_155", "pet_165",
+                "pumpkin_1", "pumpkin_2",
+                "pet_154","pet_194",
+                "pet_210", "pet_211",
+
+                "bunny_easter_free",
+                "bunny_5", 
+                "bunny_6",
+                "bunny_2", 
+                "bunny_4",
+                "dragon_2",
+                "pet_182", 
+                "pet_183",
+                "pet_208",
+            ];
+
+        
+        public static const PET_LIST_EASTER:Array = [
+                "bunny_easter_free",
+                "bunny_5", "bunny_6",
+                "bunny_2", "bunny_4",
+                "dragon_2",
+                "pet_182", "pet_183",
+                "pet_208",
             ];
 
         public static const PET_LIST_DEMO:Array = [
@@ -39,8 +49,8 @@
                 "pumpkin_1",
                 "pumpkin_2",
                 "raccoon_1",
-                "pet_154",  
-                "pet_194",  // comm
+                "pet_154",
+                "pet_194", // comm
                 "pet_210",
                 "hedgehog_1", // comm
                 "cat_4",

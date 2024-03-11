@@ -48,6 +48,9 @@
 		public var selectedChar;
 		public var selectedOpponent;
 		public var selectTurn;
+		// CHARACTER PAGE
+		public var currentPage:uint = 1;
+		public var maxPage:uint = 1;
 
 		// FRAME 3
 		public var characterArr:Vector.<Pet>;
@@ -82,7 +85,7 @@
 			this.opponentNum = 1;
 
 			this["popupCustom"].visible = false;
-
+			Central.battle = this;
 			this.back;
 			if (back != undefined)
 			{
@@ -118,7 +121,12 @@
 			this.newPlayerArr.splice(0, newPlayerArr.length);
 			this.newEnemyArr.splice(0, newEnemyArr.length);
 			this.selectTurn = "p";
-
+			this.currentPage = 1;
+			this.maxPage = Math.ceil(petList.length / Constant.MAX_CHAR_IN_GAME);
+			// this["btnPrev"].visible = false;
+			// this["btnNext"].visible = false;
+			Utils.addMouseEventClick(this["btnPrev"], this.changeCharPage);
+			Utils.addMouseEventClick(this["btnNext"], this.changeCharPage);
 			this.loadAllPet();
 			if (this.mode == 1)
 			{
@@ -470,9 +478,42 @@
 			}
 		}
 
+		public function buttonVisibility()
+		{
+			this["btnPrev"].visible = this.currentPage > 1;
+			this["btnNext"].visible = this.currentPage < this.maxPage;
+		}
+
+		public function changeCharPage(e:MouseEvent)
+		{
+			if (e.target == this["btnNext"])
+			{
+				if (this.currentPage < this.maxPage)
+				{
+					this.currentPage += 1;
+					this.hidePet();
+					this.showPet();
+				}
+			}
+			else if (e.target == this["btnPrev"])
+			{
+				if (this.currentPage > 1)
+				{
+					this.currentPage -= 1;
+					this.hidePet();
+					this.showPet();
+				}
+			}
+			buttonVisibility();
+		}
+
 		public function showPet()
 		{
-			for (var i in petList)
+			this.buttonVisibility();
+			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
+			var end = Math.min(petList.length, this.currentPage * Constant.MAX_CHAR_IN_GAME);
+			var index = 0;
+			for (var i = start; i < end; i++)
 			{
 				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "icon");
 				var petMC = cls;
@@ -481,13 +522,41 @@
 				petMC.scaleX = 0.5;
 				petMC.scaleY = 0.5;
 				var petObj = PetLibrary.getPetBySwfName(petList[i]);
-				this["charMC_" + i]["petType"].gotoAndStop(petObj["type"]);
-				this["charMC_" + i]["attributeType"].gotoAndStop(petObj["attribute_type"]);
-				this["charMC_" + i].gotoAndStop(PetLibrary.getType(petList[i]));
-				this["charMC_" + i].visible = true;
-				this["charMC_" + i]["holder"].addChild(petMC);
-				this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+				this["charMC_" + index]["petType"].gotoAndStop(petObj["type"]);
+				this["charMC_" + index]["attributeType"].gotoAndStop(petObj["attribute_type"]);
+				this["charMC_" + index].gotoAndStop(PetLibrary.getType(petList[i]));
+				this["charMC_" + index].visible = true;
+				// this["charMC_" + i]["holder"].addChild(petMC);
+				// this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+				Utils.removeChildIfExistAt(this["charMC_" + index]["holder"], 2);
+				this["charMC_" + index]["holder"].addChild(petMC);
+				if (Utils.hasMouseEventClick(this["charMC_" + index]["maskMC"]))
+				{
+					Utils.removeMouseEventClick(this["charMC_" + index]["maskMC"], loadCharacter);
+				}
+				Utils.addMouseEventClick(this["charMC_" + index]["maskMC"], loadCharacter);
+				index++;
 			}
+			// for (var i in petList)
+			// {
+			// if (i >= Constant.MAX_CHAR_IN_GAME)
+			// {
+			// break;
+			// }
+			// var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "icon");
+			// var petMC = cls;
+			// petMC.x = 40;
+			// petMC.y = 70;
+			// petMC.scaleX = 0.5;
+			// petMC.scaleY = 0.5;
+			// var petObj = PetLibrary.getPetBySwfName(petList[i]);
+			// this["charMC_" + i]["petType"].gotoAndStop(petObj["type"]);
+			// this["charMC_" + i]["attributeType"].gotoAndStop(petObj["attribute_type"]);
+			// this["charMC_" + i].gotoAndStop(PetLibrary.getType(petList[i]));
+			// this["charMC_" + i].visible = true;
+			// this["charMC_" + i]["holder"].addChild(petMC);
+			// this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+			// }
 		}
 
 		public function onLoadFinish(e:Event):void
@@ -514,7 +583,8 @@
 
 		public function loadPetById(id:int):Object
 		{
-			var petSwfName = petList[id];
+			var newId = ((currentPage - 1) * Constant.MAX_CHAR_IN_GAME) + id;
+			var petSwfName = petList[newId];
 			var petObj = PetLibrary.getPetBySwfName(petSwfName);
 			var clsName = petObj["clsName"];
 
@@ -638,9 +708,20 @@
 
 		public function hidePet()
 		{
-			for (var i = this.charNum; i < Constant.MAX_CHAR_IN_GAME; i++)
+			// for (var i = this.charNum; i < Constant.MAX_CHAR_IN_GAME + 1; i++)
+			// {
+			// this["charMC_" + i].visible = false;
+			// }
+			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
+			var end = Math.min(this.charNum, this.currentPage * Constant.MAX_CHAR_IN_GAME);
+			for (var i = (end - start - 1); i < Constant.MAX_CHAR_IN_GAME; i++)
 			{
+				Utils.removeChildIfExistAt(this["charMC_" + i]["holder"], 2);
 				this["charMC_" + i].visible = false;
+				if (Utils.hasMouseEventClick(this["charMC_" + i]["maskMC"]))
+				{
+					Utils.removeMouseEventClick(this["charMC_" + i]["maskMC"], loadCharacter);
+				}
 			}
 		}
 
