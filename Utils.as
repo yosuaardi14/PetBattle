@@ -7,6 +7,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
+	import flash.filters.GlowFilter;
 
 	public class Utils
 	{
@@ -171,6 +172,24 @@
 			if (obj.numChildren > index)
 			{
 				obj.removeChildAt(index);
+			}
+		}
+
+		public static function addActiveGlowFilter(mc, active = false)
+		{
+			if (active)
+			{
+				var glow:GlowFilter = new GlowFilter();
+				glow.color = 0x00FF00;
+				glow.blurX = 3;
+				glow.blurY = 3;
+				glow.strength = 4;
+				glow.quality = 3; // BitmapFilterQuality.HIGH;
+				mc.filters = [glow];
+			}
+			else
+			{
+				mc.filters = [];
 			}
 		}
 

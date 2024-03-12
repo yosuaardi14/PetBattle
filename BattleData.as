@@ -681,6 +681,16 @@
 					return "Sleep (" + _loc5_ + " turns)";
 				case EFFECT_PET_DAMAGE_REDUCTION:
 					return "Protection (" + _loc5_ + " turns)";
+				case EFFECT_RESTRICT_CHARGE:
+					return "Charge Disabled (" + _loc5_ + " turns)";
+				case EFFECT_CRIT_CHANCE_DMG:
+					return "Mortal (" + _loc5_ + " turns)";
+				case EFFECT_CATALYTIC_MATTER:
+					return "Catalytic (" + _loc5_ + " turns)";
+				case EFFECT_PET_LIGHTNING:
+					return "Lightning Armor (" + _loc5_ + " turns)";
+				case EFFECT_PET_SAVE_CP:
+					return "- CP Cost (" + _loc6_ + "%) (" + _loc5_ + " turns)";
 					// /////////////////////////////////////////////////////////////////////////
 				case EFFECT_STUN:
 					return "Stun(" + _loc5_ + " turns)";

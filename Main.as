@@ -11,10 +11,10 @@
 	public class Main extends MovieClip
 	{
 		// FRAME 1
-		private var mode:int = 1;
-		private var playerNum:int = 1;
-		private var opponentNum:int = 1;
-		private var gameMode:Array;
+		public var mode:int = 1;
+		public var playerNum:int = 1;
+		public var opponentNum:int = 1;
+		public var gameMode:Array;
 		public var allSwfData:Object = new Object;
 		public var back:*;
 		// FRAME 2
@@ -48,6 +48,9 @@
 		public var selectedChar;
 		public var selectedOpponent;
 		public var selectTurn;
+		// CHARACTER PAGE
+		public var currentPage:uint = 1;
+		public var maxPage:uint = 1;
 
 		// FRAME 3
 		public var characterArr:Vector.<Pet>;
@@ -82,7 +85,7 @@
 			this.opponentNum = 1;
 
 			this["popupCustom"].visible = false;
-
+			Central.battle = this;
 			this.back;
 			if (back != undefined)
 			{
@@ -107,6 +110,7 @@
 
 		internal function frame2()
 		{
+			// var selectChar = new SelectCharacter(this,mode, playerNum, opponentNum);
 			this.bg_map = new bg[this.mapIndex]();
 			this.bg_map.scaleX = 0.5;
 			this.bg_map.scaleY = 0.5;
@@ -118,7 +122,12 @@
 			this.newPlayerArr.splice(0, newPlayerArr.length);
 			this.newEnemyArr.splice(0, newEnemyArr.length);
 			this.selectTurn = "p";
-
+			this.currentPage = 1;
+			this.maxPage = Math.ceil(petList.length / Constant.MAX_CHAR_IN_GAME);
+			// this["btnPrev"].visible = false;
+			// this["btnNext"].visible = false;
+			Utils.addMouseEventClick(this["btnPrev"], this.changeCharPage);
+			Utils.addMouseEventClick(this["btnNext"], this.changeCharPage);
 			this.loadAllPet();
 			if (this.mode == 1)
 			{
@@ -470,9 +479,42 @@
 			}
 		}
 
+		public function buttonVisibility()
+		{
+			this["btnPrev"].visible = this.currentPage > 1;
+			this["btnNext"].visible = this.currentPage < this.maxPage;
+		}
+
+		public function changeCharPage(e:MouseEvent)
+		{
+			if (e.target == this["btnNext"])
+			{
+				if (this.currentPage < this.maxPage)
+				{
+					this.currentPage += 1;
+					this.hidePet();
+					this.showPet();
+				}
+			}
+			else if (e.target == this["btnPrev"])
+			{
+				if (this.currentPage > 1)
+				{
+					this.currentPage -= 1;
+					this.hidePet();
+					this.showPet();
+				}
+			}
+			buttonVisibility();
+		}
+
 		public function showPet()
 		{
-			for (var i in petList)
+			this.buttonVisibility();
+			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
+			var end = Math.min(petList.length, this.currentPage * Constant.MAX_CHAR_IN_GAME);
+			var index = 0;
+			for (var i = start; i < end; i++)
 			{
 				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "icon");
 				var petMC = cls;
@@ -481,13 +523,41 @@
 				petMC.scaleX = 0.5;
 				petMC.scaleY = 0.5;
 				var petObj = PetLibrary.getPetBySwfName(petList[i]);
-				this["charMC_" + i]["petType"].gotoAndStop(petObj["type"]);
-				this["charMC_" + i]["attributeType"].gotoAndStop(petObj["attribute_type"]);
-				this["charMC_" + i].gotoAndStop(PetLibrary.getType(petList[i]));
-				this["charMC_" + i].visible = true;
-				this["charMC_" + i]["holder"].addChild(petMC);
-				this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+				this["charMC_" + index]["petType"].gotoAndStop(petObj["type"]);
+				this["charMC_" + index]["attributeType"].gotoAndStop(petObj["attribute_type"]);
+				this["charMC_" + index].gotoAndStop(PetLibrary.getType(petList[i]));
+				this["charMC_" + index].visible = true;
+				// this["charMC_" + i]["holder"].addChild(petMC);
+				// this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+				Utils.removeChildIfExistAt(this["charMC_" + index]["holder"], 2);
+				this["charMC_" + index]["holder"].addChild(petMC);
+				if (Utils.hasMouseEventClick(this["charMC_" + index]["maskMC"]))
+				{
+					Utils.removeMouseEventClick(this["charMC_" + index]["maskMC"], loadCharacter);
+				}
+				Utils.addMouseEventClick(this["charMC_" + index]["maskMC"], loadCharacter);
+				index++;
 			}
+			// for (var i in petList)
+			// {
+			// if (i >= Constant.MAX_CHAR_IN_GAME)
+			// {
+			// break;
+			// }
+			// var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "icon");
+			// var petMC = cls;
+			// petMC.x = 40;
+			// petMC.y = 70;
+			// petMC.scaleX = 0.5;
+			// petMC.scaleY = 0.5;
+			// var petObj = PetLibrary.getPetBySwfName(petList[i]);
+			// this["charMC_" + i]["petType"].gotoAndStop(petObj["type"]);
+			// this["charMC_" + i]["attributeType"].gotoAndStop(petObj["attribute_type"]);
+			// this["charMC_" + i].gotoAndStop(PetLibrary.getType(petList[i]));
+			// this["charMC_" + i].visible = true;
+			// this["charMC_" + i]["holder"].addChild(petMC);
+			// this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
+			// }
 		}
 
 		public function onLoadFinish(e:Event):void
@@ -514,7 +584,8 @@
 
 		public function loadPetById(id:int):Object
 		{
-			var petSwfName = petList[id];
+			var newId = ((currentPage - 1) * Constant.MAX_CHAR_IN_GAME) + id;
+			var petSwfName = petList[newId];
 			var petObj = PetLibrary.getPetBySwfName(petSwfName);
 			var clsName = petObj["clsName"];
 
@@ -638,9 +709,20 @@
 
 		public function hidePet()
 		{
-			for (var i = this.charNum; i < Constant.MAX_CHAR_IN_GAME; i++)
+			// for (var i = this.charNum; i < Constant.MAX_CHAR_IN_GAME + 1; i++)
+			// {
+			// this["charMC_" + i].visible = false;
+			// }
+			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
+			var end = Math.min(this.charNum, this.currentPage * Constant.MAX_CHAR_IN_GAME);
+			for (var i = (end - start - 1); i < Constant.MAX_CHAR_IN_GAME; i++)
 			{
+				Utils.removeChildIfExistAt(this["charMC_" + i]["holder"], 2);
 				this["charMC_" + i].visible = false;
+				if (Utils.hasMouseEventClick(this["charMC_" + i]["maskMC"]))
+				{
+					Utils.removeMouseEventClick(this["charMC_" + i]["maskMC"], loadCharacter);
+				}
 			}
 		}
 
@@ -833,88 +915,6 @@
 			}
 		}
 
-		public function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):Object
-		{
-			if (charArr[selected].getIsDead())
-			{
-				for (var i in charArr)
-				{
-					if (!charArr[i].getIsDead())
-					{
-						return charArr[i];
-					}
-				}
-			}
-			return charArr[selected];
-		}
-
-		public function updateSkillCooldown(petObj:Object, skillNo:int)
-		{
-			// trace("update skill cooldown start");
-			var cooldown = petObj.getSkillCooldown();
-			// trace("--------" + petObj.getPetObj()["name"] + "---------");
-			for (var i in cooldown)
-			{
-				if (cooldown[i] > 0)
-				{
-					cooldown[i]--;
-				}
-				// trace(petObj.skillData[i]["name"] + " :" + cooldown[i]);
-			}
-			// trace("========================");
-			if (skillNo != -1)
-			{
-				cooldown[skillNo] = petObj.skillData[skillNo]["cooldown"];
-			}
-			petObj.setSkillCooldown(cooldown);
-			// trace("update skill cooldown finish");
-		}
-
-		public function setupAvailableSkills(mc)
-		{
-			mc.allActions = [];
-			for (var i in mc.skillData)
-			{
-				if (mc.getSkillCooldown()[i] <= 0)
-				{
-					mc.allActions.push(mc.skillData[i]);
-				}
-			}
-		}
-
-		public function updateHP(obj, health)
-		{
-			obj.setHP((obj.getHP() + health));
-		}
-
-		public function updateCP(obj, chakra)
-		{
-			obj.setCP((obj.getCP() + chakra));
-		}
-
-		public function charge(target)
-		{
-			var baseAmount = 25;
-			var chargeAmount = baseAmount;
-			var chargeDisable = hasEffect("restrict_charge", target, false);
-			if (chargeDisable["has"])
-			{
-				updateCP(target, 0);
-				return;
-			}
-			var chargeBonus = hasEffect("charge_cp_bonus", target, true);
-			if (chargeBonus["has"])
-			{
-				chargeAmount += chargeBonus["amount"];
-			}
-			var reduceCharge = hasEffect("pet_reduce_charge", target, false);
-			if (reduceCharge["has"])
-			{
-				chargeAmount -= reduceCharge["amount"];
-			}
-			updateCP(target, chargeAmount);
-		}
-
 		public function specialSkill(e:MouseEvent)
 		{
 			var master:Pet = getMaster(attacker);
@@ -937,8 +937,8 @@
 
 				}
 				/*if(btnSpecial.hasEventListener(MouseEvent.CLICK)){
-			btnSpecial.removeEventListener(MouseEvent.CLICK, specialSkill);
-		}*/
+					btnSpecial.removeEventListener(MouseEvent.CLICK, specialSkill);
+				}*/
 				// trace("specialSkill" + master.getPetType());
 			}
 			else
@@ -957,24 +957,24 @@
 			if (nowTurnStr == "p")
 			{
 				rand = Math.floor(Math.random() * newEnemyArr.length);
-				defender = checkTargetIsDead(rand, newEnemyArr); // this["enemyPetMc_" + rand]["charMc"].getChildByName("petMc");
+				defender = BattleUtils.checkTargetIsDead(rand, newEnemyArr); // this["enemyPetMc_" + rand]["charMc"].getChildByName("petMc");
 			}
 			else
 			{
 				rand = Math.floor(Math.random() * newPlayerArr.length);
-				defender = checkTargetIsDead(rand, newPlayerArr); // this["playerPetMc_" + rand]["charMc"].getChildByName("petMc");
+				defender = BattleUtils.checkTargetIsDead(rand, newPlayerArr); // this["playerPetMc_" + rand]["charMc"].getChildByName("petMc");
 			}
 			var mc = attacker.getPet();
 			Utils.moveToFront(mc.parent.parent);
-			setupAvailableSkills(mc);
+			BattleUtils.setupAvailableSkills(mc);
 			if (mc.allActions.length == 0)
 			{
 				defender = attacker;
 				skillTarget = "pass";
-				charge(attacker);
+				BattleUtils.charge(attacker);
 				mc.gotoAction(skillTarget);
 				skillDisplay(false);
-				updateSkillCooldown(attacker.getPet(), -1);
+				BattleUtils.updateSkillCooldown(attacker.getPet(), -1);
 				hideTarget(true);
 				battleStatus("0", skillTarget);
 				// trace("AI select skill finish pass");
@@ -999,27 +999,27 @@
 						{
 							continue;
 						}
-						if (checkHit(attacker, defender))
+						if (BattleUtils.checkHit(attacker, defender))
 						{
-							dmg = calcDamage(checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.allActions[id]["damageBonus"]);
+							dmg = BattleUtils.calcDamage(BattleUtils.checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.allActions[id]["damageBonus"]);
 							overheadNumber(true, dmg, skillTarget);
 							if (mc.allActions[id]["effect"].length > 0)
 							{
 								overheadEffect(true, mc.allActions[id]["effect"][0], "debuff");
 							}
 							addEffect(mc.allActions[id], attacker, defender, false);
-							sereneMind = hasEffect("serene_mind", defender, true);
+							sereneMind = BattleUtils.hasEffect("serene_mind", defender, true);
 							if (sereneMind["has"])
 							{
-								updateHP(attacker, -dmg);
+								BattleUtils.updateHP(attacker, -dmg);
 							}
 							else
 							{
-								updateHP(defender, -dmg);
-								dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+								BattleUtils.updateHP(defender, -dmg);
+								dmgToCp = BattleUtils.hasEffect("pet_damage_to_cp", defender, true);
 								if (dmgToCp["has"])
 								{
-									updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
+									BattleUtils.updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
 								}
 							}
 							// defender.setHit("hit");
@@ -1039,9 +1039,9 @@
 				}
 				else
 				{
-					if (checkHit(attacker, defender))
+					if (BattleUtils.checkHit(attacker, defender))
 					{
-						dmg = calcDamage(checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.allActions[id]["damageBonus"]);
+						dmg = BattleUtils.calcDamage(BattleUtils.checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.allActions[id]["damageBonus"]);
 						if (mc.allActions[id]["effect"][0].hasOwnProperty("EffectArray"))
 						{
 							randEffect = Math.floor(Math.random() * mc.allActions[id]["effect"][0]["EffectArray"].length);
@@ -1075,18 +1075,18 @@
 								}
 							}
 						}
-						sereneMind = hasEffect("serene_mind", defender, true);
+						sereneMind = BattleUtils.hasEffect("serene_mind", defender, true);
 						if (sereneMind["has"])
 						{
-							updateHP(attacker, -dmg);
+							BattleUtils.updateHP(attacker, -dmg);
 						}
 						else
 						{
-							updateHP(defender, -dmg);
-							dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+							BattleUtils.updateHP(defender, -dmg);
+							dmgToCp = BattleUtils.hasEffect("pet_damage_to_cp", defender, true);
 							if (dmgToCp["has"])
 							{
-								updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
+								BattleUtils.updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
 							}
 						}
 						defender.setHit("hit");
@@ -1161,7 +1161,7 @@
 				}
 				else
 				{
-					if (checkHit(attacker, defender))
+					if (BattleUtils.checkHit(attacker, defender))
 					{
 						if (mc.allActions[id]["effect"][0].hasOwnProperty("EffectArray"))
 						{
@@ -1205,7 +1205,7 @@
 			}
 			skillNameTxt = mc.allActions[id]["name"];
 			this.popupInfo.gotoAndPlay("show");
-			updateSkillCooldown(attacker.getPet(), mc.skillData.indexOf(mc.allActions[id]));
+			BattleUtils.updateSkillCooldown(attacker.getPet(), mc.skillData.indexOf(mc.allActions[id]));
 			battleStatus(dmg, skillTarget);
 			// trace("AI select skill finish");
 		}
@@ -1222,10 +1222,10 @@
 			{
 				defender = attacker;
 				skillTarget = "pass";
-				charge(attacker);
+				BattleUtils.charge(attacker);
 				mc.gotoAction(skillTarget);
 				skillDisplay(false);
-				updateSkillCooldown(attacker.getPet(), -1);
+				BattleUtils.updateSkillCooldown(attacker.getPet(), -1);
 				hideTarget(true);
 				battleStatus("0", skillTarget);
 				// trace("Pleayer select skill finish pass");
@@ -1246,27 +1246,27 @@
 						{
 							continue;
 						}
-						if (checkHit(attacker, defender))
+						if (BattleUtils.checkHit(attacker, defender))
 						{
-							dmg = calcDamage(checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.skillData[id]["damageBonus"]);
+							dmg = BattleUtils.calcDamage(BattleUtils.checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.skillData[id]["damageBonus"]);
 							overheadNumber(true, dmg, skillTarget);
 							if (mc.skillData[id]["effect"].length > 0)
 							{
 								overheadEffect(true, mc.skillData[id]["effect"][0], "debuff");
 							}
 							addEffect(mc.skillData[id], attacker, defender, false);
-							sereneMind = hasEffect("serene_mind", defender, true);
+							sereneMind = BattleUtils.hasEffect("serene_mind", defender, true);
 							if (sereneMind["has"])
 							{
-								updateHP(attacker, -dmg);
+								BattleUtils.updateHP(attacker, -dmg);
 							}
 							else
 							{
-								updateHP(defender, -dmg);
-								dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+								BattleUtils.updateHP(defender, -dmg);
+								dmgToCp = BattleUtils.hasEffect("pet_damage_to_cp", defender, true);
 								if (dmgToCp["has"])
 								{
-									updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
+									BattleUtils.updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
 								}
 							}
 							// defender.setHit("hit");
@@ -1286,9 +1286,9 @@
 				}
 				else
 				{
-					if (checkHit(attacker, defender))
+					if (BattleUtils.checkHit(attacker, defender))
 					{
-						dmg = calcDamage(checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.skillData[id]["damageBonus"]);
+						dmg = BattleUtils.calcDamage(BattleUtils.checkDamage(attacker.getPet().getDamage(), attacker, defender), mc.skillData[id]["damageBonus"]);
 						if (mc.skillData[id]["effect"][0].hasOwnProperty("EffectArray"))
 						{
 							randEffect = Math.floor(Math.random() * mc.skillData[id]["effect"][0]["EffectArray"].length);
@@ -1325,18 +1325,18 @@
 								}
 							}
 						}
-						sereneMind = hasEffect("serene_mind", defender, true);
+						sereneMind = BattleUtils.hasEffect("serene_mind", defender, true);
 						if (sereneMind["has"])
 						{
-							updateHP(attacker, -dmg);
+							BattleUtils.updateHP(attacker, -dmg);
 						}
 						else
 						{
-							updateHP(defender, -dmg);
-							dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+							BattleUtils.updateHP(defender, -dmg);
+							dmgToCp = BattleUtils.hasEffect("pet_damage_to_cp", defender, true);
 							if (dmgToCp["has"])
 							{
-								updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
+								BattleUtils.updateCP(defender, (dmgToCp["amount"] / 100) * dmg);
 							}
 						}
 						defender.setHit("hit");
@@ -1416,7 +1416,7 @@
 				}
 				else
 				{
-					if (checkHit(attacker, defender))
+					if (BattleUtils.checkHit(attacker, defender))
 					{
 						if (mc.skillData[id]["effect"][0].hasOwnProperty("EffectArray"))
 						{
@@ -1461,7 +1461,7 @@
 			skillNameTxt = mc.skillData[id]["name"];
 			this.popupInfo.gotoAndPlay("show");
 			skillDisplay(false);
-			updateSkillCooldown(attacker.getPet(), id);
+			BattleUtils.updateSkillCooldown(attacker.getPet(), id);
 			hideTarget(true);
 			battleStatus(dmg, skillTarget);
 			// trace("Pleayer select skill finish");
@@ -1479,608 +1479,6 @@
 			return BattleData.displaySpecialText(effect);
 		}
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////
-		public function addEffect(skillObj, attacker:Pet, target:Pet, isBuff)
-		{
-			// trace("add effect start");
-			for (var i in skillObj["effect"])
-			{
-				if (skillObj["effect"][i]["type"] != "no effect")
-				{
-					var skillEffect = {
-							"type": skillObj["effect"][i]["type"],
-							"duration": skillObj["effect"][i]["duration"],
-							"amount": skillObj["effect"][i]["amount"],
-							"chance": skillObj["effect"][i]["chance"]
-						};
-					effectToStr(skillEffect);
-					if (!isDupliEffect(skillEffect, target, isBuff))
-					{
-						if (isBuff)
-						{
-							if (!directBuff(skillEffect, target))
-							{
-								target.getBuffArr()[skillEffect["type"]] = (skillEffect);
-							}
-						}
-						else
-						{
-							if (hasEffect("debuff_resist", target, true)["has"])
-							{
-								continue;
-							}
-							// TODO chance
-							if (hasEffect("pet_debuff_resist", target, true)["has"])
-							{
-								continue;
-							}
-							if (!directDebuff(skillEffect, attacker, target))
-							{
-								target.getDebuffArr()[skillEffect["type"]] = (skillEffect);
-							}
-						}
-					}
-
-				}
-			}
-			// trace("add effect finish");
-		}
-
-		public function hasEffect(effectType, obj, isBuff)
-		{
-			var effectArr = isBuff ? obj.getBuffArr() : obj.getDebuffArr();
-			if (effectArr[effectType] != null)
-			{
-				return {
-						"has": true,
-						"type": effectArr[effectType]["type"],
-						"amount": effectArr[effectType]["amount"],
-						"duration": effectArr[effectType]["duration"]
-					};
-			}
-			return {
-					"has": false,
-					"amount": 0,
-					"duration": 0
-				};
-		}
-
-		public function isDupliEffect(effectObj, objStats, isBuff)
-		{
-			// trace(objStats);
-			var effectArr = isBuff ? objStats.getBuffArr() : objStats.getDebuffArr();
-			if (effectArr[effectObj["type"]] != undefined)
-			{
-				effectArr[effectObj["type"]] = effectObj;
-				return true;
-			}
-			/*for (var i in effectArr) {
-				if (effectObj["type"] == effectArr[i]["type"]) {
-					effectArr[i] = effectObj;
-					return true;
-				}
-			}*/
-			return false;
-		}
-		// ////////////////////////////////////////////////////////////////////////////////////////////////////
-		public function bothEffect(effectObj, attacker, target)
-		{
-
-		}
-
-		public function directDebuff(effectObj, attacker, target, targetType = "self")
-		{
-			// var targetStats = target["stats"];
-			var burnHP, burnCP;
-			if (effectObj["type"] == "burn_hp")
-			{
-				burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
-				updateHP(target, -burnHP);
-				return true;
-			}
-			else if (effectObj["type"] == "burn_cp")
-			{
-				burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-				updateCP(target, -burnCP);
-				return true;
-			}
-			else if (effectObj["type"] == "burn_cp_hp")
-			{
-				burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
-				burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-				updateHP(target, -burnHP);
-				updateCP(target, -burnCP);
-				return true;
-			}
-			else if (effectObj["type"] == "clear_buff")
-			{
-				// TODO chance
-				target.setBuffArr( {});
-				return true;
-			}
-			else if (effectObj["type"] == "drain_hp")
-			{
-				burnHP = Math.round(target.getHP() * (effectObj["amount"]) / 100);
-				updateHP(attacker, burnHP);
-				updateHP(target, -burnHP);
-				return true;
-			}
-			else if (effectObj["type"] == "pet_drain_hp")
-			{
-				burnHP = Math.round(target.getHP() * (effectObj["amount"]) / 100);
-				updateHP(getMaster(attacker), burnHP);
-				updateHP(target, -burnHP);
-				return true;
-			}
-			else if (effectObj["type"] == "drain_cp")
-			{
-				burnCP = Math.round(target.getCP() * (effectObj["amount"]) / 100);
-				updateCP(attacker, burnCP);
-				updateCP(target, -burnCP);
-				return true;
-
-			}
-			else if (effectObj["type"] == "pet_drain_cp")
-			{
-				burnCP = Math.round(target.getCP() * (effectObj["amount"]) / 100);
-				updateCP(attacker, burnCP);
-				updateCP(target, -burnCP);
-				return true;
-
-			}
-			else if (effectObj["type"] == "add_cooldown")
-			{
-				var randomSkill = Math.floor(Math.random() * target.getSkillData().length) + 1;
-				var cooldownTemp = target.getCooldown();
-				cooldownTemp[randomSkill] += (effectObj["amount"] - 1);
-				target.setCooldown(cooldownTemp);
-			}
-			return false;
-		}
-
-		public function directBuff(effectObj, target)
-		{
-			var cooldown;
-			if (effectObj["type"] == "oil_bottle")
-			{
-				cooldown = target.getPet().getSkillCooldown();
-				cooldown[2] = 0;
-				target.getPet().setSkillCooldown(cooldown);
-				return true;
-			}
-			else if (effectObj["type"] == "heal")
-			{
-				// done
-				var heal = effectObj["amount"];
-				if (target.getIsDead() || hasEffect("internal_injury", target, false)["has"])
-				{
-					heal = 0;
-				}
-				updateHP(target, heal);
-				return true;
-			}
-			else if (effectObj["type"] == "restore_cp")
-			{
-				// done
-				var restoreCP = effectObj["amount"];
-				if (target.getIsDead())
-				{
-					restoreCP = 0;
-				}
-				updateCP(target, restoreCP);
-				return true;
-			}
-			else if (effectObj["type"] == "cooldown_reduction")
-			{
-				cooldown = target.getPet().getSkillCooldown();
-				var reduceCd = effectObj["amount"];
-				for (var i in cooldown)
-				{
-					if (cooldown[i] - reduceCd < 0)
-					{
-						cooldown[i] = 0;
-					}
-					else
-					{
-						cooldown[i] -= reduceCd;
-					}
-				}
-				target.getPet().setSkillCooldown(cooldown);
-				return true;
-			}
-			else if (effectObj["type"] == "bloodlust_dedication")
-			{
-				// done
-				target.setDebuffArr( {});
-				var heal1 = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
-				updateHP(target, heal1);
-				return true;
-			}
-			return false;
-		}
-		// ////////////////////////////////////////////////////////////////////////////////////////////////////
-		public function checkPurify(charObj)
-		{
-			// trace("check purify start");
-			var purifyRandom = Math.floor(Math.random() * 100);
-			// trace(purifyRandom);
-			var purifyChance = charObj.getPurify();
-			var petEnergize = hasEffect("pet_energize", charObj, true);
-			if (petEnergize["has"])
-			{
-				purifyChance += petEnergize["amount"];
-				// trace("energize");
-			}
-			var purifyBonus = hasEffect("add_purify_chance", charObj, true);
-			if (purifyBonus["has"])
-			{
-				purifyChance += purifyBonus["amount"];
-				// trace("add purify");
-			}
-			var purifyReduce = hasEffect("reduce_purify_chance", charObj, true);
-			if (purifyReduce["has"])
-			{
-				purifyChance -= purifyReduce["amount"];
-				// trace("reduce purify");
-			}
-			var petDiso = hasEffect("pet_disoriented", charObj, true);
-			if (petDiso["has"])
-			{
-				purifyChance -= petDiso["amount"];
-				// trace("disoriented");
-			}
-			if (purifyChance >= purifyRandom)
-			{
-				// var purifyEffect = {"effect":[{"type":"purify", "duration":2}]};
-				// addEffect(purifyEffect, charObj, charObj,true);
-				overheadEffect(true, {
-							"type": "purify"
-						}, "buff");
-				var cooldown = charObj.getPet().getSkillCooldown();
-				cooldown[0] = 0;
-				charObj.getPet().setSkillCooldown(cooldown);
-				charObj.setDebuffArr( {});
-			}
-			// trace("check purify finish");
-		}
-
-		// defender dodge or hit
-		public function checkHit(attacker:Pet, defender:Pet)
-		{
-			var accRandom = Math.floor(Math.random() * 100);
-			var accPoints = 100;
-			if (hasEffect("hundred_percent_attack", attacker, true)["has"])
-			{
-				return true;
-			}
-			var accBonus = checkDodge(attacker, defender);
-			accPoints -= accBonus;
-			var petAttention = hasEffect("pet_attention", attacker, true);
-			if (petAttention["has"])
-			{
-				accPoints += petAttention["amount"];
-			}
-			if (accPoints >= accRandom)
-			{
-				return true;
-			}
-			return false;
-		}
-
-		public function checkDodge(attacker:Pet, defender:Pet)
-		{
-			var dodgeRandom = Math.floor(Math.random() * 100);
-			var dodgeChance = defender.getDodge();
-			var dodgeObj = hasEffect("dodge_bonus", defender, true);
-			if (dodgeObj["has"])
-			{
-				dodgeChance += dodgeObj["amount"];
-				// trace("dodge bonus");
-			}
-			var petDodgeObj = hasEffect("pet_dodge_bonus", defender, true);
-			if (petDodgeObj["has"])
-			{
-				dodgeChance += petDodgeObj["amount"];
-				// trace("pet dodge bonus");
-			}
-			var dodgeReduce = hasEffect("dodge_reduction", defender, false);
-			if (dodgeReduce["has"])
-			{
-				dodgeChance -= dodgeReduce["amount"];
-				// trace("dodge reduce");
-			}
-			var blindObj = hasEffect("blind", attacker, false);
-			if (blindObj["has"])
-			{
-				dodgeChance += blindObj["amount"];
-				// trace("blind attacker");
-			}
-			var petBlindObj = hasEffect("pet_blind", attacker, false);
-			if (petBlindObj["has"])
-			{
-				dodgeChance += petBlindObj["amount"];
-				// trace("pet blind attacker");
-			}
-			var petDiso = hasEffect("pet_disoriented", attacker, false);
-			if (petDiso["has"])
-			{
-				dodgeChance -= petDiso["amount"];
-				// trace("disoriented");
-			}
-			var petEnergize = hasEffect("pet_energize", attacker, true);
-			if (petEnergize["has"])
-			{
-				dodgeChance += petEnergize["amount"];
-				// trace("energize");
-			}
-			/*if (dodgeChance >= dodgeRandom) {
-				return true;
-			}
-			return false;*/
-			return dodgeChance;
-		}
-
-		public function checkCritical(charObj)
-		{
-			// trace("checkCritical start");
-
-			var criticalRandom = Math.floor(Math.random() * 100);
-			var criticalChance = charObj.getCritical();
-			var critObj = hasEffect("critical_chance_bonus", charObj, true);
-			if (critObj["has"])
-			{
-				criticalChance += critObj["amount"];
-				// trace("cc bonus");
-			}
-			var bunnyFrenzy = hasEffect("bunny_frenzy", charObj, true);
-			if (bunnyFrenzy["has"])
-			{
-				criticalChance += 2.5;
-				// trace("bunny frenzy");
-			}
-			var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", charObj, true);
-			if (battleBunnyFrenzy["has"])
-			{
-				criticalChance += 2.5;
-				// trace("bunny frenzy");
-			}
-			var petEnergize = hasEffect("pet_energize", charObj, true);
-			if (petEnergize["has"])
-			{
-				criticalChance += petEnergize["amount"];
-				// trace("energize");
-			}
-			var petDiso = hasEffect("pet_disoriented", charObj, true);
-			if (petDiso["has"])
-			{
-				criticalChance -= petDiso["amount"];
-				// trace("disoriented");
-			}
-			if (Math.round(criticalChance) >= criticalRandom)
-			{
-				// trace("checkCritical finish true");
-				return true;
-			}
-			// trace("checkCritical finish false");
-			return false;
-		}
-
-		// 
-		public function checkDamage(damage, attacker, defender)
-		{
-			// trace("checkDamage start");
-			if (hasEffect("guard", defender, true)["has"])
-			{
-				// trace("checkDamage finish guard");
-				return 0;
-			}
-			var strength = hasEffect("pet_damage_bonus", attacker, true);
-			var tempDamage = damage;
-			if (strength["has"])
-			{
-				tempDamage = damage * (strength["amount"] / 100);
-				damage = damage + tempDamage;
-				// trace(damage + " strength");
-			}
-			var fearWeaken = hasEffect("fear_weaken", attacker, false);
-			if (fearWeaken["has"])
-			{
-				tempDamage = damage * (fearWeaken["amount"] / 100);
-				damage = damage - tempDamage;
-				// trace(damage + " fear weaken");
-			}
-			var weaken = hasEffect("pet_weaken", attacker, false);
-			if (weaken["has"])
-			{
-				tempDamage = damage * (weaken["amount"] / 100);
-				damage = damage - tempDamage;
-				// trace(damage + " weaken");
-			}
-			var protection = hasEffect("damage_reduction", defender, false);
-			if (protection["has"])
-			{
-				tempDamage = damage * (protection["amount"] / 100);
-				damage = damage - tempDamage;
-				// trace(damage + " protection");
-			}
-			var petProtection = hasEffect("pet_damage_reduction", defender, false);
-			if (petProtection["has"])
-			{
-				tempDamage = damage * (petProtection["amount"] / 100);
-				damage = damage - tempDamage;
-				// trace(damage + " protection");
-			}
-			var frozen = hasEffect("pet_freeze", attacker, false);
-			if (frozen["has"])
-			{
-				tempDamage = damage * (frozen["amount"] / 100);
-				damage = damage - tempDamage;
-				// trace(damage + " frozen");
-			}
-
-			var bleeding = hasEffect("bleeding", defender, false);
-			if (bleeding["has"])
-			{
-				tempDamage = damage * (bleeding["amount"] / 100);
-				damage = damage + tempDamage;
-				// trace(damage + " bleeding");
-			}
-
-			// TODO chance
-			var petBleeding = hasEffect("pet_bleeding", defender, false);
-			if (petBleeding["has"])
-			{
-				tempDamage = damage * (petBleeding["amount"] / 100);
-				damage = damage + tempDamage;
-				// trace(damage + " petBleeding");
-			}
-			var petBunnyFrenzyDef = hasEffect("bunny_frenzy", defender, true);
-			if (petBunnyFrenzyDef["has"])
-			{
-				tempDamage = damage * (20 / 100);
-				damage = damage + tempDamage;
-				// trace(damage + " bunny_frenzy defender side effect");
-			}
-			var petBunnyFrenzyAtt = hasEffect("bunny_frenzy", attacker, true);
-			if (petBunnyFrenzyAtt["has"])
-			{
-				tempDamage = damage * 2;
-				damage = damage + tempDamage;
-				// trace(damage + " bunny_frenzy");
-			}
-			var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", attacker, true);
-			if (battleBunnyFrenzy["has"])
-			{
-				tempDamage = damage * 0.25;
-				damage = damage + tempDamage;
-				// trace(damage + " battleBunnyF");
-			}
-			if (checkCritical(attacker))
-			{
-				var criticalDamageBase = 150;
-				var criticalDamageAmount = criticalDamageBase;
-				var hamstring = hasEffect("hamstring", attacker, true);
-				if (hamstring["has"])
-				{
-					criticalDamageAmount -= 25;
-				}
-				damage *= criticalDamageAmount / 100;
-				// trace(damage + " critical strike");
-			}
-			// trace(Math.round(damage));
-			// trace("checkDamage finish");
-			return Math.round(damage);
-		}
-		// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		public function checkBuff(obj)
-		{
-			var buffArr = {};
-			for (var i in obj.getBuffArr())
-			{
-				obj.getBuffArr()[i]["duration"]--;
-				if (obj.getBuffArr()[i]["duration"] > 0)
-				{
-					buffArr[obj.getBuffArr()[i]["type"]] = (obj.getBuffArr()[i]);
-				}
-				if (obj.getBuffArr()[i]["type"] == "pet_heal" && obj.getBuffArr()[i]["duration"] > 0)
-				{
-					var recoverHP = Math.round(obj.getMaxHP() * (obj.getBuffArr()[i]["amount"]) / 100);
-					if (attacker.getIsDead() || hasEffect("internal_injury", attacker, false)["has"])
-					{
-						recoverHP = 0;
-					}
-					updateHP(obj, recoverHP);
-				}
-
-			}
-			obj.setBuffArr(buffArr);
-		}
-
-		public function checkDebuff(obj:Pet)
-		{
-			checkPurify(obj);
-			checkBuff(obj);
-			var pass = false;
-			var debuffArr = {};
-			for (var i in obj.getDebuffArr())
-			{
-				obj.getDebuffArr()[i]["duration"]--;
-				if (obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
-				}
-				if (obj.getDebuffArr()[i]["type"] == "bundle" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "chaos" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "stun" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "stun_random" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "fear" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "pet_freeze" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "pet_burn" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					var burn = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
-					updateHP(obj, -burn);
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "dismantle" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					var cooldown = obj.getPet().getSkillCooldown();
-					cooldown[0] = (obj.getDebuffArr()[i]["duration"]);
-					obj.getPet().setSkillCooldown(cooldown);
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "coilding_wave" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					var burnHP = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
-					var burnCP = Math.round(obj.getMaxCP() * (obj.getDebuffArr()[i]["amount"]) / 100);
-					updateHP(obj, -burnHP);
-					updateHP(obj, -burnCP);
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "poison" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					burnHP = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
-					updateHP(obj, -burnHP);
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "sleep" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-				else if (obj.getDebuffArr()[i]["type"] == "random_sleep" && obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					pass = true;
-				}
-			}
-			obj.setDebuffArr(debuffArr);
-			// check Dead
-			if (pass)
-			{
-				if (newPlayerArr.indexOf(obj) == 0 || (controlParty && (newPlayerArr.indexOf(nowTurn) > 0)))
-				{
-					skillDisplay(false);
-					hideTarget(true);
-				}
-				updateSkillCooldown(obj.getPet(), -1);
-				obj.getPet().gotoAction("pass");
-			}
-			return pass;
-		}
-		// ////////////////////////////////////////////////////////////////////////////////////////////////////
 		public function petMcVisible(show:Boolean)
 		{
 			for (var i = 0; i < 3; i++)
@@ -2095,8 +1493,8 @@
 		{
 			for (var i = 0; i < 3; i++)
 			{
-				addActiveGlowFilter(this["playerPetMc_" + i]["activeMc"], show);
-				addActiveGlowFilter(this["enemyPetMc_" + i]["activeMc"], show);
+				Utils.addActiveGlowFilter(this["playerPetMc_" + i]["activeMc"], show);
+				Utils.addActiveGlowFilter(this["enemyPetMc_" + i]["activeMc"], show);
 			}
 		}
 
@@ -2222,6 +1620,191 @@
 
 			skillDisplay(false);
 			initialized = true;
+		}
+
+		public function addEffect(skillObj, attacker:Pet, target:Pet, isBuff)
+		{
+			// trace("add effect start");
+			for (var i in skillObj["effect"])
+			{
+				if (skillObj["effect"][i]["type"] != "no effect")
+				{
+					var skillEffect = {
+							"type": skillObj["effect"][i]["type"],
+							"duration": skillObj["effect"][i]["duration"],
+							"amount": skillObj["effect"][i]["amount"],
+							"chance": skillObj["effect"][i]["chance"]
+						};
+					//check chance if not true effect not added
+					if(!BattleUtils.checkChanceEffect(skillEffect)){
+						trace("the skill effect not added" + skillObj["name"]);
+						return;
+					}
+					effectToStr(skillEffect);
+					if (!BattleUtils.isDupliEffect(skillEffect, target, isBuff))
+					{
+						if (isBuff)
+						{
+							if (!BattleUtils.directBuff(skillEffect, target))
+							{
+								target.getBuffArr()[skillEffect["type"]] = (skillEffect);
+							}
+						}
+						else
+						{
+							if (BattleUtils.hasEffect("debuff_resist", target, true)["has"])
+							{
+								continue;
+							}
+							// TODO chance
+							if (BattleUtils.hasEffect("pet_debuff_resist", target, true)["has"])
+							{
+								continue;
+							}
+							if (!BattleUtils.directDebuff(skillEffect, attacker, target, getMaster(attacker)))
+							{
+								target.getDebuffArr()[skillEffect["type"]] = (skillEffect);
+							}
+						}
+					}
+
+				}
+			}
+			// trace("add effect finish");
+		}
+
+		public function checkPurify(charObj)
+		{
+			if (BattleUtils.checkPurify(charObj))
+			{
+				// var purifyEffect = {"effect":[{"type":"purify", "duration":2}]};
+				// addEffect(purifyEffect, charObj, charObj,true);
+				overheadEffect(true, {
+							"type": "purify"
+						}, "buff");
+				var cooldown = charObj.getPet().getSkillCooldown();
+				cooldown[0] = 0;
+				charObj.getPet().setSkillCooldown(cooldown);
+				charObj.setDebuffArr({});
+			}
+			// trace("check purify finish");
+		}
+
+		public function checkBuff(obj)
+		{
+			var buffArr = {};
+			for (var i in obj.getBuffArr())
+			{
+				obj.getBuffArr()[i]["duration"]--;
+				if (obj.getBuffArr()[i]["duration"] > 0)
+				{
+					buffArr[obj.getBuffArr()[i]["type"]] = (obj.getBuffArr()[i]);
+				}
+				if (obj.getBuffArr()[i]["type"] == "pet_heal" && obj.getBuffArr()[i]["duration"] > 0)
+				{
+					var recoverHP = Math.round(obj.getMaxHP() * (obj.getBuffArr()[i]["amount"]) / 100);
+					if (obj.getIsDead() || BattleUtils.hasEffect("internal_injury", obj, false)["has"])
+					{
+						recoverHP = 0;
+					}
+					BattleUtils.updateHP(obj, recoverHP);
+				} else if(obj.getBuffArr()[i]["type"] == "catalytic_matter" && obj.getBuffArr()[i]["duration"] > 0){
+					trace("catalytic_matter side effect")
+					var reduceHP = -Math.round(obj.getMaxHP() * 0.02);
+					if (obj.getIsDead())
+					{
+						reduceHP = 0;
+					}
+					BattleUtils.updateHP(obj, reduceHP);
+				}
+
+			}
+			obj.setBuffArr(buffArr);
+		}
+
+		public function checkDebuff(obj)
+		{
+			BattleUtils.checkPurify(obj);
+			checkBuff(obj);
+			var pass = false;
+			var debuffArr = {};
+			for (var i in obj.getDebuffArr())
+			{
+				obj.getDebuffArr()[i]["duration"]--;
+				if (obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
+				}
+				if (obj.getDebuffArr()[i]["type"] == "bundle" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "chaos" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "stun" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "stun_random" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "fear" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "pet_freeze" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "pet_burn" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					var burn = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
+					BattleUtils.updateHP(obj, -burn);
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "dismantle" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					var cooldown = obj.getPet().getSkillCooldown();
+					cooldown[0] = (obj.getDebuffArr()[i]["duration"]);
+					obj.getPet().setSkillCooldown(cooldown);
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "coilding_wave" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					var burnHP = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
+					var burnCP = Math.round(obj.getMaxCP() * (obj.getDebuffArr()[i]["amount"]) / 100);
+					BattleUtils.updateHP(obj, -burnHP);
+					BattleUtils.updateHP(obj, -burnCP);
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "poison" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					burnHP = Math.round(obj.getMaxHP() * (obj.getDebuffArr()[i]["amount"]) / 100);
+					BattleUtils.updateHP(obj, -burnHP);
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "sleep" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+				else if (obj.getDebuffArr()[i]["type"] == "random_sleep" && obj.getDebuffArr()[i]["duration"] > 0)
+				{
+					pass = true;
+				}
+			}
+			obj.setDebuffArr(debuffArr);
+			// check Dead
+			if (pass)
+			{
+				if (newPlayerArr.indexOf(obj) == 0 || (controlParty && (newPlayerArr.indexOf(nowTurn) > 0)))
+				{
+					skillDisplay(false);
+					hideTarget(true);
+				}
+				BattleUtils.updateSkillCooldown(obj.getPet(), -1);
+				obj.getPet().gotoAction("pass");
+			}
+			return pass;
 		}
 
 		public function hideTarget(actionFinish:Boolean)
@@ -2443,7 +2026,7 @@
 				if (controlParty)
 				{
 					var index = newPlayerArr.indexOf(nowTurn);
-					addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+					Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 					attacker = newPlayerArr[index];
 					if (!checkDebuff(nowTurn))
 					{
@@ -2453,7 +2036,7 @@
 				}
 				else
 				{
-					addActiveGlowFilter(this["playerPetMc_0"]["activeMc"], true);
+					Utils.addActiveGlowFilter(this["playerPetMc_0"]["activeMc"], true);
 					attacker = newPlayerArr[0];
 					if (!checkDebuff(nowTurn))
 					{
@@ -2471,7 +2054,7 @@
 				index = newEnemyArr.indexOf(nowTurn);
 				if (index >= 0)
 				{
-					addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
+					Utils.addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
 					nowTurnStr = "e";
 					attacker = newEnemyArr[index];
 				}
@@ -2479,7 +2062,7 @@
 				{
 					nowTurnStr = "p";
 					index = newPlayerArr.indexOf(nowTurn);
-					addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+					Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 					attacker = newPlayerArr[index];
 				}
 				if (!checkDebuff(nowTurn))
@@ -2488,33 +2071,6 @@
 					AISelectSkill();
 				}
 				updateBar();
-			}
-		}
-
-		public function calcDamage(amount:int, damageBonus):int
-		{
-			amount = int(amount + Math.round(amount * damageBonus));
-			var constVal = 0.2;
-			var minVal = amount - amount * constVal;
-			var maxVal = amount + amount * constVal;
-			return Math.round(Math.random() * (maxVal - minVal) + minVal);
-		}
-
-		public function addActiveGlowFilter(mc, active = false)
-		{
-			if (active)
-			{
-				var glow:GlowFilter = new GlowFilter();
-				glow.color = 0x00FF00;
-				glow.blurX = 3;
-				glow.blurY = 3;
-				glow.strength = 4;
-				glow.quality = 3; // BitmapFilterQuality.HIGH;
-				mc.filters = [glow];
-			}
-			else
-			{
-				mc.filters = [];
 			}
 		}
 
@@ -2654,40 +2210,6 @@
 						}
 						pointXY = new Point(tempX, tempY);
 						break;
-						/*tempY = defMc.parent.parent.y - attMc.parent.parent.y;
-				if(attMc.parent.parent.y < defMc.parent.parent.y){
-					tempY -= 70 ;
-				}else if(attMc.parent.parent.y > defMc.parent.parent.y){
-					tempY += 70;
-				}
-				tempX = defMc.parent.parent.x - defMc.parent.parent.width - attMc.parent.parent.x + 90;
-				if(defMc.parent.parent.x - attMc.parent.parent.x > 1100){
-					tempX -= 170;
-				}else if(defMc.parent.parent.x - attMc.parent.parent.x > 700){
-					tempX -= 130;
-				}
-				pointXY = new Point(tempX, tempY);
-				break;*/
-						/*case "melee3":
-				if (attacker.getPet().parent.x < defender.getPet().parent.x)
-				{
-					pointXY = new Point(defender.getPet().parent.x - defender.getHitArea().parent.width * BATTLE_CHAR_SCALE - attacker.getHitArea().parent.width * BATTLE_CHAR_SCALE - 300, defender.getPet().parent.y);
-				}
-				else
-				{
-					pointXY = new Point(defender.getPet().parent.x + defender.getHitArea().parent.width * BATTLE_CHAR_SCALE + attacker.getHitArea().parent.width * BATTLE_CHAR_SCALE + 300, defender.getPet().parent.y);
-				}
-				break;*/
-						/*case PositionType.MELEE_4:
-				if (defender.getPet().parent.x > Data.GAME_WIDTH / 2)
-				{
-					pointXY = new Point(Data.GAME_WIDTH / 2 - PositionType.RANGE_2_OFFSET * BATTLE_CHAR_SCALE * 2 / 3, middleRowY);
-				}
-				if (defender.getPet().x < Data.GAME_WIDTH / 2)
-				{
-					pointXY = new Point(Data.GAME_WIDTH / 2 + PositionType.RANGE_2_OFFSET * BATTLE_CHAR_SCALE * 2 / 3, middleRowY);
-				}
-				break;*/
 					case "range1":
 						tempX = (Math.abs(pPoint.x - ePoint.x) / 2 - 40) * BATTLE_CHAR_SCALE;
 						if (pPoint.y <= ePoint.y)
@@ -2724,14 +2246,6 @@
 						}
 						pointXY = new Point(tempX, tempY);
 						break;
-						/*if (defender.getPet().x > Data.GAME_WIDTH / 2)
-				{
-					pointXY = new Point(defender.getPet().x - defender.getHitArea().width * BATTLE_CHAR_SCALE / 2, defender.getPet().y);
-				}
-				if (defender.getPet().x < Data.GAME_WIDTH / 2)
-				{
-					pointXY = new Point(defender.getPet().x + defender.getHitArea().width * BATTLE_CHAR_SCALE / 2, defender.getPet().y);
-				}*/
 				}
 			}
 			return pointXY;

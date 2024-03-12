@@ -376,6 +376,132 @@
 								}]
 						}]
 				},
+				"pet10": {
+					"id": "10",
+					"name": "Easa",
+					"description": "A bunny...with a sword...it's dangerous, watch out!",
+					"swfName": "bunny_1",
+					"clsName": "Bunny_1",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 400,
+					"max_level": 30,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.4,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Bunny Quick Strike",
+							"description": "<b>Bunny Quick Strike</b><br>Slash target swiftly and have 50% chance to inflict bleeding (5% extra damage) (2 turns)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1.4,
+							"cooldown": 8,
+							"target": "",
+							"name": "Bunny Triple Kunai",
+							"description": "<b>Bunny Triple Kunai</b><br>Throw kunai to target and have 50% chance to inflict bleeding (5% extra damage) (2 turns)",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.4,
+							"cooldown": 10,
+							"target": "",
+							"name": "Secret: Bunny Slash",
+							"description": "<b>Secret: Bunny Slash</b><br>Powerful slash that has 25% chance to stun target (1 turn)",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun_random",
+									"duration": 2,
+									"chance": 25
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Frenzy Bunny",
+							"description": "<b>Frenzy Bunny</b><br>Bunny is under frenzy status - increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (3 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bunny_frenzy",
+									"duration": 4
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 14,
+							"target": "master",
+							"name": "Secret: Mirror of Moon",
+							"description": "<b>Secret: Mirror of Moon</b><br>Ultimate jutsu - Hallucinate target for master with mirror-like water so that all attack by target will be rebound (1 turn)",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "serene_mind",
+									"duration": 2
+								}]
+						}]
+				},
 				"pet15": {
 					"id": "15",
 					"name": "Kisuke",
@@ -1211,7 +1337,8 @@
 							"skill_cp": 0,
 							"effect": [ {
 									"type": "guard",
-									"duration": 3
+									"duration": 3,
+									"chance": 50
 								}]
 						}, {
 							"id": 4,
@@ -1229,7 +1356,7 @@
 							"effect": [ {
 									"type": "stun_random",
 									"duration": 2,
-									"amount": 100
+									"chance": 100
 								}]
 						}, {
 							"id": 5,
@@ -1248,6 +1375,614 @@
 									"type": "pet_damage_bonus",
 									"duration": 3,
 									"amount": 8
+								}]
+						}]
+				},
+				"pet57": {
+					"id": "57",
+					"name": "Zen",
+					"description": "",
+					"swfName": "bunny_2",
+					"clsName": "Bunny_2",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 30,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.4,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Bunny Quick Strike",
+							"description": "<b>Bunny Quick Strike</b><br>Slash target swiftly and have 50% chance to inflict bleeding (5% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 100
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1.2,
+							"cooldown": 8,
+							"target": "",
+							"name": "Bunny Triple Kunai",
+							"description": "<b>Bunny Triple Kunai</b><br>Throw kunai to target and have 50% chance to inflict bleeding (5% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 100
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.4,
+							"cooldown": 10,
+							"target": "",
+							"name": "Bunny Up Slash",
+							"description": "<b>Bunny Up Slash</b><br>Perform a Up Slash, 50% chance produce bleeding effect. (2 turns) (Character will take extra 5% damage under bleeding effect.)<br>",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 100
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Frenzy Zen",
+							"description": "<b>Frenzy Zen</b><br>Bunny is under frenzy status - increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (3 turns)<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bunny_frenzy",
+									"duration": 4
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 14,
+							"target": "",
+							"name": "Secret: Smoky Ansatsu",
+							"description": "<b>Secret: Smoky Ansatsu</b><br>Assassinate Skill invented by Zen. Use smoke bomb assassinate target. Target reduce 6% HP.<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "burn_hp",
+									"amount": 6,
+									"chance": 100
+								}]
+						}
+					]
+				},
+				"pet58": {
+					"id": "58",
+					"name": "Zenitsu",
+					"description": "",
+					"swfName": "bunny_3",
+					"clsName": "Bunny_3",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 30,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.4,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Bunny Quick Strike",
+							"description": "<b>Bunny Quick Strike</b><br>Slash target swiftly and have 50% chance to inflict bleeding (5% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1.2,
+							"cooldown": 8,
+							"target": "",
+							"name": "Bunny Triple Kunai",
+							"description": "<b>Bunny Triple Kunai</b><br>Throw kunai to target and have 50% chance to inflict bleeding (5% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.4,
+							"cooldown": 10,
+							"target": "",
+							"name": "Bunny Sound Illusion",
+							"description": "<b>Bunny Sound Illusion</b><br>Chaos target (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "chaos",
+									"duration": 3
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Frenzy Zenitsu",
+							"description": "<b>Frenzy Zenitsu</b><br>Bunny is under frenzy status - increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (3 turns)<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bunny_frenzy",
+									"duration": 4
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.4,
+							"cooldown": 14,
+							"target": "",
+							"name": "Secret: Bunny Weapon Technique",
+							"description": "<b>Secret: Bunny Weapon Technique</b><br>Throw weapon to target and inflict bleeding (20% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 20,
+									"chance": 100
+								}]
+						}]
+				},
+				"pet59": {
+					"id": "59",
+					"name": "Zetsu",
+					"description": "",
+					"swfName": "bunny_4",
+					"clsName": "Bunny_4",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 30,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.4,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Bunny Quick Strike",
+							"description": "<b>Bunny Quick Strike</b><br>Slash target swiftly and have 50% chance to inflict bleeding (5% extra damage) (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.2,
+							"cooldown": 8,
+							"target": "",
+							"name": "Toxic Bottle",
+							"description": "<b>Toxic Bottle</b><br>Throw poison to enemy, target reduce 2%HP each turn. (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "poison",
+									"duration": 3,
+									"amount": 2
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.4,
+							"cooldown": 10,
+							"target": "",
+							"name": "Bunny Up Slash",
+							"description": "<b>Bunny Up Slash</b><br>Perform a Up Slash, 50% chance produce bleeding effect. (2 turns) (Character will take extra 5% damage under bleeding effect.)<br>",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Frenzy Zetsu",
+							"description": "<b>Frenzy Zetsu</b><br>Bunny is under frenzy status - increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (3 turns)<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bunny_frenzy",
+									"duration": 4
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 14,
+							"target": "",
+							"name": "Secret: Zetsu Toxic Slash",
+							"description": "<b>Secret: Zetsu Toxic Slash</b><br>Put poison on weapon, and preform a slash to poison target. Reduce 3% HP in each turn (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "poison",
+									"duration": 3,
+									"amount": 3
+								}]
+						}]
+				},
+				"pet63": {
+					"id": "63",
+					"name": "Itikura",
+					"description": "Itikura",
+					"swfName": "bunny_5",
+					"clsName": "Bunny_5",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 0,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 20,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.4,
+							"cooldown": 6,
+							"target": "",
+							"name": "Swift Kick",
+							"description": "<b>Swift Kick</b><br>A quick dash of flying kick.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Chakra Bullet",
+							"description": "<b>Chakra Bullet</b><br>Shoot chakra bullets to disable target from charging (1 turn).",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "restrict_charge",
+									"duration": 2
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "self",
+							"name": "Weak Point Focus",
+							"description": "<b>Weak Point Focus</b><br>Increase critical rate by 15% and critical damage by 30% (2 turns).",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "crit_chance_dmg",
+									"amount": 30,
+									"duration": 3
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.4,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Secret: Absolute Chakra Shield",
+							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to crash target - 50% chance to stun target for 1 turn.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun_random",
+									"duration": 2,
+									"chance": 50
+								}]
+						}]
+				},
+				"pet64": {
+					"id": "64",
+					"name": "Rakura",
+					"description": "Rakura",
+					"swfName": "bunny_6",
+					"clsName": "Bunny_6",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 0,
+					"support_rate": 2,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 30,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.4,
+							"cooldown": 6,
+							"target": "",
+							"name": "Swift Kick",
+							"description": "<b>Swift Kick</b><br>A quick dash of flying kick.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Chakra Bullet",
+							"description": "<b>Chakra Bullet</b><br>Shoot chakra bullets to disable target from charging (2 turns).",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "restrict_charge",
+									"duration": 3
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "self",
+							"name": "Weak Point Focus",
+							"description": "<b>Weak Point Focus</b><br>Increase critical rate by 15% and critical damage by 30% (3 turns).",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "crit_chance_dmg",
+									"amount": 30,
+									"duration": 4
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.4,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Secret: Absolute Chakra Shield",
+							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to to stun target (1 turn).",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 14,
+							"target": "",
+							"name": "Secret: Absolute Chakra Strike",
+							"description": "<b>Secret: Absolute Chakra Strike</b><br>Emit huge amount of chakra - 30% chance to remove all buffs from target.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "clear_buff",
+									"chance": 30
 								}]
 						}]
 				},
@@ -1368,6 +2103,97 @@
 								}]
 						}]
 				},
+				"pet75": {
+					"id": "75",
+					"name": "Eashin",
+					"description": "",
+					"swfName": "bunny_7",
+					"clsName": "Bunny_7",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 0,
+					"max_level": 15,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.4,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Bunny Quick Strike",
+							"description": "<b>Bunny Quick Strike</b><br>Slash target swiftly and have 50% chance to inflict bleeding (5% extra damage) (2 turns)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 5,
+									"chance": 50
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1.4,
+							"cooldown": 8,
+							"target": "",
+							"name": "Bunny Triple Sword",
+							"description": "<b>Bunny Triple Sword</b><br>Throw sword to target and inflict bleeding (15% extra damage) (2 turns)",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 15,
+									"chance": 100
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.4,
+							"cooldown": 10,
+							"target": "",
+							"name": "Secret: Bunny Slash",
+							"description": "<b>Secret: Bunny Slash</b><br>Powerful slash that has 50% chance to stun target (2 turns)",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun_random",
+									"duration": 3,
+									"chance": 50
+								}]
+						}
+					]
+				},
 				"pet89": {
 					"id": "89",
 					"name": "Honoo",
@@ -1435,6 +2261,75 @@
 
 						}]
 				},
+				"pet91": {
+					"id": "91",
+					"name": "Tamadama Dragon",
+					"description": "The legendary Tamadama Dragon.",
+					"swfName": "dragon_2",
+					"clsName": "Dragon_2",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 2,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 1000000,
+					"max_level": 10,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Violent Horn",
+							"description": "<b>Violent Horn</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Air Bozooka",
+							"description": "<b>Air Bozooka</b><br>Using air flow to create cannon ball. Produce bleeding effect. (1 turns)(Character will take extra 6% damage under bleeding effect.)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"amount": 6,
+									"duration": 2
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.4,
+							"cooldown": 10,
+							"target": "all",
+							"name": "Spinning Slash",
+							"description": "<b>Spinning Slash</b><br>Using air flow to create a wind blade. 80% chance to produce bleeding effect. (3 turns) (Character will take extra 6% damage under bleeding effect.)",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"amount": 5,
+									"duration": 2,
+									"chance": 80
+								}]
+						}]
+				},
 				"pet98": {
 					"id": "98",
 					"name": "Red Fox",
@@ -1480,7 +2375,7 @@
 							"skill_cp": 0,
 							"effect": [ {
 									"type": "clear_buff",
-									"amount": 40
+									"chance": 40
 								}]
 						}, {
 							"id": 2,
@@ -1498,7 +2393,7 @@
 							"effect": [ {
 									"type": "random_sleep",
 									"duration": 3,
-									"amount": 70
+									"chance": 70
 								}]
 						}, {
 							"id": 3,
@@ -1928,7 +2823,8 @@
 							"effect": [ {
 									"type": "blind",
 									"duration": 3,
-									"amount": 15
+									"amount": 15,
+									"chance": 70
 								}]
 						}, {
 							"id": 2,
@@ -2098,7 +2994,7 @@
 							"effect": [ {
 									"type": "pet_debuff_resist",
 									"duration": 2,
-									"amount": 100
+									"chance": 100
 								}]
 						}, {
 							"id": 5,
@@ -2117,6 +3013,242 @@
 									"type": "pet_damage_bonus",
 									"duration": 4,
 									"amount": 10
+								}]
+						}]
+				},
+				"pet182": {
+					"id": "182",
+					"name": "Sonic Bunny",
+					"description": "Sonic Bunny",
+					"swfName": "pet_182",
+					"clsName": "Pet_182",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 2,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"gold": 0,
+					"token": 100000,
+					"max_level": 25,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 2,
+							"cooldown": 7,
+							"target": "",
+							"name": "Thunder Shoot",
+							"description": "<b>Thunder Shoot</b><br>Reduce enemy's accuracy by 20%. (1 turn)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 20
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 11,
+							"target": "master",
+							"name": "Lightning Rod",
+							"description": "<b>Lightning Rod</b><br>Increases its master's attack damage, critical chance & accuracy by 10% for 2 turns.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_lightning",
+									"duration": 3,
+									"amount": 10
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 2,
+							"cooldown": 10,
+							"target": "",
+							"name": "Thunder Kunai",
+							"description": "<b>Thunder Kunai</b><br>Reduce target's HP & CP by 5%",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "burn_cp_hp",
+									"amount": 5
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 9,
+							"target": "master",
+							"name": "Lighting Circle",
+							"description": "<b>Lighting Circle</b><br>Has 100% chance to cast 'Debuff Resist' status for 1 turn.",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_debuff_resist",
+									"duration": 2,
+									"chance": 100
+								}]
+						}, {
+							"id": 5,
+							"level": 25,
+							"damageBonus": 2,
+							"cooldown": 10,
+							"target": "",
+							"name": "Thunder Beast",
+							"description": "<b>Thunder Beast</b><br>Increase target's 1 random skill cooldown for 2 extra turns.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "add_cooldown",
+									"amount": 3
+								}]
+						}]
+				},
+				"pet183": {
+					"id": "183",
+					"name": "Earth Turtle",
+					"description": "Earth Turtle",
+					"swfName": "pet_183",
+					"clsName": "Pet_183",
+					"type": 3,
+					"attack_rate": 1,
+					"defend_rate": 2,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 25,
+					"gold": 0,
+					"token": 100000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 7,
+							"target": "",
+							"name": "Earth Hill",
+							"description": "<b>Earth Hill</b><br>Stuns target for 1 turn.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 7,
+							"target": "",
+							"name": "Wood Tentacle",
+							"description": "<b>Wood Tentacle</b><br>Restricts the target for 1 turn.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bundle",
+									"duration": 2
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 2,
+							"cooldown": 10,
+							"target": "",
+							"name": "Water Penetrate",
+							"description": "<b>Water Penetrate</b><br>Reduce target HP & CP by 2% and stun target for 1 turn.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									// "type": "colliding_wave",
+									"type": "coilding_wave",
+									"duration": 2,
+									"amount": 2
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 7,
+							"target": "master",
+							"name": "Ocean Atmosphere",
+							"description": "<b>Ocean Atmosphere</b><br>Reduces master’s CP consumption when using skills by 25% for 1 turn.",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_save_cp",
+									"duration": 2,
+									"amount": 25
+								}]
+						}, {
+							"id": 5,
+							"level": 25,
+							"damageBonus": 2,
+							"cooldown": 12,
+							"target": "",
+							"name": "Iron Head",
+							"description": "<b>Iron Head</b><br>Has 30% chance to remove all target's positive status.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "clear_buff",
+									"chance": 30
 								}]
 						}]
 				},
@@ -2217,6 +3349,121 @@
 									"type": "pet_heal",
 									"duration": 3,
 									"amount": 3
+								}]
+						}]
+				},
+				"pet208": {
+					"id": "208",
+					"name": "Dark Bee",
+					"description": "Dark Bee",
+					"swfName": "pet_208",
+					"clsName": "Pet_208",
+					"type": 1,
+					"attack_rate": 2,
+					"defend_rate": 2,
+					"support_rate": 2,
+					"attribute_type": "fire",
+					"gold": 0,
+					"token": 1000,
+					"max_level": 25,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Baisc Attack",
+							"description": "<b>Baisc Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Poison Jet",
+							"description": "<b>Poison Jet</b><br>Inflict poison status for 2 turns. (Poison: Reduce 2%HP every turn)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "poison",
+									"duration": 3,
+									"amount": 2
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 3,
+							"cooldown": 10,
+							"target": "",
+							"name": "Ultrasonic Wave",
+							"description": "<b>Ultrasonic Wave</b><br>Stun target (2 turns).",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 3
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 17,
+							"cooldown": 7,
+							"target": "",
+							"name": "Lightning Gun",
+							"description": "<b>Lightning Gun</b><br>This pet skill contain higher damage.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Honey Shield",
+							"description": "<b>Honey Shield</b><br>Increase master's all attack damage by 15% but reduce master HP by 2% (2 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "catalytic_matter",
+									"duration": 3,
+									"amount": 15
+								}]
+						}, {
+							"id": 5,
+							"level": 25,
+							"damageBonus": 4,
+							"cooldown": 12,
+							"target": "",
+							"name": "Venom Onslaught",
+							"description": "<b>Venom Onslaught</b><br>Inflict poison status for 2 turns. (Poison: Reduce 5%HP every turn)",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "poison",
+									"duration": 3,
+									"amount": 5
 								}]
 						}]
 				},
