@@ -3,65 +3,65 @@
 
     public class BattleUtils
     {
-        public static const DAMAGE_RANGE =  0.2;
+        public static const DAMAGE_RANGE = 0.2;
 
         public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):Object
-		{
-			if (charArr[selected].getIsDead())
-			{
-				for (var i in charArr)
-				{
-					if (!charArr[i].getIsDead())
-					{
-						return charArr[i];
-					}
-				}
-			}
-			return charArr[selected];
-		}
+        {
+            if (charArr[selected].getIsDead())
+            {
+                for (var i in charArr)
+                {
+                    if (!charArr[i].getIsDead())
+                    {
+                        return charArr[i];
+                    }
+                }
+            }
+            return charArr[selected];
+        }
 
-		public static function setupAvailableSkills(mc)
-		{
-			mc.allActions = [];
-			for (var i in mc.skillData)
-			{
-				if (mc.getSkillCooldown()[i] <= 0)
-				{
-					mc.allActions.push(mc.skillData[i]);
-				}
-			}
-		}
+        public static function setupAvailableSkills(mc)
+        {
+            mc.allActions = [];
+            for (var i in mc.skillData)
+            {
+                if (mc.getSkillCooldown()[i] <= 0)
+                {
+                    mc.allActions.push(mc.skillData[i]);
+                }
+            }
+        }
 
         public static function updateSkillCooldown(petObj:Object, skillNo:int)
-		{
-			// trace("update skill cooldown start");
-			var cooldown = petObj.getSkillCooldown();
-			// trace("--------" + petObj.getPetObj()["name"] + "---------");
-			for (var i in cooldown)
-			{
-				if (cooldown[i] > 0)
-				{
-					cooldown[i]--;
-				}
-				// trace(petObj.skillData[i]["name"] + " :" + cooldown[i]);
-			}
-			// trace("========================");
-			if (skillNo != -1)
-			{
-				cooldown[skillNo] = petObj.skillData[skillNo]["cooldown"];
-			}
-			petObj.setSkillCooldown(cooldown);
-			// trace("update skill cooldown finish");
-		}
+        {
+            // trace("update skill cooldown start");
+            var cooldown = petObj.getSkillCooldown();
+            // trace("--------" + petObj.getPetObj()["name"] + "---------");
+            for (var i in cooldown)
+            {
+                if (cooldown[i] > 0)
+                {
+                    cooldown[i]--;
+                }
+                // trace(petObj.skillData[i]["name"] + " :" + cooldown[i]);
+            }
+            // trace("========================");
+            if (skillNo != -1)
+            {
+                cooldown[skillNo] = petObj.skillData[skillNo]["cooldown"];
+            }
+            petObj.setSkillCooldown(cooldown);
+            // trace("update skill cooldown finish");
+        }
 
         public static function calcDamage(amount:int, damageBonus):int
-		{
-			amount = int(amount + Math.round(amount * damageBonus));
-			var constVal = DAMAGE_RANGE;
-			var minVal = amount - amount * constVal;
-			var maxVal = amount + amount * constVal;
-			return Math.round(Math.random() * (maxVal - minVal) + minVal);
-		}
+        {
+            amount = int(amount + Math.round(amount * damageBonus));
+            var constVal = DAMAGE_RANGE;
+            var minVal = amount - amount * constVal;
+            var maxVal = amount + amount * constVal;
+            return Math.round(Math.random() * (maxVal - minVal) + minVal);
+        }
 
         public static function updateHP(obj, health)
         {
@@ -85,27 +85,27 @@
         }
 
         public static function charge(target)
-		{
-			var baseAmount = 25;
-			var chargeAmount = baseAmount;
-			var chargeDisable = hasEffect("restrict_charge", target, false);
-			if (chargeDisable["has"])
-			{
-				updateCP(target, 0);
-				return;
-			}
-			var chargeBonus = hasEffect("charge_cp_bonus", target, true);
-			if (chargeBonus["has"])
-			{
-				chargeAmount += chargeBonus["amount"];
-			}
-			var reduceCharge = hasEffect("pet_reduce_charge", target, false);
-			if (reduceCharge["has"])
-			{
-				chargeAmount -= reduceCharge["amount"];
-			}
-			updateCP(target, chargeAmount);
-		}
+        {
+            var baseAmount = 25;
+            var chargeAmount = baseAmount;
+            var chargeDisable = hasEffect("restrict_charge", target, false);
+            if (chargeDisable["has"])
+            {
+                updateCP(target, 0);
+                return;
+            }
+            var chargeBonus = hasEffect("charge_cp_bonus", target, true);
+            if (chargeBonus["has"])
+            {
+                chargeAmount += chargeBonus["amount"];
+            }
+            var reduceCharge = hasEffect("pet_reduce_charge", target, false);
+            if (reduceCharge["has"])
+            {
+                chargeAmount -= reduceCharge["amount"];
+            }
+            updateCP(target, chargeAmount);
+        }
 
         public static function checkDamage(damage, attacker, defender)
         {
@@ -210,7 +210,7 @@
                 damage = damage + tempDamage;
                 trace(damage + " petLightning");
             }
-            
+
             if (checkCritical(attacker))
             {
                 var criticalDamageBase = 150;
@@ -232,6 +232,31 @@
             // trace(Math.round(damage));
             // trace("checkDamage finish");
             return Math.round(damage);
+        }
+
+        public static function checkChanceEffect(effectObj)
+        {
+            var chanceRandom = Math.floor(Math.random() * 100);
+            var chance = 0;
+            if (effectObj["chance"] == undefined)
+            {
+                chance = 100;
+            }
+            else
+            {
+                chance = effectObj["chance"];
+            }
+            if (chance < 1)
+            {
+                chance = 100;
+            }
+            if (chance >= chanceRandom)
+            {
+                trace("check chance finish true" + chance + ">=" + chanceRandom);
+                return true;
+            }
+            trace("check chance finish false");
+            return false;
         }
 
         public static function checkCritical(charObj)
@@ -394,7 +419,7 @@
             var petLightning = hasEffect("pet_lightning", attacker, true);
             if (petLightning["has"])
             {
-                 accPoints += petLightning["amount"];
+                accPoints += petLightning["amount"];
             }
             if (accPoints >= accRandom)
             {

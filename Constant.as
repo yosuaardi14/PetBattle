@@ -13,11 +13,14 @@
         public static const ENEMY:String = "e";
 
         public static const PET_LIST:Array = [
-                "bird_1", "toad_1",
+                "bird_1", "toad_1", "bunny_1",
                 "raccoon_1",
-                "hedgehog_1", "cat_4", "wolf_0",
 
-                "bat_1", "bat_2", "bat_3",
+                "hedgehog_1", "cat_4", "wolf_0",
+                "bat_3", 
+                "bunny_3", "bunny_7",
+
+                "bat_1", "bat_2", 
                 "pet_157", "fox_2",
                 "pet_155", "pet_165",
                 "pumpkin_1", "pumpkin_2",
@@ -25,14 +28,18 @@
                 "pet_210", "pet_211",
 
                 "bunny_easter_free",
-                "bunny_5",
-                "bunny_6",
-                "bunny_2",
-                "bunny_4",
+                "bunny_5", "bunny_6",
+                "bunny_2", "bunny_4",
                 "dragon_2",
-                "pet_182",
-                "pet_183",
+                "pet_182", "pet_183",
                 "pet_208",
+            ];
+        
+        public static const PET_LIST_UNRELEASE:Array = [
+                "hedgehog_1", 
+                "cat_4", 
+                "wolf_0",
+                "bunny_3", "bunny_7",
             ];
 
         public static const PET_LIST_EASTER:Array = [

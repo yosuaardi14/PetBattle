@@ -1635,6 +1635,11 @@
 							"amount": skillObj["effect"][i]["amount"],
 							"chance": skillObj["effect"][i]["chance"]
 						};
+					//check chance if not true effect not added
+					if(!BattleUtils.checkChanceEffect(skillEffect)){
+						trace("the skill effect not added" + skillObj["name"]);
+						return;
+					}
 					effectToStr(skillEffect);
 					if (!BattleUtils.isDupliEffect(skillEffect, target, isBuff))
 					{
