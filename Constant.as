@@ -13,14 +13,14 @@
         public static const ENEMY:String = "e";
 
         public static const PET_LIST:Array = [
-                "bird_1", "toad_1", "bunny_1",
+                "bird_1", "toad_1", "bat_1",  "bunny_1",
                 "raccoon_1",
 
                 "hedgehog_1", "cat_4", "wolf_0",
                 "bat_3", 
                 "bunny_3", "bunny_7",
 
-                "bat_1", "bat_2", 
+                "bat_2", 
                 "pet_157", "fox_2",
                 "pet_155", "pet_165",
                 "pumpkin_1", "pumpkin_2",

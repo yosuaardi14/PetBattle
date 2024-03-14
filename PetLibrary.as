@@ -313,7 +313,7 @@
 							"description": "<b>Shining Eyes</b><br>Charge master with 100CP.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -799,7 +799,7 @@
 							"description": "<b>Secret: Shackles of Heart</b><br>Increase target's 1 random skill cooldown for 4 extra turns.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -915,7 +915,7 @@
 							"description": "<b>Secret: Shackles of Heart</b><br>Increase target's 1 random skill cooldown for 3 extra turns.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -2523,7 +2523,7 @@
 							"description": "<b>Secret: Shackles of Heart</b><br>Increase target's 1 random skill cooldown for 3 extra turns.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -2769,7 +2769,7 @@
 							"description": "<b>HEAL</b><br>Recover master 10% HP, 2 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {

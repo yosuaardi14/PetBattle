@@ -5,6 +5,14 @@
     {
         public static const DAMAGE_RANGE = 0.2;
 
+        public static const DODGE_ACTION_OBJ = {"type": "dodge"};
+
+        public static const PURIFY_ACTION_OBJ = {"type": "purify"};
+
+        public static const BUFF_TYPE = "buff";
+
+        public static const DEBUFF_TYPE = "debuff";
+
         public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):Object
         {
             if (charArr[selected].getIsDead())
@@ -32,7 +40,7 @@
             }
         }
 
-        public static function updateSkillCooldown(petObj:Object, skillNo:int)
+        public static function updateSkillCooldown(petObj:Object, skillNo:int):void
         {
             // trace("update skill cooldown start");
             var cooldown = petObj.getSkillCooldown();
@@ -63,12 +71,12 @@
             return Math.round(Math.random() * (maxVal - minVal) + minVal);
         }
 
-        public static function updateHP(obj, health)
+        public static function updateHP(obj, health):void
         {
             obj.setHP((obj.getHP() + health));
         }
 
-        public static function updateCP(obj, chakra)
+        public static function updateCP(obj, chakra):void
         {
             obj.setCP((obj.getCP() + chakra));
         }
@@ -78,6 +86,7 @@
             var effectArr = isBuff ? objStats.getBuffArr() : objStats.getDebuffArr();
             if (effectArr[effectObj["type"]] != undefined)
             {
+                trace("dupli effect" + effectObj["type"]);
                 effectArr[effectObj["type"]] = effectObj;
                 return true;
             }
@@ -107,12 +116,12 @@
             updateCP(target, chargeAmount);
         }
 
-        public static function checkDamage(damage, attacker, defender)
+        public static function getFinalDamage(damage, attacker, defender)
         {
-            // trace("checkDamage start");
-            if (hasEffect("guard", defender, true)["has"])
+            // trace("getFinalDamage start");
+            if (hasEffect("guard", defender, true)["duration"] > 1)
             {
-                // trace("checkDamage finish guard");
+                // trace("getFinalDamage finish guard");
                 return 0;
             }
             var strength = hasEffect("pet_damage_bonus", attacker, true);
@@ -121,7 +130,7 @@
             {
                 tempDamage = damage * (strength["amount"] / 100);
                 damage = damage + tempDamage;
-                // trace(damage + " strength");
+                trace(damage + " strength");
             }
             var fearWeaken = hasEffect("fear_weaken", attacker, false);
             if (fearWeaken["has"])
@@ -138,14 +147,14 @@
                 // trace(damage + " weaken");
             }
             var protection = hasEffect("damage_reduction", defender, false);
-            if (protection["has"])
+            if (protection["duration"] > 1)
             {
                 tempDamage = damage * (protection["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " protection");
             }
             var petProtection = hasEffect("pet_damage_reduction", defender, false);
-            if (petProtection["has"])
+            if (petProtection["duration"] > 1)
             {
                 tempDamage = damage * (petProtection["amount"] / 100);
                 damage = damage - tempDamage;
@@ -158,25 +167,22 @@
                 damage = damage - tempDamage;
                 // trace(damage + " frozen");
             }
-
             var bleeding = hasEffect("bleeding", defender, false);
-            if (bleeding["has"])
+            if (bleeding["duration"] > 1)
             {
                 tempDamage = damage * (bleeding["amount"] / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " bleeding");
             }
-
-            // TODO chance
             var petBleeding = hasEffect("pet_bleeding", defender, false);
-            if (petBleeding["has"])
+            if (petBleeding["duration"] > 1)
             {
                 tempDamage = damage * (petBleeding["amount"] / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " petBleeding");
             }
             var petBunnyFrenzyDef = hasEffect("bunny_frenzy", defender, true);
-            if (petBunnyFrenzyDef["has"])
+            if (petBunnyFrenzyDef["duration"] > 1)
             {
                 tempDamage = damage * (20 / 100);
                 damage = damage + tempDamage;
@@ -230,12 +236,46 @@
                 // trace(damage + " critical strike");
             }
             // trace(Math.round(damage));
-            // trace("checkDamage finish");
+            // trace("getFinalDamage finish");
             return Math.round(damage);
+        }
+
+        public static function checkDamageRebound(damage, attacker, defender)
+        {
+            // TODO
+            var sereneMind = hasEffect("serene_mind", defender, true);
+            var dmgToCp;
+            if (sereneMind["duration"] > 1)
+            {
+                trace(sereneMind["duration"]);
+                updateHP(attacker, -damage);
+                dmgToCp = hasEffect("pet_damage_to_cp", attacker, true);
+                if (dmgToCp["has"])
+                {
+                    updateCP(attacker, (dmgToCp["amount"] / 100) * damage);
+                }
+                return true;
+            }
+            else
+            {
+                updateHP(defender, -damage);
+                dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+                if (dmgToCp["duration"] > 1)
+                {
+                    updateCP(defender, (dmgToCp["amount"] / 100) * damage);
+                }
+                return false;
+            }
+
         }
 
         public static function checkChanceEffect(effectObj)
         {
+            // TODO
+            if (effectObj == undefined)
+            {
+                return true;
+            }
             var chanceRandom = Math.floor(Math.random() * 100);
             var chance = 0;
             if (effectObj["chance"] == undefined)
@@ -255,7 +295,7 @@
                 trace("check chance finish true" + chance + ">=" + chanceRandom);
                 return true;
             }
-            trace("check chance finish false");
+            trace("check chance finish false" + chance + ">=" + chanceRandom);
             return false;
         }
 
@@ -315,24 +355,24 @@
             return false;
         }
 
-        public static function checkDodge(attacker:Pet, defender:Pet)
+        public static function getDodgeChance(attacker:Pet, defender:Pet)
         {
             var dodgeRandom = Math.floor(Math.random() * 100);
             var dodgeChance = defender.getDodge();
             var dodgeObj = hasEffect("dodge_bonus", defender, true);
-            if (dodgeObj["has"])
+            if (dodgeObj["duration"] > 1)
             {
                 dodgeChance += dodgeObj["amount"];
                 // trace("dodge bonus");
             }
             var petDodgeObj = hasEffect("pet_dodge_bonus", defender, true);
-            if (petDodgeObj["has"])
+            if (petDodgeObj["duration"] > 1)
             {
                 dodgeChance += petDodgeObj["amount"];
                 // trace("pet dodge bonus");
             }
             var dodgeReduce = hasEffect("dodge_reduction", defender, false);
-            if (dodgeReduce["has"])
+            if (dodgeReduce["duration"] > 1)
             {
                 dodgeChance -= dodgeReduce["amount"];
                 // trace("dodge reduce");
@@ -405,11 +445,19 @@
         {
             var accRandom = Math.floor(Math.random() * 100);
             var accPoints = 100;
+            if (hasEffect("sleep", defender, false)["has"])
+            {
+                defender.getDebuffArr()["sleep"]["duration"] = 0;
+            }
+            if (hasEffect("random_sleep", defender, false)["has"])
+            {
+                defender.getDebuffArr()["random_sleep"]["duration"] = 0;
+            }
             if (hasEffect("hundred_percent_attack", attacker, true)["has"])
             {
                 return true;
             }
-            var accBonus = checkDodge(attacker, defender);
+            var accBonus = getDodgeChance(attacker, defender);
             accPoints -= accBonus;
             var petAttention = hasEffect("pet_attention", attacker, true);
             if (petAttention["has"])
@@ -478,7 +526,6 @@
             }
             else if (effectObj["type"] == "clear_buff")
             {
-                // TODO chance
                 target.setBuffArr( {});
                 return true;
             }
