@@ -13,6 +13,14 @@
 
         public static const DEBUFF_TYPE = "debuff";
 
+        public static const TARGET_MASTER = "master";
+
+        public static const TARGET_SELF = "self";
+
+        public static const TARGET_ALL = "all";
+        // new
+        public static const TARGET_TEAM = "team";
+
         public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):Object
         {
             if (charArr[selected].getIsDead())

@@ -9,6 +9,11 @@
 - Add Characters: Easter (DONE)
 
 ### 13 Mar
+#### TODO
+- Add Feat: Stats Option (Default or Define Level) (TESTING)
+- Add check isDead when checkDebuff (TESTING)
+- Add New Target Type Team (DONE)
+
 #### FIXED
 - game map when click prev in first map, show error
 

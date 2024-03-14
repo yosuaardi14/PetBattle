@@ -14,6 +14,7 @@
 		public var mode:int = 1;
 		public var playerNum:int = 1;
 		public var opponentNum:int = 1;
+		public var customStats:int = 0;
 		public var gameMode:Array;
 		public var allSwfData:Object = new Object;
 		public var back:*;
@@ -83,6 +84,7 @@
 			this.mode = 1;
 			this.playerNum = 1;
 			this.opponentNum = 1;
+			this.customStats = 0;
 
 			this["popupCustom"].visible = false;
 			Central.battle = this;
@@ -233,6 +235,9 @@
 			this["popupCustom"]["btnMinO"].addEventListener(MouseEvent.CLICK, changeNum);
 			this["popupCustom"]["btnPlusP"].addEventListener(MouseEvent.CLICK, changeNum);
 			this["popupCustom"]["btnPlusO"].addEventListener(MouseEvent.CLICK, changeNum);
+
+			this["popupCustom"]["btnStatsPrev"].addEventListener(MouseEvent.CLICK, changeNum);
+			this["popupCustom"]["btnStatsNext"].addEventListener(MouseEvent.CLICK, changeNum);
 		}
 
 		private function hidePopupCustom(e:MouseEvent)
@@ -270,8 +275,33 @@
 					this.opponentNum -= 1;
 				}
 			}
+			else if (e.target == this["popupCustom"]["btnStatsPrev"])
+			{
+				this.customStats--;
+				if (this.customStats < 0)
+				{
+					this.customStats = Constant.CUSTOM_CHAR_STATS.length - 1;
+				}
+			}
+			else if (e.target == this["popupCustom"]["btnStatsNext"])
+			{
+				this.customStats++;
+				if (this.customStats > Constant.CUSTOM_CHAR_STATS.length - 1)
+				{
+					this.customStats = 0;
+				}
+			}
 			this["popupCustom"]["txtOpponentNum"].text = this.opponentNum.toString();
 			this["popupCustom"]["txtPlayerNum"].text = this.playerNum.toString();
+			if (this.customStats == 0)
+			{
+				this["popupCustom"]["txtStats"].text = Constant.CUSTOM_CHAR_STATS[this.customStats].toString();
+			}
+			else
+			{
+				this["popupCustom"]["txtStats"].text = "Lv " + Constant.CUSTOM_CHAR_STATS[this.customStats].toString();
+			}
+
 		}
 
 		// FRAME 2
@@ -296,7 +326,6 @@
 				{
 					this.mapIndex = bg.length - 1;
 				}
-				trace(mapIndex);
 			}
 			this.bg_map = new bg[this.mapIndex]();
 			this.bg_map.scaleX = 0.5;
@@ -345,19 +374,23 @@
 		}
 		public function setupStats(petObj:Object):Object
 		{
-			// petObj["max_level"] = 1;
+			var charLevel = petObj["max_level"]; // 1
+			if (this.customStats > 0)
+			{
+				charLevel = Constant.CUSTOM_CHAR_STATS[this.customStats];
+			}
 			var stats = {
-					// "dmg": setupDamage(petObj["max_level"], petObj["type"]),
-					"lv": petObj["max_level"],
-					"hp": petObj["max_level"] * 20 + 80, // 40 + 60,
+					// "dmg": setupDamage(charLevel, petObj["type"]),
+					"lv": charLevel,
+					"hp": charLevel * 20 + 80, // 40 + 60,
 					"cp": 0,
-					"maxHP": petObj["max_level"] * 20 + 80, // 40 + 60,
-					"maxCP": petObj["max_level"] * 20 + 80, // 40 + 60,
+					"maxHP": charLevel * 20 + 80, // 40 + 60,
+					"maxCP": charLevel * 20 + 80, // 40 + 60,
 					"isDead": false,
 					"critical": 5,
 					"dodge": 5,
 					"purify": 5,
-					"agility": petObj["max_level"] + 9,
+					"agility": charLevel + 9,
 					"buff": {},
 					"debuff": {}
 				};
@@ -602,7 +635,14 @@
 			cls.setSkillCooldown(setInitialCooldown(petObj["skill"]));
 			cls.skillData = petObj["skill"];
 			cls.setPetObj(petObj);
-			cls.setupDamage(petObj["max_level"]);
+			if (this.customStats == 0)
+			{
+				cls.setupDamage(petObj["max_level"]);
+			}
+			else
+			{
+				cls.setupDamage(Constant.CUSTOM_CHAR_STATS[this.customStats]);
+			}
 
 			var iconCls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), "icon");
 			iconCls.scaleX = 1;
@@ -966,7 +1006,7 @@
 		{
 			if (mc.allActions[id]["target"] == "all")
 			{
-				handleAllTargetDamageSkill(mc, id, skillTarget);
+				handleAreaDamageSkill(mc, id, skillTarget);
 			}
 			else
 			{
@@ -985,13 +1025,17 @@
 			{
 				handleNonDamageSkillSelf(mc, id, skillTarget);
 			}
+			else if (mc.allActions[id]["target"] == "team")
+			{
+				handleAreaTeamSkill(mc, id, skillTarget);
+			}
 			else
 			{
 				handleNonDamageSkillEnemy(mc, id, skillTarget);
 			}
 		}
 
-		private function handleAllTargetDamageSkill(mc:Object, id:int, skillTarget:String)
+		private function handleAreaDamageSkill(mc:Object, id:int, skillTarget:String)
 		{
 			var dmg;
 			// var randEffect:int;
@@ -1236,6 +1280,22 @@
 			// mc.gotoAction(mc.allActions[id]["animation"]);
 			// 2
 			setAnimationPoint(mc, id, attacker, defender);
+		}
+
+		private function handleAreaTeamSkill(mc:Object, id:int, skillTarget:String)
+		{
+			skillTarget = "team";
+			var tempArr = nowTurnStr == "p" ? newPlayerArr : newEnemyArr;
+			for (var i in tempArr)
+			{
+				defender = tempArr[i];
+				if (defender.getIsDead())
+				{
+					continue;
+				}
+				addEffect(mc.allActions[id], attacker, defender, true);
+			}
+			setAnimationPoint(mc, id, attacker, tempArr[0]);
 		}
 
 		private function handleEffectArray(mc, id):Object
@@ -1769,17 +1829,28 @@
 			}
 			obj.setDebuffArr(debuffArr);
 			// check Dead
-			if (pass)
+			var isDead = checkAndSetCharDead(obj);
+			if (pass || isDead)
 			{
+
 				if (newPlayerArr.indexOf(obj) == 0 || (controlParty && (newPlayerArr.indexOf(nowTurn) > 0)))
 				{
 					skillDisplay(false);
 					hideTarget(true);
 				}
 				BattleUtils.updateSkillCooldown(obj.getPet(), -1);
-				obj.getPet().gotoAction("pass");
+				if (isDead)
+				{
+					setTimeout(function()
+						{
+							turn++;
+							startBattle();
+						}, 300);
+				}else{
+					obj.getPet().gotoAction("pass");
+				}
 			}
-			return pass;
+			return pass || isDead;
 		}
 
 		public function hideTarget(actionFinish:Boolean)
@@ -2069,37 +2140,59 @@
 			}
 		}
 
+		private function checkAndSetCharDead(obj)
+		{
+			var charType = newPlayerArr.indexOf(obj) >= 0 ? "p" : "e";
+			trace("checkAndSetCharDead " + charType);
+			if (obj.getHP() <= 0 && !obj.getIsDead())
+			{
+				numDead[charType] += 1;
+				obj.getPet().setActionFinishCB(null);
+				obj.setIsDead(true);
+				checkHpCpZero(obj);
+				obj.getPet().gotoDead();
+				if (obj.getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
+				{
+					obj.getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+				}
+				return true;
+			}
+			return false;
+		}
+
 		public function checkDead()
 		{
 			for (var i = 0; i < newPlayerArr.length; i++)
 			{
-				if (newPlayerArr[i].getHP() <= 0 && !newPlayerArr[i].getIsDead())
-				{
-					numDead["p"] += 1;
-					newPlayerArr[i].getPet().setActionFinishCB(null);
-					newPlayerArr[i].setIsDead(true);
-					checkHpCpZero(newPlayerArr[i]);
-					newPlayerArr[i].getPet().gotoDead();
-					if (newPlayerArr[i].getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
-					{
-						newPlayerArr[i].getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
-					}
-				}
+				checkAndSetCharDead(newPlayerArr[i]);
+				// if (newPlayerArr[i].getHP() <= 0 && !newPlayerArr[i].getIsDead())
+				// {
+				// numDead["p"] += 1;
+				// newPlayerArr[i].getPet().setActionFinishCB(null);
+				// newPlayerArr[i].setIsDead(true);
+				// checkHpCpZero(newPlayerArr[i]);
+				// newPlayerArr[i].getPet().gotoDead();
+				// if (newPlayerArr[i].getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
+				// {
+				// newPlayerArr[i].getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+				// }
+				// }
 			}
 			for (i = 0; i < newEnemyArr.length; i++)
 			{
-				if (newEnemyArr[i].getHP() <= 0 && !newEnemyArr[i].getIsDead())
-				{
-					numDead["e"] += 1;
-					newEnemyArr[i].getPet().setActionFinishCB(null);
-					newEnemyArr[i].setIsDead(true);
-					checkHpCpZero(newEnemyArr[i]);
-					newEnemyArr[i].getPet().gotoDead();
-					if (newEnemyArr[i].getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
-					{
-						newEnemyArr[i].getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
-					}
-				}
+				checkAndSetCharDead(newEnemyArr[i]);
+				// if (newEnemyArr[i].getHP() <= 0 && !newEnemyArr[i].getIsDead())
+				// {
+				// numDead["e"] += 1;
+				// newEnemyArr[i].getPet().setActionFinishCB(null);
+				// newEnemyArr[i].setIsDead(true);
+				// checkHpCpZero(newEnemyArr[i]);
+				// newEnemyArr[i].getPet().gotoDead();
+				// if (newEnemyArr[i].getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
+				// {
+				// newEnemyArr[i].getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+				// }
+				// }
 			}
 			if (newEnemyArr[selectedTarget].getIsDead())
 			{
