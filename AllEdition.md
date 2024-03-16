@@ -8,6 +8,22 @@
 - Add Feat: Stats Option (Default or Define Level)
 - Add Characters: Easter (DONE)
 
+### 16 Mar
+#### TODO
+- Testing Critical, checkDebuff isDead or Pass
+
+#### In Game UI
+- Add Game Mode Selection in Custom (PvP/PvE)
+
+### 15 Mar
+#### TODO 
+- PvP and PvE Mode
+- PvP only available in Custom (Add game UI TODO)
+- Fix selectedTarget for PvP Mode
+
+#### In Game UI
+- show overhead number when reduce HP/CP or recover HP/CP
+
 ### 13 Mar
 #### TODO
 - Add Feat: Stats Option (Default or Define Level) (TESTING)
