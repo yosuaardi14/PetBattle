@@ -9,13 +9,14 @@
 - ATB System
 #### Game Mode
 - Tournament Battle (Offline)
-- PvP (Offline)
 ### All Edition 
 - Custom Game (x vs y Battle)
+- PvP (Offline Mode) in Custom
+- Character Stats Level Selection in Custom
 - 1 v 1 Battle 
 - 2 v 2 Battle
 - 3 v 3 Battle
-- 20 Characters
+- 31 Characters
 - 12 Map
 - Control Party
 ### Halloween Edition
