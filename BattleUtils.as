@@ -89,12 +89,26 @@
             obj.setCP((obj.getCP() + chakra));
         }
 
+        public static function getCPCost(chakra, obj)
+        {
+            // FUTURE
+            var tempChakra = chakra;
+            var petSaveCP = hasEffect("pet_save_cp", obj, true);
+            if (petSaveCP["has"])
+            {
+                tempChakra = chakra * (petSaveCP["amount"] / 100);
+                chakra = chakra - tempChakra;
+            }
+            // updateCP(obj, chakra);
+        }
+
         public static function isDupliEffect(effectObj, objStats, isBuff)
         {
             var effectArr = isBuff ? objStats.getBuffArr() : objStats.getDebuffArr();
             if (effectArr[effectObj["type"]] != undefined)
             {
                 trace("dupli effect" + effectObj["type"]);
+                // replace with the new effect
                 effectArr[effectObj["type"]] = effectObj;
                 return true;
             }
@@ -227,20 +241,21 @@
 
             if (checkCritical(attacker))
             {
-                var criticalDamageBase = 150;
-                var criticalDamageAmount = criticalDamageBase;
-                var critRate = hasEffect("crit_chance_dmg", attacker, true);
-                if (critRate["has"])
-                {
-                    criticalDamageBase += critRate["amount"];
-                    trace(criticalDamageBase + " crit_chance_dmg");
-                }
-                var hamstring = hasEffect("hamstring", attacker, true);
-                if (hamstring["has"])
-                {
-                    criticalDamageAmount -= 25;
-                }
-                damage *= criticalDamageAmount / 100;
+                damage = getCriticalDamage(damage, attacker, defender);
+                // var criticalDamageBase = 150;
+                // var criticalDamageAmount = criticalDamageBase;
+                // var critRate = hasEffect("crit_chance_dmg", attacker, true);
+                // if (critRate["has"])
+                // {
+                // criticalDamageBase += critRate["amount"];
+                // trace(criticalDamageBase + " crit_chance_dmg");
+                // }
+                // var hamstring = hasEffect("hamstring", attacker, true);
+                // if (hamstring["has"])
+                // {
+                // criticalDamageAmount -= 25;
+                // }
+                // damage *= criticalDamageAmount / 100;
                 // trace(damage + " critical strike");
             }
             // trace(Math.round(damage));
@@ -248,9 +263,28 @@
             return Math.round(damage);
         }
 
+        public static function getCriticalDamage(damage, attacker, defender)
+        {
+            // TEST
+            var criticalDamageBase = 150;
+            var criticalDamageAmount = criticalDamageBase;
+            var critRate = hasEffect("crit_chance_dmg", attacker, true);
+            if (critRate["has"])
+            {
+                criticalDamageBase += critRate["amount"];
+                trace(criticalDamageBase + " crit_chance_dmg");
+            }
+            var hamstring = hasEffect("hamstring", attacker, true);
+            if (hamstring["has"])
+            {
+                criticalDamageAmount -= 25;
+            }
+            damage *= criticalDamageAmount / 100;
+            return damage;
+        }
+
         public static function checkDamageRebound(damage, attacker, defender)
         {
-            // TODO
             var sereneMind = hasEffect("serene_mind", defender, true);
             var dmgToCp;
             if (sereneMind["duration"] > 1)
@@ -279,14 +313,13 @@
 
         public static function checkChanceEffect(effectObj)
         {
-            // TODO
-            if (effectObj == undefined)
+            if (effectObj == undefined) // 
             {
                 return true;
             }
             var chanceRandom = Math.floor(Math.random() * 100);
             var chance = 0;
-            if (effectObj["chance"] == undefined)
+            if (effectObj["chance"] == undefined) // if no chance property
             {
                 chance = 100;
             }
@@ -294,7 +327,7 @@
             {
                 chance = effectObj["chance"];
             }
-            if (chance < 1)
+            if (chance < 1) // if the EffectArray chance
             {
                 chance = 100;
             }
@@ -508,19 +541,21 @@
 
         }
 
-        public static function directDebuff(effectObj, attacker, target, master, targetType = "self")
+        public static function directDebuff(effectObj, attacker, target, master, overheadNumber)
         {
             // var targetStats = target["stats"];
-            var burnHP, burnCP;
+            var burnHP, burnCP, burnHPMaster, burnCPMaster;
             if (effectObj["type"] == "burn_hp")
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
+                overheadNumber(true, "-" + burnHP, "", target);
                 updateHP(target, -burnHP);
                 return true;
             }
             else if (effectObj["type"] == "burn_cp")
             {
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
+                overheadNumber(true, "-" + burnCP + " CP", "", target);
                 updateCP(target, -burnCP);
                 return true;
             }
@@ -528,6 +563,7 @@
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
+                overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", target);
                 updateHP(target, -burnHP);
                 updateCP(target, -burnCP);
                 return true;
@@ -540,21 +576,42 @@
             else if (effectObj["type"] == "drain_hp")
             {
                 burnHP = Math.round(target.getHP() * (effectObj["amount"]) / 100);
-                updateHP(attacker, burnHP);
+                burnHPMaster = burnHP;
+                if (master.getIsDead())
+                {
+                    burnHPMaster = 0;
+                }
+                overheadNumber(true, "+" + burnHPMaster, "self", master);
+                overheadNumber(true, "-" + burnHP, "", target);
+                updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
             }
             else if (effectObj["type"] == "pet_drain_hp")
             {
                 burnHP = Math.round(target.getHP() * (effectObj["amount"]) / 100);
-                updateHP(master, burnHP);
+                burnHPMaster = burnHP;
+                if (master.getIsDead())
+                {
+                    burnHPMaster = 0;
+                }
+                overheadNumber(true, "+" + burnHPMaster, "self", master);
+                overheadNumber(true, "-" + burnHP, "", target);
+                updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
             }
             else if (effectObj["type"] == "drain_cp")
             {
                 burnCP = Math.round(target.getCP() * (effectObj["amount"]) / 100);
-                updateCP(attacker, burnCP);
+                burnCPMaster = burnCP;
+                if (master.getIsDead())
+                {
+                    burnCPMaster = 0;
+                }
+                overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
+                overheadNumber(true, "-" + burnCP + " CP", "", target);
+                updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
 
@@ -562,7 +619,14 @@
             else if (effectObj["type"] == "pet_drain_cp")
             {
                 burnCP = Math.round(target.getCP() * (effectObj["amount"]) / 100);
-                updateCP(attacker, burnCP);
+                burnCPMaster = burnCP;
+                if (master.getIsDead())
+                {
+                    burnCPMaster = 0;
+                }
+                overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
+                overheadNumber(true, "-" + burnCP + " CP", "", target);
+                updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
 
@@ -573,6 +637,7 @@
                 var cooldownTemp = target.getCooldown();
                 cooldownTemp[randomSkill] += (effectObj["amount"] - 1);
                 target.setCooldown(cooldownTemp);
+                return true;
             }
             return false;
         }
@@ -633,6 +698,140 @@
                 target.setDebuffArr( {});
                 var heal1 = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
                 updateHP(target, heal1);
+                return true;
+            }
+            return false;
+        }
+
+        // CHECK BUFF
+        public static function applyBuffEffects(buff, obj, overheadNumber):void
+        {
+            if (buff["duration"] <= 0)
+            {
+                return;
+            }
+            var recoverHP = 0, reduceHP = 0;
+            switch (buff["type"])
+            {
+                case "pet_heal":
+                    recoverHP = Math.round(obj.getMaxHP() * (buff["amount"] / 100));
+                    if (obj.getIsDead() || hasEffect("internal_injury", obj, false)["has"])
+                    {
+                        recoverHP = 0;
+                    }
+                    overheadNumber(true, "+" + recoverHP, "self", obj);
+                    updateHP(obj, recoverHP);
+                    break;
+                case "catalytic_matter":
+                    trace("catalytic_matter side effect");
+                    reduceHP = -Math.round(obj.getMaxHP() * 0.02);
+                    if (obj.getIsDead())
+                    {
+                        reduceHP = 0;
+                    }
+                    overheadNumber(true, "-" + reduceHP, "", obj);
+                    updateHP(obj, reduceHP);
+                    break;
+
+            }
+        }
+
+        // CHECK DEBUFF
+        public static function shouldPass(debuff):Boolean
+        {
+            var pass = false;
+            switch (debuff["type"])
+            {
+                case "bundle":
+                case "chaos":
+                case "stun":
+                case "stun_random":
+                case "fear":
+                case "pet_freeze":
+                case "coilding_wave":
+                case "sleep":
+                case "random_sleep":
+                    pass = debuff["duration"] > 0;
+                    break;
+            }
+            return pass;
+        }
+
+        public static function applyDebuffEffects(debuff, obj, overheadNumber):void
+        {
+            if (debuff["duration"] <= 0)
+            {
+                return;
+            }
+            var burn = 0, burnHP = 0, burnCP = 0;
+            switch (debuff["type"])
+            {
+                case "pet_burn":
+                    burn = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
+                    overheadNumber(true, "-" + burn, "", obj);
+                    updateHP(obj, -burn);
+                    break;
+                case "dismantle":
+                    var cooldown = obj.getPet().getSkillCooldown();
+                    cooldown[0] = debuff["duration"];
+                    obj.getPet().setSkillCooldown(cooldown);
+                    break;
+                case "coilding_wave":
+                    burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
+                    burnCP = Math.round(obj.getMaxCP() * (debuff["amount"] / 100));
+                    overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", obj);
+                    updateHP(obj, -burnHP);
+                    updateHP(obj, -burnCP);
+                    break;
+                case "poison":
+                    burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
+                    overheadNumber(true, "-" + burnHP, "", obj);
+                    updateHP(obj, -burnHP);
+                    break;
+            }
+        }
+
+        // ADD EFFECT
+        public static function createSkillEffectObject(effect)
+        {
+            return {
+                    "type": effect["type"],
+                    "duration": effect["duration"],
+                    "amount": effect["amount"],
+                    "chance": effect["chance"]
+                };
+        }
+
+        public static function addBuffEffect(skillEffect, target)
+        {
+            if (!directBuff(skillEffect, target) && !isDupliEffect(skillEffect, target, true))
+            {
+                target.getBuffArr()[skillEffect["type"]] = (skillEffect);
+            }
+        }
+
+        public static function addDebuffEffect(skillEffect, target, attacker, master, overheadNumber)
+        {
+            if (!directDebuff(skillEffect, attacker, target, master, overheadNumber) && !isDupliEffect(skillEffect, target, false))
+            {
+                target.getDebuffArr()[skillEffect["type"]] = (skillEffect);
+            }
+        }
+
+        public static function skipAddBuffEffect(target):Boolean
+        {
+            // FUTURE
+            return false;
+        }
+
+        public static function skipAddDebuffEffect(target):Boolean
+        {
+            if (hasEffect("debuff_resist", target, true)["duration"] > 1)
+            {
+                return true;
+            }
+            if (hasEffect("pet_debuff_resist", target, true)["duration"] > 1)
+            {
                 return true;
             }
             return false;

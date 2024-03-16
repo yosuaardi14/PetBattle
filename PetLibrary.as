@@ -3613,7 +3613,7 @@
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
-									"type": "battle_internal_injury",
+									"type": "internal_injury", //"battle_internal_injury",
 									"duration": 2
 								}]
 						}, {
