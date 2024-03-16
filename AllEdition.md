@@ -10,10 +10,15 @@
 
 ### 16 Mar
 #### TODO
-- Testing Critical, checkDebuff isDead or Pass
+- Testing Critical
+
+#### FIXED
+- drain bug not to master
+- checkDebuff isDead or Pass
 
 #### In Game UI
 - Add Game Mode Selection in Custom (PvP/PvE)
+- Player Win Text in PvP too Large -> P1/P2 Win
 
 ### 15 Mar
 #### TODO 

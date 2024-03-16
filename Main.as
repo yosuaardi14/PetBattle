@@ -1839,7 +1839,7 @@
 			this.popup.visible = true;
 			if (this.gameMode == Constant.GAME_MODE_PVP)
 			{
-				this.popup.txt.text = (winner == "p" ? "Player 1" : "Player 2") + " Win";
+				this.popup.txt.text = (winner == "p" ? "P1" : "P2") + "\nWin";
 
 			}
 			else
