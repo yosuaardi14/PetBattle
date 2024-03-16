@@ -36,16 +36,24 @@
 - Control Party
 #
 ## Effect 
-Chance not implemented
+Chance implemented in All Edition
+- ### Future
+- [x] pet_save_cp : -CP Cost (x%) add not used yet (Overturn Buff)
 - ### Direct Buff
 - [x] oil_bottle 
 - [x] restore_cp : CP +
 - [x] heal : HP +
 - [x] cooldown_reduction : Rapid Cooldown
+- [x] bloodlust_dedication : Bloodlust
 - ### Direct Debuff
 - [x] burn_cp_hp : Reduce HP & CP 
 - [x] burn_hp : Reduce HP 
-- [x] burn_cp : Reduce CP 
+- [x] burn_cp : Reduce CP
+- [x] clear_buff : Disperse
+- [x] drain_hp : Drain HP (x%)
+- [x] drain_cp : Drain CP (x%)
+- [x] pet_drain_hp : Drain HP (x%)
+- [x] pet_drain_cp : Drain CP (x%)
 - ### Overturn Buff
 - [x] pet_attention : Attention
 - [x] pet_damage_to_cp : Damage to CP 
@@ -54,6 +62,12 @@ Chance not implemented
 - [x] pet_energize : Energize
 - [x] guard : Guard
 - [x] pet_heal : (HP + x%)
+- [x] debuff_resist : Debuff Resist
+- [x] serene_mind : Serene Mind
+- [x] pet_debuff_resist : Debuff Resist
+- [x] catalytic_matter : Catalytic (Buff but has side effect)
+- [x] crit_chance_dmg : Mortal
+- [x] pet_lightning : Lightning Armor
 - ### Overturn Debuff
 - [x] bundle : Restriction
 - [x] dismantle : Dismantle
@@ -74,3 +88,6 @@ Chance not implemented
 - [x] pet_blind : Blind
 - [x] bleeding : Bleeding
 - [x] pet_bleeding : Bleeding
+- [x] sleep : Sleep
+- [x] random_sleep : Sleep 
+- [x] restrict_charge : Charge Disable
