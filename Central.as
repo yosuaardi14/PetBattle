@@ -3,27 +3,27 @@
    public class Central
    {
       
-      private static var _main;
+      private static var _main:*;
       
-      private static var _battle;
+      private static var _battle:*;
       
-      private static var _skill;
+      private static var _skill:*;
       
-      private static var _panel;
+      private static var _panel:*;
       
-      private static var _mission;
+      private static var _mission:*;
       
-      private static var _map;
+      private static var _map:*;
       
-      private static var _token;
+      private static var _token:*;
       
-      private static var _sns;
+      private static var _sns:*;
       
-      private static var _clan;
+      private static var _clan:*;
       
-      private static var _socket;
+      private static var _socket:*;
       
-      private static var _client;
+      private static var _client:*;
        
       
       public function Central()

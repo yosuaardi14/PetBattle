@@ -322,7 +322,7 @@
 
 		public static const SKILL_335:String = "skill_335";
 
-		public static const EFFECT_HEAL_OVER_TIME_NPC = "effect_heal_overtime_npc";
+		public static const EFFECT_HEAL_OVER_TIME_NPC:String = "effect_heal_overtime_npc";
 
 		public static const SKILL_342:String = "skill_342";
 

@@ -21,11 +21,11 @@
         // new
         public static const TARGET_TEAM = "team";
 
-        public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):Object
+        public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):*
         {
             if (charArr[selected].getIsDead())
             {
-                for (var i in charArr)
+                for (var i:* in charArr)
                 {
                     if (!charArr[i].getIsDead())
                     {
@@ -36,11 +36,18 @@
             return charArr[selected];
         }
 
-        public static function setupAvailableSkills(mc)
+        public static function setupAvailableSkills(mc, obj):void
         {
             mc.allActions = [];
             for (var i in mc.skillData)
             {
+                // TODO
+                var cpCost:int = BattleUtils.getCPCost(mc.skillData[i]["skill_cp"], obj);
+                if (obj.getCP() < cpCost)
+                {
+                    trace(mc.skillData[i]["name"] + "CP: "+ cpCost);
+                    continue;
+                }
                 if (mc.getSkillCooldown()[i] <= 0)
                 {
                     mc.allActions.push(mc.skillData[i]);
@@ -89,6 +96,12 @@
             obj.setCP((obj.getCP() + chakra));
         }
 
+        public static function handleCPCost(chakra, obj):void
+        {
+            var cpCost = getCPCost(chakra, obj);
+            updateCP(obj, -cpCost);
+        }
+
         public static function getCPCost(chakra, obj)
         {
             // FUTURE
@@ -99,6 +112,7 @@
                 tempChakra = chakra * (petSaveCP["amount"] / 100);
                 chakra = chakra - tempChakra;
             }
+            return chakra;
             // updateCP(obj, chakra);
         }
 

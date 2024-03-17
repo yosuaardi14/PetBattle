@@ -9,7 +9,9 @@
         public static const GAME_MODE_PVE:String = "PvE";
         public static const GAME_MODE_ARR:Array = [GAME_MODE_PVP, GAME_MODE_PVE];
         public static const CUSTOM_CHAR_STATS:Array = [DEFAULT_STATS, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
-        public static const DEFAULT_STATS = "DEFAULT";
+        public static const DEFAULT_STATS:String = "DEFAULT";
+
+        public static const ATB_MAX_VALUE:int = 100;
 
         public static const PLAYER:String = "p";
         public static const ENEMY:String = "e";
