@@ -5,6 +5,20 @@
 
 ## TODO
 - Refactor Battle and SelectCharacter to AS File (?)
+
+## v0.2
+### 16 Mar
+#### TODO
+- Fixing code depends on asconfig.json (WARNING)
+
+#### Bug Fix
+- coilding_wave doesn't reduce CP but reduce HP 2 times
+
+#### Game System
+- CP System
+- ATB System
+
+## v0.1
 - Add Feat: Stats Option (Default or Define Level)
 - Add Characters: Easter (DONE)
 

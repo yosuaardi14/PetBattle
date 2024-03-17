@@ -204,7 +204,7 @@
 			if (this.mode == 4) // Custom Game
 			{
 				// show popup
-				this.popupCustom.visible = true;
+				this["popupCustom"].visible = true;
 				this.playerNum = 1;
 				this.opponentNum = 1;
 				this.initCustomPopup();
@@ -224,7 +224,7 @@
 			this["popupCustom"]["txtStats"].text = Constant.CUSTOM_CHAR_STATS[0];
 			this["popupCustom"]["txtGameMode"].text = this.gameMode.toString();
 
-			Utils.initButton(this.popupCustom["btnStart"], this.gotoSelectChar, "Start", true);
+			Utils.initButton(this["popupCustom"]["btnStart"], this.gotoSelectChar, "Start", true);
 			this["popupCustom"]["btnExit"].addEventListener(MouseEvent.CLICK, this.hidePopupCustom);
 			this["popupCustom"]["btnMinP"].addEventListener(MouseEvent.CLICK, changeNum);
 			this["popupCustom"]["btnMinO"].addEventListener(MouseEvent.CLICK, changeNum);
@@ -383,7 +383,7 @@
 				};
 		}
 		// FRAME 2 - CHARACTER STATS - START
-		public function setupStats(petObj:Object):Object
+		public function setupStats(petObj:Object):*
 		{
 			var charLevel = petObj["max_level"]; // 1
 			if (this.customStats > 0)
@@ -394,7 +394,7 @@
 					// "dmg": setupDamage(charLevel, petObj["type"]),
 					"lv": charLevel,
 					"hp": charLevel * 20 + 80, // 40 + 60,
-					"cp": 0,
+					"cp": 100,
 					"maxHP": charLevel * 20 + 80, // 40 + 60,
 					"maxCP": charLevel * 20 + 80, // 40 + 60,
 					"isDead": false,
@@ -768,7 +768,7 @@
 
 		public function onInfo()
 		{
-			this.popupInfo.msgTxt.text = skillNameTxt;
+			this["popupInfo"].msgTxt.text = skillNameTxt;
 		}
 
 		public function addSpecialEffect(mc:MovieClip)
@@ -776,13 +776,13 @@
 			Utils.removeParent(mc);
 			mc.scaleX = 2;
 			mc.scaleY = 2;
-			if (this.battleEffectMc.numChildren > 0)
+			if (this["battleEffectMc"].numChildren > 0)
 			{
-				this.battleEffectMc.removeChildAt(0);
+				this["battleEffectMc"].removeChildAt(0);
 			}
-			this.battleEffectMc.addChild(mc);
+			this["battleEffectMc"].addChild(mc);
 			mc.gotoAndPlay(2);
-			Utils.moveToFront(this.battleEffectMc);
+			Utils.moveToFront(this["battleEffectMc"]);
 		}
 
 		// FUTURE - sort by big agility
@@ -807,7 +807,7 @@
 			hideTarget(false);
 			for (var i in petObj.getPet().skillData)
 			{
-				var skillName = "Skill_" + i;
+				var skillName:String = "Skill_" + i;
 				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petObj.getPet().getPetObj()["swfName"]), skillName);
 				if (cls != null)
 				{
@@ -820,13 +820,24 @@
 					this["skillMC_" + i]["holder"].addChild(temp);
 					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, selectSkill);
 					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OVER, infoSkill);
-					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent)
+					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
 						{
 							txt.visible = false;
 						});
 					this["skillMC_" + i].visible = true;
 					this["skillMC_" + i]["cdTxt"].text = "";
 					this["skillMC_" + i]["cdFilter"].visible = false;
+					// TODO Chakra
+					var cpCost = BattleUtils.getCPCost(petObj.getPet().skillData[i]["skill_cp"], petObj);
+					if (petObj.getCP() < cpCost)
+					{
+						trace("not enough chakra"+ skillName)
+						this["skillMC_" + i]["cdFilter"].visible = true;
+						if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+						{
+							this["skillMC_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, selectSkill);
+						}
+					}
 					if (petObj.getPet().getSkillCooldown()[i] > 0)
 					{
 						this["skillMC_" + i]["cdFilter"].visible = true;
@@ -838,10 +849,10 @@
 					}
 				}
 			}
-			btnPass.visible = true;
-			btnPass.addEventListener(MouseEvent.CLICK, selectSkill);
-			btnPass.addEventListener(MouseEvent.ROLL_OVER, infoAction);
-			btnPass.addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent)
+			this["btnPass"].visible = true;
+			this["btnPass"].addEventListener(MouseEvent.CLICK, selectSkill);
+			this["btnPass"].addEventListener(MouseEvent.ROLL_OVER, infoAction);
+			this["btnPass"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
 				{
 					txt.visible = false;
 				});
@@ -863,52 +874,52 @@
 			var baseDmg = attacker.getPet().getDamage();
 			var targetName = attacker.getPet().skillData[id]["target"] == "" ? "Enemy" : attacker.getPet().skillData[id]["target"].replace(attacker.getPet().skillData[id]["target"].charAt(0), attacker.getPet().skillData[id]["target"].charAt(0).toUpperCase());
 			var skillDamage = attacker.getPet().skillData[id]["hasDamage"] ? Math.round((baseDmg + (baseDmg * attacker.getPet().skillData[id]["damageBonus"]))) : 0;
-			Utils.moveToFrontTF(txt);
-			txt.visible = true;
-			txt.htmlText = "<font size=\"20\" color=\"#FFFFFF\">" + attacker.getPet().skillData[id]["description"] + "</font>";
-			txt.htmlText += "<font size=\"20\" color=\"#00FF00\">" + ("Target: " + targetName) + "</font>";
-			txt.htmlText += "<font size=\"20\" color=\"#FFDE00\">" + ("Level: " + attacker.getPet().skillData[id]["level"]) + "</font>";
-			txt.htmlText += "<font size=\"20\" color=\"#FF0000\">" + ("Damage: " + skillDamage) + "</font>";
-			txt.htmlText += "<font size=\"20\" color=\"#00BFFF\">" + ("Chakra: " + attacker.getPet().skillData[id]["skill_cp"]) + "</font>";
-			txt.htmlText += "<font size=\"20\">" + ("Cooldown: " + attacker.getPet().skillData[id]["cooldown"]) + "</font>";
-			txt.y = 900;
-			if ((txt.y + txt.textHeight) > 950)
+			Utils.moveToFrontTF(this["txt"]);
+			this["txt"].visible = true;
+			this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\">" + attacker.getPet().skillData[id]["description"] + "</font>";
+			this["txt"].htmlText += "<font size=\"20\" color=\"#00FF00\">" + ("Target: " + targetName) + "</font>";
+			this["txt"].htmlText += "<font size=\"20\" color=\"#FFDE00\">" + ("Level: " + attacker.getPet().skillData[id]["level"]) + "</font>";
+			this["txt"].htmlText += "<font size=\"20\" color=\"#FF0000\">" + ("Damage: " + skillDamage) + "</font>";
+			this["txt"].htmlText += "<font size=\"20\" color=\"#00BFFF\">" + ("Chakra: " + attacker.getPet().skillData[id]["skill_cp"]) + "</font>";
+			this["txt"].htmlText += "<font size=\"20\">" + ("Cooldown: " + attacker.getPet().skillData[id]["cooldown"]) + "</font>";
+			this["txt"].y = 900;
+			if ((this["txt"].y + this["txt"].textHeight) > 950)
 			{
-				txt.y -= txt.y + txt.textHeight + 5 - 950;
+				this["txt"].y -= this["txt"].y + this["txt"].textHeight + 5 - 950;
 			}
-			txt.x = mouseX - 200;
-			txt.height = txt.textHeight + 5;
-			txt.background = true;
-			txt.backgroundColor = 0x000000;
-			txt.alpha = 0.8;
+			this["txt"].x = mouseX - 200;
+			this["txt"].height = this["txt"].textHeight + 5;
+			this["txt"].background = true;
+			this["txt"].backgroundColor = 0x000000;
+			this["txt"].alpha = 0.8;
 		}
 
 		public function infoAction(e:MouseEvent)
 		{
-			if (e.target == btnPass)
+			if (e.target == this["btnPass"])
 			{
-				txt.visible = true;
-				// txt.htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Add CP 25%</font>";
-				txt.htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Skip turn</font>";
+				this["txt"].visible = true;
+				// this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Add CP 25%</font>";
+				this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Skip turn</font>";
 				// trace("pass");
 			}
 			/*else if(e.target == btnSpecial){
 				var master = getMaster(attacker);
-				txt.visible = true;
-				txt.htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>"+PetLibrary.getType(master.getPetInfo()["swfName"])+"Special</b><br>Only once per battle</font>";
-				txt.htmlText += "<font size=\"20\" color=\"#00FF00\">" + ("Target: " + "All") + "</font>";
-				txt.htmlText += "<font size=\"20\" color=\"#00BFFF\">" + ("Chakra: " + master.getMaxCP()) + "</font>";
+				this["txt"].visible = true;
+				this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>"+PetLibrary.getType(master.getPetInfo()["swfName"])+"Special</b><br>Only once per battle</font>";
+				this["txt"].htmlText += "<font size=\"20\" color=\"#00FF00\">" + ("Target: " + "All") + "</font>";
+				this["txt"].htmlText += "<font size=\"20\" color=\"#00BFFF\">" + ("Chakra: " + master.getMaxCP()) + "</font>";
 			}*/
-			txt.y = 900;
-			if ((txt.y + txt.textHeight) > 950)
+			this["txt"].y = 900;
+			if ((this["txt"].y + this["txt"].textHeight) > 950)
 			{
-				txt.y -= txt.y + txt.textHeight + 5 - 950;
+				this["txt"].y -= this["txt"].y + this["txt"].textHeight + 5 - 950;
 			}
-			txt.x = mouseX - 200;
-			txt.height = txt.textHeight + 5;
-			txt.background = true;
-			txt.backgroundColor = 0x000000;
-			txt.alpha = 0.8;
+			this["txt"].x = mouseX - 200;
+			this["txt"].height = this["txt"].textHeight + 5;
+			this["txt"].background = true;
+			this["txt"].backgroundColor = 0x000000;
+			this["txt"].alpha = 0.8;
 		}
 
 		public function skillDisplay(show:Boolean)
@@ -921,7 +932,7 @@
 					this["skillMC_" + i].visible = false;
 				}
 			}
-			btnPass.visible = show;
+			this["btnPass"].visible = show;
 			// btnSpecial.visible = show;
 		}
 
@@ -1230,7 +1241,7 @@
 			}
 			var mc = attacker.getPet();
 			Utils.moveToFront(mc.parent.parent);
-			BattleUtils.setupAvailableSkills(mc);
+			BattleUtils.setupAvailableSkills(mc, attacker);
 			var skillTarget = "enemy";
 			if (mc.allActions.length == 0)
 			{
@@ -1248,8 +1259,9 @@
 			// 
 			baseSelectSkill(mc, id, skillTarget);
 			// 
+			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
 			skillNameTxt = mc.allActions[id]["name"];
-			this.popupInfo.gotoAndPlay("show");
+			this["popupInfo"].gotoAndPlay("show");
 			BattleUtils.updateSkillCooldown(attacker.getPet(), mc.skillData.indexOf(mc.allActions[id]));
 			// battleStatus(dmg, skillTarget);
 			// trace("AI select skill finish");
@@ -1286,8 +1298,9 @@
 			// 
 			baseSelectSkill(mc, id, skillTarget);
 			// 
+			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
 			skillNameTxt = mc.allActions[id]["name"]; // skillNameTxt = mc.skillData[id]["name"];
-			this.popupInfo.gotoAndPlay("show");
+			this["popupInfo"].gotoAndPlay("show");
 			skillDisplay(false);
 			BattleUtils.updateSkillCooldown(attacker.getPet(), id);
 			hideTarget(true);
@@ -1346,8 +1359,8 @@
 			{
 				return;
 			}
-			statusTxt.htmlText = "<font color=\"#00FF00\">Battle Start</font>";
-			statusTxt.scrollV = statusTxt.maxScrollV;
+			this["statusTxt"].htmlText = "<font color=\"#00FF00\">Battle Start</font>";
+			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
 			// characterArr = new Vector.<Pet> (playerNum + opponentNum);
 			characterArr = new Vector.<Pet>();
 			petMcVisible(false);
@@ -1355,18 +1368,18 @@
 			updateBar();
 			for (var i = 0; i < newPlayerArr.length; i++)
 			{
-				newPlayerArr[i].getPet().setAttackHitCB(function()
+				newPlayerArr[i].getPet().setAttackHitCB(function():void
 					{
 						onAttackHit();
 					});
-				newPlayerArr[i].getPet().setActionFinishCB(function()
+				newPlayerArr[i].getPet().setActionFinishCB(function():void
 					{
 						this.x = 0;
 						this.y = 0;
 						updateBar();
 						if (this.currentLabel != "hit" && this.currentLabel != "dodge")
 						{
-							setTimeout(function()
+							setTimeout(function():void
 								{
 									turn++;
 									startBattle();
@@ -1389,11 +1402,11 @@
 			}
 			for (i = 0; i < newEnemyArr.length; i++)
 			{
-				newEnemyArr[i].getPet().setAttackHitCB(function()
+				newEnemyArr[i].getPet().setAttackHitCB(function():void
 					{
 						onAttackHit();
 					});
-				newEnemyArr[i].getPet().setActionFinishCB(function()
+				newEnemyArr[i].getPet().setActionFinishCB(function():void
 					{
 						this.x = 0;
 						this.y = 0;
@@ -1421,7 +1434,7 @@
 				// characterArr[i * 2 + 1] = newEnemyArr[i]; //TODO
 				this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
 			}
-			var maxNum = Math.max(playerNum, opponentNum);
+			var maxNum:int = Math.max(playerNum, opponentNum);
 			for (i = 0; i < maxNum; i++)
 			{
 				if (i < playerNum)
@@ -1743,12 +1756,12 @@
 		// FRAME 3 - EFFECT LIST - START
 		public function hideEffectList(e:MouseEvent)
 		{
-			this.effectListMc.visible = false;
+			this["effectListMc"].visible = false;
 		}
 
 		public function showEffectList(e:MouseEvent)
 		{
-			this.effectListMc.visible = true;
+			this["effectListMc"].visible = true;
 			getEffectList(e.target.parent);
 		}
 
@@ -1757,7 +1770,7 @@
 			var id = mc.name.split("_")[1];
 			var charObj:Pet = mc.name.indexOf("player") >= 0 ? newPlayerArr[id] : newEnemyArr[id];
 			var effType, amount, duration;
-			effectListMc.txt.htmlText = "Effect: ";
+			this["effectListMc"].txt.htmlText = "Effect: ";
 			for (var i in charObj.getBuffArr())
 			{
 				effType = charObj.getBuffArr()[i]["type"] != "no effect" ? (charObj.getBuffArr()[i]["type"] + " ") : "";
@@ -1779,16 +1792,16 @@
 					this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#FF0000\">" + effectToStr(charObj.getDebuffArr()[j]) + "</font>";
 				}
 			}
-			effectListMc.y = mc.y + 15;
+			this["effectListMc"].y = mc.y + 15;
 			if (mc.x < (1920 / 2))
 			{
-				effectListMc.x = mc.x - 265;
+				this["effectListMc"].x = mc.x - 265;
 			}
 			else
 			{
-				effectListMc.x = mc.x + 265;
+				this["effectListMc"].x = mc.x + 265;
 			}
-			Utils.moveToFront(effectListMc);
+			Utils.moveToFront(this["effectListMc"]);
 		}
 
 		public function refreshEffectList()
@@ -1807,7 +1820,7 @@
 		public function startBattle()
 		{
 			skillNameTxt = "";
-			this.popupInfo.gotoAndStop("idle");
+			this["popupInfo"].gotoAndStop("idle");
 			updateBar();
 			initBattle();
 			checkDead();
@@ -1817,10 +1830,14 @@
 				onGameFinish();
 				return;
 			}
-			getAliveCharTurn();
-			trace("getAliveCharTurn - startBattle");
-			controlCharacter();
-			trace("controlCharacter - startBattle");
+			// ATB
+			updateCharacterATB();
+			handleATBTurn();
+			// Old
+			// getAliveCharTurn();
+			// trace("getAliveCharTurn - startBattle");
+			// controlCharacter();
+			// trace("controlCharacter - startBattle");
 		}
 
 		private function onGameFinish()
@@ -1828,26 +1845,71 @@
 			updateBar();
 			if (this.gameMode == Constant.GAME_MODE_PVP)
 			{
-				statusTxt.htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player 1" : "Player 2") + " Win</font><br>";
+				this["statusTxt"].htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player 1" : "Player 2") + " Win</font><br>";
 			}
 			else
 			{
-				statusTxt.htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player" : "Enemy") + " Win</font><br>";
+				this["statusTxt"].htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player" : "Enemy") + " Win</font><br>";
 
 			}
-			Utils.moveToFront(this.popup);
-			this.popup.visible = true;
+			Utils.moveToFront(this["popup"]);
+			this["popup"].visible = true;
 			if (this.gameMode == Constant.GAME_MODE_PVP)
 			{
-				this.popup.txt.text = (winner == "p" ? "P1" : "P2") + "\nWin";
+				this["popup"].txt.text = (winner == "p" ? "P1" : "P2") + "\nWin";
 
 			}
 			else
 			{
-				this.popup.txt.text = (winner == "p" ? "Player" : "Enemy") + " Win";
+				this["popup"].txt.text = (winner == "p" ? "Player" : "Enemy") + " Win";
 
 			}
-			statusTxt.scrollV = statusTxt.maxScrollV;
+			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
+		}
+
+		private function updateCharacterATB()
+		{
+			var atbConst = 1;
+			var isFull = false;
+			while (true)
+			{
+				for each (var character in characterArr)
+				{
+					character.updateATB(atbConst); // Assuming there's a method to update character ATB based on their agility
+					trace(character.getLevel() + "-" + character.getATB());
+					if (character.isATBFull() && !character.getIsDead())
+					{
+						isFull = true;
+					}
+				}
+				if (isFull)
+				{
+					break;
+				}
+			}
+		}
+
+		private function handleATBTurn()
+		{
+			// Sort characters by ATB
+			characterArr.sort(compareByATB);
+
+			// Select the next character whose ATB is full
+			for each (var character in characterArr)
+			{
+				if (character.isATBFull() && !character.getIsDead())
+				{
+					character.resetATB();
+					nowTurn = character;
+					controlCharacter();
+					return; // Exit loop after handling one character's turn
+				}
+			}
+		}
+
+		private function compareByATB(characterA, characterB)
+		{
+			return characterB.getATB() - characterA.getATB(); // Sort in descending order of ATB
 		}
 
 		private function getAliveCharTurn()
@@ -2129,8 +2191,8 @@
 
 		public function battleStatus(str:String, target:String):void
 		{
-			var attackerName = attacker.getPet().getPetObj()["name"];
-			var defenderName = defender.getPet().getPetObj()["name"];
+			var attackerName:String = attacker.getPet().getPetObj()["name"];
+			var defenderName:String = defender.getPet().getPetObj()["name"];
 			// trace(attackerName + " deals " + str + " damage to " + defenderName + "(" + target + ")" + "\n");
 			if (str == null)
 			{
@@ -2140,29 +2202,29 @@
 			{
 				if (target == "pass")
 				{
-					statusTxt.htmlText += "<font color=\"#0000FF\">" + attackerName + " pass</font>";
+					this["statusTxt"].htmlText += "<font color=\"#0000FF\">" + attackerName + " pass</font>";
 				}
 				else
 				{
-					statusTxt.htmlText += "<font color=\"#0000FF\">" + attackerName + " deals " + str + " damage to " + defenderName + " (" + target + ")" + "</font>";
+					this["statusTxt"].htmlText += "<font color=\"#0000FF\">" + attackerName + " deals " + str + " damage to " + defenderName + " (" + target + ")" + "</font>";
 				}
 			}
 			else
 			{
 				if (target == "pass")
 				{
-					statusTxt.htmlText += "<font color=\"#0000FF\">" + attackerName + " pass</font>";
+					this["statusTxt"].htmlText += "<font color=\"#0000FF\">" + attackerName + " pass</font>";
 				}
 				else
 				{
-					statusTxt.htmlText += "<font color=\"#FF0000\">" + attackerName + " deals " + str + " damage to " + defenderName + " (" + target + ")" + "</font>";
+					this["statusTxt"].htmlText += "<font color=\"#FF0000\">" + attackerName + " deals " + str + " damage to " + defenderName + " (" + target + ")" + "</font>";
 				}
 			}
 			if (target != "pass")
 			{
 				overheadNumber(true, str, target, defender);
 			}
-			statusTxt.scrollV = statusTxt.maxScrollV;
+			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
 		}
 
 		public function getPoint(skillObj, attacker:Pet, defender:Pet):*

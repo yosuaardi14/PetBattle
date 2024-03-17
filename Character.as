@@ -16,6 +16,7 @@
 		private var petMc;
 		private var iconMc;
 		private var bodyMc;
+		private var atb:int = 0;
 
 		public function Character(statsObj: Object, petMc, iconMc, bodyMc) {
 			this.level = statsObj["level"];
@@ -135,6 +136,22 @@
 			return this.petMc;
 		}
 
+		public function getATB(){
+			return this.atb;
+		}
+
+		public function resetATB():void{
+			this.atb = this.atb % Constant.ATB_MAX_VALUE;
+			// this.atb = 0;
+		}
+
+		public function updateATB(val):void{
+			this.atb += this.agility * val;
+		}
+
+		public function isATBFull():Boolean{
+			return this.atb >= Constant.ATB_MAX_VALUE;
+		}
 	}
 
 }

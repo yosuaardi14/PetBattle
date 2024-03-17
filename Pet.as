@@ -13,11 +13,11 @@
 			super(statsObj, petMc, iconMc, bodyMc);
 		}
 
-		public function setHit(hitVal){
+		public function setHit(hitVal:String):void{
 			this.isHit = hitVal;
 		}
 
-		public function getHit(){
+		public function getHit():String{
 			return this.isHit;
 		}
 	
