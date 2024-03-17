@@ -781,7 +781,7 @@
                     burnCP = Math.round(obj.getMaxCP() * (debuff["amount"] / 100));
                     overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", obj);
                     updateHP(obj, -burnHP);
-                    updateHP(obj, -burnCP);
+                    updateCP(obj, -burnCP);
                     break;
                 case "poison":
                     burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));

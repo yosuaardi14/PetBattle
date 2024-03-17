@@ -1532,7 +1532,7 @@
 				{
 					debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
 				}
-				pass = BattleUtils.shouldPass(obj.getDebuffArr()[i]);
+				pass = pass || BattleUtils.shouldPass(obj.getDebuffArr()[i]);
 				BattleUtils.applyDebuffEffects(obj.getDebuffArr()[i], obj, overheadNumber);
 			}
 			obj.setDebuffArr(debuffArr);
