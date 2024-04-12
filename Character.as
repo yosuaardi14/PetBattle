@@ -1,6 +1,7 @@
 ﻿package {
 
 	public class Character {
+		private var name:String = "";
 		private var level: int = 1;
 		private var hp: int = 100;
 		private var maxHP: int = 100;
@@ -19,6 +20,7 @@
 		private var atb:int = 0;
 
 		public function Character(statsObj: Object, petMc, iconMc, bodyMc) {
+			this.name = statsObj["name"];
 			this.level = statsObj["level"];
 			this.hp = statsObj["hp"];
 			this.maxHP = statsObj["maxHP"];
@@ -62,6 +64,10 @@
 	
 		public function setIsDead(dead:Boolean){
 			this.isDead = dead;
+		}
+
+		public function getName(){
+			return this.name;
 		}
 		
 		public function getLevel(){

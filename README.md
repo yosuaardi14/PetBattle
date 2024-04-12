@@ -6,10 +6,17 @@
 - CP System
 - Special Skill System
 - AP System
+- AP Special Skill System
 - ATB System
 #### Game Mode
+- Survival ?
+- Most Damage
+- Limit Turn Battle
 - Tournament Battle (Offline)
 ### All Edition 
+#### v0.2
+- 
+#### v0.1
 - Custom Game (x vs y Battle)
 - PvP (Offline Mode) in Custom
 - Character Stats Level Selection in Custom

@@ -4,7 +4,7 @@
     public class Constant
     {
 
-        public static const MAX_CHAR_IN_GAME:uint = 14;
+        public static const MAX_CHAR_IN_GAME:uint = 7;
         public static const GAME_MODE_PVP:String = "PvP";
         public static const GAME_MODE_PVE:String = "PvE";
         public static const GAME_MODE_ARR:Array = [GAME_MODE_PVP, GAME_MODE_PVE];
