@@ -18,6 +18,7 @@
 		public var gameMode:String;
 		public var allSwfData:Object;
 		public var back:*;
+		public var messageTxt:String = "";
 		// FRAME 2
 		public var petLib;
 		public var petList:Array;
@@ -127,12 +128,12 @@
 			{
 				this["popupMap"].btnControl.visible = false;
 			}
-
+			this["player_0"]["iconMc"].gotoAndStop(2);
 			for (var i = 2; i >= playerNum; i--)
 			{
 				this["player_" + i].visible = false;
 			}
-
+			this["enemy_0"]["iconMc"].gotoAndStop(2);
 			for (i = 2; i >= opponentNum; i--)
 			{
 				this["enemy_" + i].visible = false;
@@ -145,6 +146,8 @@
 			this["btnBack"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
 			Utils.initButton(this["btnBattle"], this.onStartBattle, "Start", true);
 			this["popupMap"]["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
+			messageTxt = "Player Turn";
+			this["popupInfo"].gotoAndPlay("show");
 		}
 
 		internal function frame3()
@@ -368,6 +371,11 @@
 				this.enemyMaster = this.newEnemyArr[0];
 				this["popupMap"].visible = true;
 			}
+			else
+			{
+				this.messageTxt = "Please choose character";
+				this["popupInfo"].gotoAndPlay("show");
+			}
 			if (e.target.parent == this["popupMap"]["btnBattle"])
 			{
 				gotoAndStop("battle");
@@ -392,9 +400,10 @@
 			}
 			var stats = {
 					// "dmg": setupDamage(charLevel, petObj["type"]),
-					"lv": charLevel,
+					"name": petObj["name"],
+					"level": charLevel,
 					"hp": charLevel * 20 + 80, // 40 + 60,
-					"cp": 100,
+					"cp": charLevel * 20 + 80, // 100
 					"maxHP": charLevel * 20 + 80, // 40 + 60,
 					"maxCP": charLevel * 20 + 80, // 40 + 60,
 					"isDead": false,
@@ -503,12 +512,17 @@
 			this["popupMap"]["btnExit"].addEventListener(MouseEvent.CLICK, hidePopupMap);
 			for (var j = 0; j < playerNum; j++)
 			{
-				Utils.initButton(this["player_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
+				// Utils.initButton(this["player_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
+				this["player_" + j]["btnRemove"].visible = false;
+				this["player_" + j]["btnInfo"].visible = false;
+				Utils.addMouseEventClick(this["player_" + j]["btnRemove"], removeSelectedChar);
 			}
 			for (j = 0; j < opponentNum; j++)
 			{
-				Utils.initButton(this["player_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
-				Utils.initButton(this["enemy_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
+				// Utils.initButton(this["enemy_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
+				this["enemy_" + j]["btnRemove"].visible = false;
+				this["enemy_" + j]["btnInfo"].visible = false;
+				Utils.addMouseEventClick(this["enemy_" + j]["btnRemove"], removeSelectedChar);
 			}
 
 			this.hidePet();
@@ -634,8 +648,9 @@
 			}
 
 			var iconCls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), "icon");
-			iconCls.scaleX = 1;
-			iconCls.scaleY = 1;
+			iconCls.scaleX = 0.75;
+			iconCls.scaleY = 0.75;
+			iconCls.y = 36;
 
 			var bodyCls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), "StaticFullBody");
 			bodyCls.scaleX = 0.75;
@@ -671,10 +686,37 @@
 			if (this.selectTurn == "p" && this.newPlayerArr.length == this.playerNum)
 			{
 				this.selectTurn = "e";
+				if (this.newEnemyArr.length < this.opponentNum)
+				{
+					messageTxt = "Opponent Turn";
+					this["popupInfo"].gotoAndPlay("show");
+				}
 			}
 			if (this.selectTurn == "e" && this.newPlayerArr.length < this.playerNum)
 			{
 				selectTurn = "p";
+				messageTxt = "Player Turn";
+				this["popupInfo"].gotoAndPlay("show");
+			}
+		}
+
+		private function setSelectedCharCard(charMc:*, charObj:Pet, isAdd:Boolean = true):void
+		{
+			if (isAdd)
+			{
+				charMc["nameTxt"].text = charObj.getName();
+				charMc["lvTxt"].text = charObj.getLevel();
+				charMc["hpTxt"].text = charObj.getHP() + "/" + charObj.getMaxHP();
+				charMc["cpTxt"].text = charObj.getCP() + "/" + charObj.getMaxCP();
+				charMc["btnRemove"].visible = true;
+				charMc["iconMc"]["holder"].addChild(charObj.getIcon());
+			}
+			else
+			{
+				charMc["nameTxt"].text = "Name";
+				charMc["lvTxt"].text = "1";
+				charMc["hpTxt"].text = "100/100";
+				charMc["cpTxt"].text = "100/100";
 			}
 		}
 
@@ -682,14 +724,10 @@
 		{
 			for (var i = 0; i < playerNum; i++)
 			{
-				if (this["player_" + i]["holder"].numChildren > 0)
-				{
-					this["player_" + i]["holder"].removeChildAt(0);
-				}
+				Utils.removeChildIfExistAt(this["player_" + i]["iconMc"]["holder"], 0);
 				if (i < this.newPlayerArr.length)
 				{
-					this["player_" + i]["btnRemove"].visible = true;
-					this["player_" + i]["holder"].addChild(this.newPlayerArr[i].getBody());
+					setSelectedCharCard(this["player_" + i], this.newPlayerArr[i]);
 				}
 				else
 				{
@@ -698,37 +736,36 @@
 			}
 			for (i = 0; i < opponentNum; i++)
 			{
-				if (this["enemy_" + i]["holder"].numChildren > 0)
-				{
-					this["enemy_" + i]["holder"].removeChildAt(0);
-				}
+				Utils.removeChildIfExistAt(this["enemy_" + i]["iconMc"]["holder"], 0);
 				if (i < newEnemyArr.length)
 				{
-					this["enemy_" + i]["btnRemove"].visible = true;
-					this["enemy_" + i]["holder"].addChild(this.newEnemyArr[i].getBody());
+					setSelectedCharCard(this["enemy_" + i], this.newEnemyArr[i]);
 				}
 				else
 				{
 					this["enemy_" + i]["btnRemove"].visible = false;
-
 				}
 			}
 		}
 
 		public function removeSelectedChar(e:MouseEvent)
 		{
-			var targetName = e.target.parent.parent.name.split("_");
+			var targetName = e.target.parent.name.split("_");
 			if (targetName[0] == "player")
 			{
+				this.setSelectedCharCard(e.target.parent, null, false);
 				this.newPlayerArr.removeAt(int(targetName[1]));
 			}
 			else
 			{
+				this.setSelectedCharCard(e.target.parent, null, false);
 				this.newEnemyArr.removeAt(int(targetName[1]));
 			}
 			if (this.selectTurn == "e" && this.newPlayerArr.length < this.playerNum)
 			{
 				this.selectTurn = "p";
+				messageTxt = "Player Turn";
+				this["popupInfo"].gotoAndPlay("show");
 			}
 			this.showSelectedChar();
 		}
@@ -768,7 +805,15 @@
 
 		public function onInfo()
 		{
-			this["popupInfo"].msgTxt.text = skillNameTxt;
+			if (messageTxt == "")
+			{
+				this["popupInfo"].msgTxt.text = skillNameTxt;
+			}
+			else
+			{
+				this["popupInfo"].msgTxt.text = messageTxt;
+				messageTxt = "";
+			}
 		}
 
 		public function addSpecialEffect(mc:MovieClip)
@@ -831,7 +876,7 @@
 					var cpCost = BattleUtils.getCPCost(petObj.getPet().skillData[i]["skill_cp"], petObj);
 					if (petObj.getCP() < cpCost)
 					{
-						trace("not enough chakra"+ skillName)
+						trace("not enough chakra" + skillName);
 						this["skillMC_" + i]["cdFilter"].visible = true;
 						if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
 						{
