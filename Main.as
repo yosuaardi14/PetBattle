@@ -39,6 +39,7 @@
 		public var mapIndex:int = 0;
 		public var bg_map:*;
 		public var controlParty = false;
+		public var atbMode = false;
 		// FRAME 2 - SELECT CHARACTER
 		public var newPlayerArr:Vector.<Pet> = new Vector.<Pet>();
 		public var newEnemyArr:Vector.<Pet> = new Vector.<Pet>();
@@ -76,6 +77,7 @@
 			this.petList = Constant.PET_LIST;
 			this.charNum = petList.length;
 			this.selectTurn = "p";
+			loadPetSwf();
 			addFrameScript(0, this.frame1, 1, this.frame2, 2, this.frame3);
 		}
 
@@ -139,13 +141,15 @@
 				this["enemy_" + i].visible = false;
 			}
 
-			this["popupMap"].btnControl.gotoAndStop(0);
+			this["popupMap"].btnControl.gotoAndStop(1);
+			this["popupMap"].btnATB.gotoAndStop(1);
 			this["popupMap"].btnNext.addEventListener(MouseEvent.CLICK, changeBg);
 			this["popupMap"].btnPrev.addEventListener(MouseEvent.CLICK, changeBg);
 
 			this["btnBack"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
 			Utils.initButton(this["btnBattle"], this.onStartBattle, "Start", true);
 			this["popupMap"]["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
+			this["popupMap"]["btnATB"].addEventListener(MouseEvent.CLICK, this.onATBMode);
 			messageTxt = "Player Turn";
 			this["popupInfo"].gotoAndPlay("show");
 		}
@@ -217,6 +221,14 @@
 				this.playerNum = mode;
 				this.opponentNum = mode;
 				this.gotoAndStop("selectChar");
+			}
+		}
+
+		public function loadPetSwf():void
+		{
+			for (var i in petList)
+			{
+				Utils.loadSwf(Utils.genPetSwfFilePath(petList[i]), this.onLoadFinish);
 			}
 		}
 
@@ -355,6 +367,19 @@
 			else
 			{
 				this["popupMap"].btnControl.gotoAndStop(2);
+			}
+		}
+
+		public function onATBMode(e:MouseEvent)
+		{
+			this.atbMode = !atbMode;
+			if (atbMode == false)
+			{
+				this["popupMap"].btnATB.gotoAndStop(1);
+			}
+			else
+			{
+				this["popupMap"].btnATB.gotoAndStop(2);
 			}
 		}
 
@@ -531,10 +556,6 @@
 				this.showPet();
 				return;
 			}
-			for (var i in petList)
-			{
-				Utils.loadSwf(Utils.genPetSwfFilePath(petList[i]), this.onLoadFinish);
-			}
 		}
 
 		public function buttonVisibility()
@@ -614,10 +635,10 @@
 			{
 				trace("Error");
 			}
-			if (this.allSwfData["length"] == this.petList.length)
-			{
-				this.showPet();
-			}
+			// if (this.allSwfData["length"] == this.petList.length)
+			// {
+			// 	this.showPet();
+			// }
 		}
 
 		public function loadPetById(id:int):Object
@@ -1229,6 +1250,7 @@
 			var skillEffect = {
 					"effect": [ {
 							"type": mc.allActions[id]["effect"][0]["EffectArray"][randEffect]["type"],
+							"heal": mc.allActions[id]["effect"][0]["EffectArray"][randEffect]["heal"],
 							"duration": mc.allActions[id]["effect"][0]["EffectArray"][randEffect]["duration"],
 							"amount": mc.allActions[id]["effect"][0]["EffectArray"][randEffect]["amount"],
 							"chance": mc.allActions[id]["effect"][0]["EffectArray"][randEffect]["chance"]
@@ -1529,6 +1551,9 @@
 				effectToStr(skillEffect);
 				if (isBuff)
 				{
+					if(skillEffect["type"] == "heal_damage"){
+						skillEffect["amount"] = skillEffect["amount"] + BattleUtils.calcDamage(Math.round(attacker.getPet().getDamage() * 10), skillEffect["heal"]);
+					}
 					overheadEffect(true, skillEffect, BattleUtils.BUFF_TYPE, target);
 					BattleUtils.addBuffEffect(skillEffect, target);
 				}
@@ -1875,14 +1900,21 @@
 				onGameFinish();
 				return;
 			}
-			// ATB
-			updateCharacterATB();
-			handleATBTurn();
-			// Old
-			// getAliveCharTurn();
-			// trace("getAliveCharTurn - startBattle");
-			// controlCharacter();
-			// trace("controlCharacter - startBattle");
+
+			if (atbMode)
+			{
+				// ATB
+				updateCharacterATB();
+				handleATBTurn();
+			}
+			else
+			{
+				// Old (Player -> Enemy)
+				getAliveCharTurn();
+				// trace("getAliveCharTurn - startBattle");
+				controlCharacter();
+				// trace("controlCharacter - startBattle");
+			}
 		}
 
 		private function onGameFinish()

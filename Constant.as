@@ -17,14 +17,19 @@
         public static const ENEMY:String = "e";
 
         public static const PET_LIST:Array = [
-                "bird_1", "toad_1", "bat_1",  "bunny_1",
+                "bird_1", // "cat_1", "dog_1", "snake_1", "pig_1", "pig_2",
+                "bat_1", "bunny_1", //"snake_2",
+                "toad_1",
+                "turtle_1", "pig_3",
+                "bird_4", "pet_123",
+
                 "raccoon_1",
 
                 "hedgehog_1", "cat_4", "wolf_0",
-                "bat_3", 
+                "bat_3",
                 "bunny_3", "bunny_7",
 
-                "bat_2", 
+                "bat_2",
                 "pet_157", "fox_2",
                 "pet_155", "pet_165",
                 "pumpkin_1", "pumpkin_2",
@@ -37,11 +42,17 @@
                 "dragon_2",
                 "pet_182", "pet_183",
                 "pet_208",
+
+                "dog_7",
+                "pet_121",
+                "pet_190",
+                "pet_227",
+                "pet_193",
             ];
-        
+
         public static const PET_LIST_UNRELEASE:Array = [
-                "hedgehog_1", 
-                "cat_4", 
+                "hedgehog_1",
+                "cat_4",
                 "wolf_0",
                 "bunny_3", "bunny_7",
             ];
@@ -86,6 +97,19 @@
                 "pet_194",
                 "pet_210",
                 "pet_211",
+            ];
+
+        public static const PET_LIST_SOCCER_FEVER:Array = [
+                "dog_7",
+                "pet_121",
+                "pet_190",
+                "pet_227",
+                "pet_193", // olympic
+            ];
+
+        public static const PET_LIST_FRIENDSHIP:Array = [
+                "turtle_1", "pig_3",
+                "bird_4", "pet_123",
             ];
     }
 

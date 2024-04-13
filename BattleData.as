@@ -552,6 +552,8 @@
 
 		public static const EFFECT_INTERNAL_INJURY_FEAR_WEAKEN:String = "battle_internal_injury_fear";
 
+		public static const EFFECT_HEAL_DAMAGE:String = "heal_damage";
+
 		public static const CONSUMABLE_LIMIT:uint = 5;
 
 		public static const SIDE_FRIENDLY:uint = 1;
@@ -691,6 +693,8 @@
 					return "Lightning Armor (" + _loc5_ + " turns)";
 				case EFFECT_PET_SAVE_CP:
 					return "- CP Cost (" + _loc6_ + "%) (" + _loc5_ + " turns)";
+				case EFFECT_HEAL_DAMAGE:
+					return "Heal (+" + _loc6_ + ")";
 					// /////////////////////////////////////////////////////////////////////////
 				case EFFECT_STUN:
 					return "Stun(" + _loc5_ + " turns)";

@@ -540,13 +540,15 @@
                         "has": true,
                         "type": effectArr[effectType]["type"],
                         "amount": effectArr[effectType]["amount"],
-                        "duration": effectArr[effectType]["duration"]
+                        "duration": effectArr[effectType]["duration"],
+                        "heal": effectArr[effectType]["heal"]
                     };
             }
             return {
                     "has": false,
                     "amount": 0,
-                    "duration": 0
+                    "duration": 0,
+                    "heal": 0
                 };
         }
 
@@ -666,7 +668,7 @@
                 target.getPet().setSkillCooldown(cooldown);
                 return true;
             }
-            else if (effectObj["type"] == "heal")
+            else if (effectObj["type"] == "heal" || effectObj["type"] == "heal_damage")
             {
                 // done
                 var heal = effectObj["amount"];
@@ -812,7 +814,8 @@
                     "type": effect["type"],
                     "duration": effect["duration"],
                     "amount": effect["amount"],
-                    "chance": effect["chance"]
+                    "chance": effect["chance"],
+                    "heal": effect["heal"]
                 };
         }
 

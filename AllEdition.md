@@ -7,8 +7,26 @@
 - Refactor Battle and SelectCharacter to AS File (?)
 
 ## v0.2
+### 13 Apr
+#### Characters
+- Football Player Rakura, Ace Striker, Monkey Keeper, Ace Striker, Felinia (DONE)
+- Kame, Katsura, Takachi, Daruma Family (DONE)
+#### Effect
+- heal_damage
+
+### 12 Apr
+#### Done 
+#### Game UI
+- Change UI Select Character add Name, Level, HP, CP Information
+#### Feature
+- Add ATB Mode Selection (need to test)
+#### Characters
+- Football Player Rakura (Need Check Library because only copy from Rakura)
+#### WIP
+- Add MapEffect File
+
 ### 16 Mar
-#### TODO
+#### TODO (Too many error)
 - Fixing code depends on asconfig.json (WARNING)
 
 #### Bug Fix

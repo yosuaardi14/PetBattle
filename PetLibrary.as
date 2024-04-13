@@ -152,7 +152,6 @@
 								}]
 						}]
 				},
-
 				"pet2": {
 					"id": "2",
 					"name": "Chiko",
@@ -256,7 +255,124 @@
 								}]
 						}]
 				},
-
+				"pet8": {
+					"id": "8",
+					"name": "Kame",
+					"description": "Special pet for someone who has good friends!",
+					"swfName": "turtle_1",
+					"clsName": "Turtle_1",
+					"type": 3,
+					"attack_rate": 1,
+					"defend_rate": 2,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 20,
+					"gold": 0,
+					"token": 0,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "master",
+							"name": "Turtle Spirit",
+							"description": "<b>Turtle Spirit</b><br>Recover master's HP.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "heal_damage",
+									"heal": 0.2, // bonus
+									"amount": 10 // minVal
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "",
+							"name": "Rolling Carapace",
+							"description": "<b>Rolling Carapace</b><br>Attack target with its carapace.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Sea Veins Badge",
+							"description": "<b>Sea Veins Badge</b><br>Seal a sea veins on master to reduce master's damage taken by 15% (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_reduction",
+									"amount": 15,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "master",
+							"name": "Secret: Spring Rain",
+							"description": "<b>Secret: Spring Rain</b><br>Ultimate jutsu - Recover master's HP by 2% (3 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_heal",
+									"amount": 2,
+									"duration": 4
+								}
+							]
+						}
+					]
+				},
 				"pet9": {
 					"id": "9",
 					"name": "Easter Egg",
@@ -924,7 +1040,122 @@
 								}]
 						}]
 				},
-
+				"pet23": {
+					"id": "23",
+					"name": "Takachi",
+					"description": "Takachi",
+					"swfName": "bird_4",
+					"clsName": "Bird_4",
+					"type": 1,
+					"attack_rate": 1,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 0,
+					"token": 1000000,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 6,
+							"target": "",
+							"name": "Thunder Strike",
+							"description": "<b>Thunder Strike</b><br>A quick dash strike.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "",
+							"name": "Thunder Bolt",
+							"description": "<b>Thunder Bolt</b><br>Takachi launches a thunder bolt to attack the enemy.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "Thunder Scream",
+							"description": "<b>Thunder Scream</b><br>Takachi's scream will increase master 5% damage.(5 turn)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"amount": 5,
+									"duration": 6
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 1.1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Thunder Shadow",
+							"description": "<b>Secret: Thunder Shadow</b><br>Takachi strikes the enemy with his thunder shadow.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "blind",
+									"amount": 5,
+									"duration": 6
+								}
+							]
+						}
+					]
+				},
 				"pet26": {
 					"id": "26",
 					"name": "Haru",
@@ -1377,6 +1608,145 @@
 									"amount": 8
 								}]
 						}]
+				},
+				"pet56": {
+					"id": "56",
+					"name": "Katsura",
+					"description": "",
+					"swfName": "pig_3",
+					"clsName": "Pig_3",
+					"type": 3,
+					"attack_rate": 2,
+					"defend_rate": 1,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 15,
+					"gold": 0,
+					"token": 1000000,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 3,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Fierce Rush",
+							"description": "<b>Fierce Rush</b><br>An attack that uses full body force",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 5,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Attention",
+							"description": "<b>Attention!</b><br>Master's attack ignore 3% of target's dodge (2 turns)",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_attention",
+									"duration": 3,
+									"amount": 3
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 7,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Defense!",
+							"description": "<b>Defense!</b><br>Reduce 5% damage to master (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_reduction",
+									"amount": 5,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 8,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Attack!",
+							"description": "<b>Attack!</b><br>Increase 3% master\'s damage to enemy (2 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"amount": 3,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Healing!",
+							"description": "<b>Healing!</b><br>Heal master\'s HP by 2% in each turn (3 turns)",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_heal",
+									"amount": 2,
+									"duration": 4
+								}
+							]
+						}
+					]
 				},
 				"pet57": {
 					"id": "57",
@@ -2194,6 +2564,127 @@
 						}
 					]
 				},
+				"pet85": {
+					"id": "85",
+					"name": "Football Player Rakura",
+					"description": "Football Player Rakura",
+					"swfName": "dog_7",
+					"clsName": "Dog_7",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 0,
+					"support_rate": 2,
+					"attribute_type": "null",
+					"max_level": 30,
+					"gold": 0,
+					"token": 1000000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.4,
+							"cooldown": 6,
+							"target": "",
+							"name": "Swift Kick",
+							"description": "<b>Swift Kick</b><br>A quick dash of flying kick.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Chakra Bullet",
+							"description": "<b>Chakra Bullet</b><br>Shoot chakra bullets to disable target from charging (2 turns).",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "restrict_charge",
+									"duration": 3
+								}]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "self",
+							"name": "Weak Point Focus",
+							"description": "<b>Weak Point Focus</b><br>Increase critical rate by 15% and critical damage by 30% (3 turns).",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "crit_chance_dmg",
+									"amount": 30,
+									"duration": 4
+								}]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.4,
+							"cooldown": 12,
+							"target": "self",
+							"name": "Secret: Absolute Chakra Shield",
+							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to to stun target (1 turn).",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 14,
+							"target": "",
+							"name": "Secret: Absolute Chakra Strike",
+							"description": "<b>Secret: Absolute Chakra Strike</b><br>Emit huge amount of chakra - 30% chance to remove all buffs from target.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "clear_buff",
+									"chance": 30
+								}]
+						}]
+				},
 				"pet89": {
 					"id": "89",
 					"name": "Honoo",
@@ -2529,6 +3020,207 @@
 							"effect": [ {
 									"type": "add_cooldown",
 									"amount": 4
+								}]
+						}]
+				},
+				"pet121": {
+					"id": "121",
+					"name": "Ace Striker",
+					"description": "Ace Striker",
+					"swfName": "pet_121",
+					"clsName": "Pet_121",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 0,
+					"support_rate": 0,
+					"attribute_type": "null",
+					"max_level": 20,
+					"gold": 0,
+					"token": 100000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic attack",
+							"description": "<b>Basic attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 7,
+							"target": "",
+							"name": "Red Card",
+							"description": "<b>Red Card</b><br>Prevents the target from using skills with the power of the red card. Restricts the target for 2 turns.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bundle",
+									"duration": 3
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Dual Tearing Slash",
+							"description": "<b>Dual Tearing Slash</b><br>A consecutive claw strike that disables the target's attack ability. Prevents the target from using weapon attack for 2 turns.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "dismantle",
+									"duration": 3
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "",
+							"name": "Obnoxious Call",
+							"description": "<b>Obnoxious Call</b><br>A surprise attack from behind that always caught the target off guard. Weakens the target's damage by 15% for 2 turns.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_weaken",
+									"duration": 3,
+									"amount": 15
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 9,
+							"target": "",
+							"name": "Ace Shot",
+							"description": "<b>Ace Shot</b><br>A devastating shot that crushes the target's awareness. Inflicts chaos status for 1 turn.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "chaos",
+									"duration": 2
+								}]
+						}]
+				},
+				"pet123": {
+					"id": "123",
+					"name": "Daruma Family",
+					"description": "Daruma Family",
+					"swfName": "pet_123",
+					"clsName": "Pet_123",
+					"type": 3,
+					"attack_rate": 1,
+					"defend_rate": 2,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 20,
+					"gold": 0,
+					"token": 1000000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic attack",
+							"description": "<b>Basic attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0,
+							"cooldown": 7,
+							"target": "master",
+							"name": "Shield Wall",
+							"description": "<b>Shield Wall</b><br>Creates a magic barrier to protect the master. Increases master's defense by 10% for 3 turns.",
+							"action": "special",
+							"animation": "attack_02",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_damage_reduction",
+									"duration": 4,
+									"amount": 10
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 9,
+							"target": "master",
+							"name": "Damage Boost",
+							"description": "<b>Damage Boost</b><br>Inspires the master through magic. Increases master's damage by 5% for 6 turns.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_damage_bonus",
+									"duration": 7,
+									"amount": 5
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Treat Wounds",
+							"description": "<b>Treat Wounds</b><br>Casts a rejuvenation spell to heal the master. Recovers 8% of the master's max HP for 2 turns.",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_heal",
+									"duration": 3,
+									"amount": 8
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Tower Slam",
+							"description": "<b>Tower Slam</b><br>A full body assault. Reduces critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 6% for 2 turns.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_disoriented",
+									"duration": 3,
+									"amount": 6
 								}]
 						}]
 				},
@@ -3252,6 +3944,189 @@
 								}]
 						}]
 				},
+				"pet190": {
+					"id": "190",
+					"name": "Monkey Keeper",
+					"description": "Monkey Keeper",
+					"swfName": "pet_190",
+					"clsName": "Pet_190",
+					"type": 1,
+					"attack_rate": 1,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "fire",
+					"max_level": 25,
+					"gold": 0,
+					"token": 1000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Palm of Keeper",
+							"description": "<b>Palm of Keeper</b><br>Stun target (1 turn)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 7,
+							"target": "",
+							"name": "Goal Kick",
+							"description": "<b>Goal Kick</b><br>Inflicts internal injury for 2 turn.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "internal_injury",
+									"duration": 3
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Summon Goal",
+							"description": "<b>Summon Goal</b><br>Increases master's defense by 40% for 2 turns.",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "damage_reduction",
+									"duration": 3,
+									"amount": 40
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Soccer Bomb",
+							"description": "<b>Soccer Bomb</b><br>Burns target HP by 3% for 2 turns.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_burn",
+									"duration": 3,
+									"amount": 3
+								}]
+						}, {
+							"id": 5,
+							"level": 25,
+							"damageBonus": 1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Soaring Header",
+							"description": "<b>Soaring Header</b><br>Has 30% chance to remove all buff from target.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "clear_buff",
+									"chance": 30
+								}]
+						}]
+				},
+				"pet193": {
+					"id": "193",
+					"name": "Felinia",
+					"description": "Felinia",
+					"swfName": "pet_193",
+					"clsName": "Pet_193",
+					"type": 1,
+					"attack_rate": 2,
+					"defend_rate": 1,
+					"support_rate": 2,
+					"attribute_type": "null",
+					"max_level": 10,
+					"gold": 0,
+					"token": 100,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0,
+							"cooldown": 7,
+							"target": "master",
+							"name": "Cheer Horn",
+							"description": "<b>Cheer Horn</b><br>Recovers 5% of its master's max HP for 3 turns.",
+							"action": "special",
+							"animation": "attack_02",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_heal",
+									"duration": 4,
+									"amount": 5
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Happy Dance",
+							"description": "<b>Happy Dance</b><br>Applies a 30% chance to resist negative status buff for 2 turns.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_debuff_resist",
+									"duration": 3,
+									"chance": 30
+								}]
+						}]
+				},
 				"pet194": {
 					"id": "194",
 					"name": "Pumpkin Raider",
@@ -3613,7 +4488,7 @@
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
-									"type": "internal_injury", //"battle_internal_injury",
+									"type": "internal_injury", // "battle_internal_injury",
 									"duration": 2
 								}]
 						}, {
@@ -3685,6 +4560,124 @@
 							"effect": [ {
 									"type": "burn_cp_hp",
 									"amount": 5
+								}]
+						}]
+				},
+				"pet227": {
+					"id": "227",
+					"name": "Striker Wolf",
+					"description": "Striker Wolf",
+					"swfName": "pet_227",
+					"clsName": "Pet_227",
+					"type": 1,
+					"attack_rate": 1,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "water",
+					"max_level": 25,
+					"gold": 0,
+					"token": 1000,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Vacuum Shoot",
+							"description": "<b>Vacuum Shoot</b><br>Bleeding effect occur which will increase 20% extra damage (2 turn)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bleeding",
+									"duration": 3,
+									"amount": 20
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 7,
+							"target": "",
+							"name": "Diving Header Attack",
+							"description": "<b>Diving Header Attack</b><br>Stun target (1 turn).",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "",
+							"name": "Lightning Long Shot",
+							"description": "<b>Lightning Long Shot</b><br>To blinds the target for 2 turns (30% accuracy reduction).",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "blind",
+									"duration": 3,
+									"amount": 30
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "Musical Whistle",
+							"description": "<b>Musical Whistle</b><br>Increase master's all attack damage, critical chance & accuracy by 25% (2 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_lightning",
+									"duration": 3,
+									"amount": 25
+								}]
+						}, {
+							"id": 5,
+							"level": 25,
+							"damageBonus": 1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Blind Spot Corner Ball",
+							"description": "<b>Blind Spot Corner Ball</b><br>Inflicts internal injury status for 2 turns.",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "battle_internal_injury",
+									"duration": 3
 								}]
 						}]
 				}
