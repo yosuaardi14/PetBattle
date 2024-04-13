@@ -45,7 +45,7 @@
                 var cpCost:int = BattleUtils.getCPCost(mc.skillData[i]["skill_cp"], obj);
                 if (obj.getCP() < cpCost)
                 {
-                    trace(mc.skillData[i]["name"] + "CP: "+ cpCost);
+                    trace(mc.skillData[i]["name"] + "CP: " + cpCost);
                     continue;
                 }
                 if (mc.getSkillCooldown()[i] <= 0)
@@ -252,7 +252,13 @@
                 damage = damage + tempDamage;
                 trace(damage + " petLightning");
             }
-
+            var ecstasy = hasEffect("ecstatic_sound", attacker, false);
+            if (ecstasy["has"])
+            {
+                tempDamage = damage * (ecstasy["amount"] / 100);
+                damage = damage - tempDamage;
+                // trace(damage + " ecstasy");
+            }
             if (checkCritical(attacker))
             {
                 damage = getCriticalDamage(damage, attacker, defender);
@@ -322,7 +328,18 @@
                 }
                 return false;
             }
+        }
 
+        public static function handleActiveBuffAfterAttack(dmg, attacker, defender):int
+        {
+            var bloodfeed = hasEffect("pet_drain_hp_kekkai", attacker, true);
+            if (bloodfeed["duration"] > 0)
+            {
+                var hp = Math.round((bloodfeed["amount"] / 100) * dmg);
+                updateHP(attacker, hp);
+                return hp;
+            }
+            return 0;
         }
 
         public static function checkChanceEffect(effectObj)
@@ -508,6 +525,15 @@
             {
                 defender.getDebuffArr()["random_sleep"]["duration"] = 0;
             }
+            var fireWall = hasEffect("pet_reflect_attack", defender, true);
+            if (fireWall["has"])
+            {
+                attacker.getDebuffArr()["pet_burn"] = {
+                        "type": "pet_burn",
+                        "duration": 1,
+                        "amount": fireWall["amount"]
+                    };
+            }
             if (hasEffect("hundred_percent_attack", attacker, true)["has"])
             {
                 return true;
@@ -645,7 +671,6 @@
                 updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
-
             }
             else if (effectObj["type"] == "add_cooldown")
             {
@@ -653,6 +678,32 @@
                 var cooldownTemp = target.getCooldown();
                 cooldownTemp[randomSkill] += (effectObj["amount"] - 1);
                 target.setCooldown(cooldownTemp);
+                return true;
+            }
+            else if (effectObj["type"] == "flame_eater")
+            {
+                var hasBurn = false;
+                if (hasEffect("burn", target, false)["has"])
+                {
+                    target.getDebuffArr()["burn"]["duration"] = 0;
+                    hasBurn = true;
+                }
+                if (hasEffect("pet_burn", target, false)["has"])
+                {
+                    target.getDebuffArr()["pet_burn"]["duration"] = 0;
+                    hasBurn = true;
+                }
+                if (hasBurn)
+                {
+                    burnHP = Math.round(target.getMaxHP() * (5 / 100));
+                }
+                else
+                {
+                    burnHP = Math.round(target.getMaxHP() * (1 / 100));
+                }
+                overheadNumber(true, "-" + burnHP, "", target);
+                updateHP(target, -burnHP);
+                trace("flame_eater HP - "+burnHP);
                 return true;
             }
             return false;
@@ -767,6 +818,7 @@
                 case "coilding_wave":
                 case "sleep":
                 case "random_sleep":
+                case "ecstatic_sound":
                     pass = debuff["duration"] > 0;
                     break;
             }

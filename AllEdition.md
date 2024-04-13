@@ -8,16 +8,22 @@
 
 ## v0.2
 ### 13 Apr
+#### Game UI
+- Change UI Select Character add AP, Pet Type, Show All Character Body not Icon (DONE)
 #### Characters
 - Football Player Rakura, Ace Striker, Monkey Keeper, Ace Striker, Felinia (DONE)
 - Kame, Katsura, Takachi, Daruma Family (DONE)
+- Suzu, Eriko, Leiko, Suki, Inokuchi, Tomaru (DONE)
 #### Effect
 - heal_damage
+- flame_eater (TEST)
+- pet_reflect_attack
+- ecstatic_sound
+- pet_drain_hp_kekkai
 
 ### 12 Apr
-#### Done 
 #### Game UI
-- Change UI Select Character add Name, Level, HP, CP Information
+- Change UI Select Character add Name, Level, HP, CP Information (DONE)
 #### Feature
 - Add ATB Mode Selection (need to test)
 #### Characters

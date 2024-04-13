@@ -17,8 +17,8 @@
         public static const ENEMY:String = "e";
 
         public static const PET_LIST:Array = [
-                "bird_1", // "cat_1", "dog_1", "snake_1", "pig_1", "pig_2",
-                "bat_1", "bunny_1", //"snake_2",
+                "bird_1", "cat_1", "dog_1", "snake_1", "pig_1", "pig_2",
+                "bat_1", "bunny_1", "snake_2",
                 "toad_1",
                 "turtle_1", "pig_3",
                 "bird_4", "pet_123",

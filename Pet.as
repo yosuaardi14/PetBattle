@@ -45,6 +45,10 @@
 			return this.getPet().getPetObj();
 		}
 
+		public function getPetSwfName(){
+			return this.getPet().getPetObj()["swfName"];
+		}
+
 		public function getPetType(){
 			return this.getPet().getPetObj()["type"];
 		}
