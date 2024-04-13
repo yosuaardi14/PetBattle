@@ -255,6 +255,476 @@
 								}]
 						}]
 				},
+				"pet3": {
+					"id": "3",
+					"name": "Suzu",
+					"description": "A cute charming kitten posseses ferocious battle capabilities.",
+					"swfName": "cat_1",
+					"clsName": "Cat_1",
+					"type": 3,
+					"attack_rate": 2,
+					"defend_rate": 1,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 100000,
+					"token": 0,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Claw Scratch",
+							"description": "<b>Claw Scratch</b><br>Claw target.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "",
+							"name": "Cuty Girl Transformation",
+							"description": "<b>Cuty Girl Transformation</b><br>Stun target for 1 turn.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "stun",
+									"duration": 2
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "",
+							"name": "Moon Dance Claw",
+							"description": "<b>Moon Dance Claw</b><br>Wield the claws to attack target and reduce target's CP by 5%",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "burn_cp",
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Ecstasy Transformation",
+							"description": "<b>Secret: Ecstasy Transformation</b><br>Ultimate genjutsu - Restrict target and reduce target's attack damage by 100% (1 turn)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "ecstatic_sound",
+									"duration": 2,
+									"amount": 100
+								}
+							]
+						}
+					]
+				},
+				"pet4": {
+					"id": "4",
+					"name": "Eriko",
+					"description": "A trained hound dog specializes in hunting.",
+					"swfName": "dog_1",
+					"clsName": "Dog_1",
+					"type": 1,
+					"attack_rate": 2,
+					"defend_rate": 0,
+					"support_rate": 2,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 100000,
+					"token": 0,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.3,
+							"cooldown": 6,
+							"target": "",
+							"name": "Spin Strike",
+							"description": "<b>Spin Strike</b><br>Strike target with spinning body.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0.6,
+							"cooldown": 8,
+							"target": "",
+							"name": "Stale Gas",
+							"description": "<b>Stale Gas</b><br>Blind target (-15% accuracy) for 2 turns.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "blind",
+									"duration": 3,
+									"amount": 15
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Courage Roar",
+							"description": "<b>Courage Roar</b><br>Roar for master - increase master's all attack damage by 5% (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"duration": 3,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Eliminate Strike",
+							"description": "<b>Secret: Eliminate Strike</b><br>Ultimate taijutsu - Strike target fiercely and reduce target's HP by 3%",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "burn_hp",
+									"amount": 3
+								}
+							]
+						}
+					]
+				},
+				"pet5": {
+					"id": "5",
+					"name": "Suki",
+					"description": "A loving pig that protects its master from harm.",
+					"swfName": "pig_1",
+					"clsName": "Pig_1",
+					"type": 2,
+					"attack_rate": 1,
+					"defend_rate": 3,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 100000,
+					"token": 0,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Fierce Rush",
+							"description": "<b>Fierce Rush</b><br> Crash target with the body.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "Master Protect!",
+							"description": "<b>Master Protect!</b><br>Reduce master's 30% damage taken for 2 turns.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "damage_reduction",
+									"duration": 3,
+									"amount": 20
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 1.2,
+							"cooldown": 10,
+							"target": "",
+							"name": "One Body Explosive Blast",
+							"description": "<b>One Body Explosive Blast</b><br>Strike against target to reduce target's all attack damage by 5% (2 turns)",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_weaken",
+									"duration": 3,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "master",
+							"name": "Secret: Immovable Mind",
+							"description": "<b>Secret: Immovable Mind</b><br>Ultimate defense - 50% Guard master and reduce master's damage taken by 100% (1 turn)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "guard",
+									"duration": 2,
+									"amount": 100,
+									"chance": 50
+								}
+							]
+						}
+					]
+				},
+				"pet6": {
+					"id": "6",
+					"name": "Leiko",
+					"description": "An arrogant snake that might betray its master.",
+					"swfName": "snake_1",
+					"clsName": "Snake_1",
+					"type": 3,
+					"attack_rate": 2,
+					"defend_rate": 1,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 100000,
+					"token": 0,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Fear Sound",
+							"description": "<b>Fear Sound</b><br>A sensory sound attack.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0.2,
+							"cooldown": 10,
+							"target": "",
+							"name": "Poison Gas",
+							"description": "<b>Poison Gas</b><br>Reduce target's 3% HP for 2 turns.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "poison",
+									"duration": 3,
+									"amount": 3
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Catalytic Matter",
+							"description": "<b>Catalytic Matter</b><br>Release special gas that will increase master's all attack damage by 7% (Side effect: Reduce master HP by 2%) (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "catalytic_matter",
+									"duration": 3,
+									"amount": 7
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 40,
+							"damageBonus": 0.5,
+							"cooldown": 12,
+							"target": "all",
+							"name": "Secret: Hazy Smoke",
+							"description": "<b>Secret: Hazy Smoke</b><br>Ultimate jutsu - Create a misty screens to reduce accuracy of all enemies by 5% (2 turns)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 3,
+									"amount": 5
+								}
+							]
+						}
+					]
+				},
 				"pet8": {
 					"id": "8",
 					"name": "Kame",
@@ -615,6 +1085,246 @@
 							"effect": [ {
 									"type": "serene_mind",
 									"duration": 2
+								}]
+						}]
+				},
+				"pet11": {
+					"id": "11",
+					"name": "Tomaru",
+					"description": "Active at the volcano area, Tomaru can emit fireball from its mouth.",
+					"swfName": "snake_2",
+					"clsName": "Snake_2",
+					"type": 3,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"max_level": 30,
+					"gold": 0,
+					"token": 400,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Fire Ball",
+							"description": "<b>Fire Ball</b><br>Burn target to reduce target's HP by 2% (3 turns)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_burn",
+									"duration": 4,
+									"amount": 2
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.4,
+							"cooldown": 8,
+							"target": "",
+							"name": "Dark Touch",
+							"description": "<b>Dark Touch</b><br>Reduce target's damage by 8% for 2 turns.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_fear_weaken",
+									"duration": 3,
+									"amount": 8
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Firebreath",
+							"description": "<b>Firebreath</b><br>Emit the breath of fire to reduce master's jutsu CP consumption by 30% (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_save_cp",
+									"duration": 3,
+									"amount": 30
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0.8,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Hell Flame Eater",
+							"description": "<b>Secret: Hell Flame Eater</b><br>Ultimate justu - Swallow the flame on target to deal bigger damage: reduce target's HP by 1% and remove burn status (5% if target is under  burn status)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "flame_eater"
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 14,
+							"target": "master",
+							"name": "Secret: Evil Fire Ward",
+							"description": "<b>Secret: Evil Fire Ward</b><br>Ultimate jutsu - Form a fiery kekkei to guard master within 2 turns: burn attacker's HP by 3% in 1 turn",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_reflect_attack",
+									"duration": 3,
+									"amount": 3
+								}
+							]
+						}
+					]
+				},
+				"pet13": {
+					"id": "13",
+					"name": "Inokuchi",
+					"description": "Inokuchi has received tough training and can move very fast!",
+					"swfName": "pig_2",
+					"clsName": "Pig_2",
+					"type": 1,
+					"attack_rate": 3,
+					"defend_rate": 1,
+					"support_rate": 1,
+					"attribute_type": "null",
+					"max_level": 40,
+					"gold": 100000,
+					"token": 0,
+					"skill": [ {
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 1,
+							"level": 10,
+							"damageBonus": 0.3,
+							"cooldown": 12,
+							"target": "",
+							"name": "Spin Strike",
+							"description": "<b>Spin Strike</b><br>Strike target with spinning body.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}, {
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0.6,
+							"cooldown": 6,
+							"target": "",
+							"name": "Earth Strangle",
+							"description": "<b>Earth Strangle</b><br>Stun target for 1 turn.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 3,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "master",
+							"name": "Rock Shade",
+							"description": "<b>Rock Shade</b><br>Form a kekkei for master so that master can recover HP when attack (Amount: 15% of the attack damage) (2 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_drain_hp_kekkai",
+									"duration": 3,
+									"amount": 15
+								}]
+						}, {
+							"id": 4,
+							"level": 40,
+							"damageBonus": 1.4,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Rock Death Spear",
+							"description": "<b>Secret: Rock Death Spear</b><br>Ultimate jutsu - summon rock spears to inflict bleeding (10% extra damage) (2 turns)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_bleeding",
+									"duration": 3,
+									"amount": 10
 								}]
 						}]
 				},
@@ -1711,7 +2421,7 @@
 							"cooldown": 10,
 							"target": "master",
 							"name": "Attack!",
-							"description": "<b>Attack!</b><br>Increase 3% master\'s damage to enemy (2 turns)",
+							"description": "<b>Attack!</b><br>Increase 3% master's damage to enemy (2 turns)",
 							"action": "special",
 							"animation": "attack_05",
 							"posType": "range1",
@@ -1732,7 +2442,7 @@
 							"cooldown": 10,
 							"target": "master",
 							"name": "Healing!",
-							"description": "<b>Healing!</b><br>Heal master\'s HP by 2% in each turn (3 turns)",
+							"description": "<b>Healing!</b><br>Heal master's HP by 2% in each turn (3 turns)",
 							"action": "special",
 							"animation": "attack_06",
 							"posType": "range1",

@@ -695,6 +695,14 @@
 					return "- CP Cost (" + _loc6_ + "%) (" + _loc5_ + " turns)";
 				case EFFECT_HEAL_DAMAGE:
 					return "Heal (+" + _loc6_ + ")";
+				case EFFECT_ECSTATIC_SOUND:
+					return "Ecstasy (" + _loc6_ + "%) (" + _loc5_ + ") turns";
+				case EFFECT_FLAME_EATER:
+					return "Flame Eater";
+				case EFFECT_PET_REFLECT_ATTACK:
+					return "Fire Wall (" + _loc5_ + ") turns";
+				case EFFECT_PET_DRAIN_HP_KEKKAI:
+					return "Bloodfeed (" + _loc6_ + "%) (" + _loc5_ + ") turns";
 					// /////////////////////////////////////////////////////////////////////////
 				case EFFECT_STUN:
 					return "Stun(" + _loc5_ + " turns)";

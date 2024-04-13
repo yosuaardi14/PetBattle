@@ -595,12 +595,12 @@
 			var index = 0;
 			for (var i = start; i < end; i++)
 			{
-				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "icon");
+				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "StaticFullBody");
 				var petMC = cls;
-				petMC.x = 40;
-				petMC.y = 70;
-				petMC.scaleX = 0.5;
-				petMC.scaleY = 0.5;
+				petMC.x = 25;
+				petMC.y = 32;
+				petMC.scaleX = 0.35;
+				petMC.scaleY = 0.35;
 				var petObj = PetLibrary.getPetBySwfName(petList[i]);
 				this["charMC_" + index]["petType"].gotoAndStop(petObj["type"]);
 				this["charMC_" + index]["attributeType"].gotoAndStop(petObj["attribute_type"]);
@@ -637,7 +637,7 @@
 			}
 			// if (this.allSwfData["length"] == this.petList.length)
 			// {
-			// 	this.showPet();
+			// this.showPet();
 			// }
 		}
 
@@ -689,6 +689,11 @@
 
 		public function loadCharacter(e:MouseEvent)
 		{
+			if (this.newPlayerArr.length == this.playerNum && this.newEnemyArr.length == this.opponentNum)
+			{
+				messageTxt = "Click Start to Begin the Battle";
+				this["popupInfo"].gotoAndPlay("show");
+			}
 			var id = e.target.parent.name.split("_")[1];
 			var petObj = loadPetById(id);
 			var newPetObj = new Pet(petObj["stats"], petObj["mc"], petObj["icon"], petObj["body"]);
@@ -725,11 +730,19 @@
 		{
 			if (isAdd)
 			{
+				var attributeType = charObj.getPetAttributeType();
 				charMc["nameTxt"].text = charObj.getName();
 				charMc["lvTxt"].text = charObj.getLevel();
 				charMc["hpTxt"].text = charObj.getHP() + "/" + charObj.getMaxHP();
 				charMc["cpTxt"].text = charObj.getCP() + "/" + charObj.getMaxCP();
 				charMc["btnRemove"].visible = true;
+				charMc["typeTxt"].text = PetLibrary.getType(charObj.getPetSwfName());
+				if (attributeType != "null")
+				{
+					charMc["attributeTxt"].text = attributeType.replace(attributeType.substring(0, 1), attributeType.substring(0, 1).toUpperCase());
+				}
+				charMc["petType"].gotoAndStop(charObj.getPetType());
+				charMc["attributeType"].gotoAndStop(attributeType);
 				charMc["iconMc"]["holder"].addChild(charObj.getIcon());
 			}
 			else
@@ -738,6 +751,10 @@
 				charMc["lvTxt"].text = "1";
 				charMc["hpTxt"].text = "100/100";
 				charMc["cpTxt"].text = "100/100";
+				charMc["typeTxt"].text = "Balance";
+				charMc["attributeTxt"].text = "";
+				charMc["petType"].gotoAndStop(4);
+				charMc["attributeType"].gotoAndStop("null");
 			}
 		}
 
@@ -1111,6 +1128,11 @@
 					if (!BattleUtils.checkDamageRebound(dmg, attacker, defender))
 					{
 						overheadNumber(true, dmg, skillTarget, defender);
+						var activeBuff = BattleUtils.handleActiveBuffAfterAttack(dmg, attacker, defender);
+						if (activeBuff > 0)
+						{
+							overheadNumber(true, activeBuff, "self", attacker);
+						}
 					}
 					else
 					{
@@ -1155,6 +1177,11 @@
 				if (!BattleUtils.checkDamageRebound(dmg, attacker, defender))
 				{
 					overheadNumber(true, dmg, skillTarget, defender);
+					var activeBuff = BattleUtils.handleActiveBuffAfterAttack(dmg, attacker, defender);
+					if (activeBuff > 0)
+					{
+						overheadNumber(true, activeBuff, "self", attacker);
+					}
 				}
 				else
 				{
@@ -1551,7 +1578,8 @@
 				effectToStr(skillEffect);
 				if (isBuff)
 				{
-					if(skillEffect["type"] == "heal_damage"){
+					if (skillEffect["type"] == "heal_damage")
+					{
 						skillEffect["amount"] = skillEffect["amount"] + BattleUtils.calcDamage(Math.round(attacker.getPet().getDamage() * 10), skillEffect["heal"]);
 					}
 					overheadEffect(true, skillEffect, BattleUtils.BUFF_TYPE, target);
