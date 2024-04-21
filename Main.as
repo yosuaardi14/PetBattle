@@ -40,6 +40,7 @@
 		public var bg_map:*;
 		public var controlParty = false;
 		public var atbMode = false;
+		public var useMapEffect = true;
 		// FRAME 2 - SELECT CHARACTER
 		public var newPlayerArr:Vector.<Pet> = new Vector.<Pet>();
 		public var newEnemyArr:Vector.<Pet> = new Vector.<Pet>();
@@ -113,11 +114,12 @@
 			// var selectChar = new SelectCharacter(this.mode, playerNum, opponentNum);
 			this.mapIndex = 0;
 			this.bg_map = new bg[this.mapIndex]();
-			this.bg_map.scaleX = 0.5;
-			this.bg_map.scaleY = 0.5;
-
+			this.bg_map.scaleX = 0.9;
+			this.bg_map.scaleY = 0.9;
+			this["popupMap"]["map"]["holder"].addChild(bg_map);
+			this.showMapEffectList(mapIndex);
 			this["popupMap"].visible = false;
-			this["popupMap"]["map"].addChild(bg_map);
+
 			this.newPlayerArr.splice(0, newPlayerArr.length);
 			this.newEnemyArr.splice(0, newEnemyArr.length);
 			this.selectTurn = "p";
@@ -128,7 +130,7 @@
 			this.loadAllPet();
 			if (this.mode == 1 || this.playerNum == 1)
 			{
-				this["popupMap"].btnControl.visible = false;
+				this["btnControl"].visible = false;
 			}
 			this["player_0"]["iconMc"].gotoAndStop(2);
 			for (var i = 2; i >= playerNum; i--)
@@ -141,15 +143,23 @@
 				this["enemy_" + i].visible = false;
 			}
 
-			this["popupMap"].btnControl.gotoAndStop(1);
-			this["popupMap"].btnATB.gotoAndStop(1);
-			this["popupMap"].btnNext.addEventListener(MouseEvent.CLICK, changeBg);
-			this["popupMap"].btnPrev.addEventListener(MouseEvent.CLICK, changeBg);
+			this.controlParty = false;
+			this.atbMode = false;
+			this.useMapEffect = true;
+
+			this["btnControl"].gotoAndStop(1);
+			this["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
+			this["btnATB"].gotoAndStop(1);
+			this["btnATB"].addEventListener(MouseEvent.CLICK, this.onATBMode);
+
+			this["popupMap"]["btnEffect"].gotoAndStop(2);
+			this["popupMap"]["btnEffect"].addEventListener(MouseEvent.CLICK, this.onMapEffectSwitch);
+			this["popupMap"]["btnNext"].addEventListener(MouseEvent.CLICK, changeBg);
+			this["popupMap"]["btnPrev"].addEventListener(MouseEvent.CLICK, changeBg);
 
 			this["btnBack"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
 			Utils.initButton(this["btnBattle"], this.onStartBattle, "Start", true);
-			this["popupMap"]["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
-			this["popupMap"]["btnATB"].addEventListener(MouseEvent.CLICK, this.onATBMode);
+
 			messageTxt = "Player Turn";
 			this["popupInfo"].gotoAndPlay("show");
 		}
@@ -331,9 +341,9 @@
 		// FRAME 2
 		public function changeBg(e:MouseEvent)
 		{
-			if (this["popupMap"]["map"].numChildren > 0)
+			if (this["popupMap"]["map"]["holder"].numChildren > 0)
 			{
-				this["popupMap"]["map"].removeChildAt(0);
+				this["popupMap"]["map"]["holder"].removeChildAt(0);
 			}
 			if (e.target == this["popupMap"].btnNext)
 			{
@@ -352,9 +362,62 @@
 				}
 			}
 			this.bg_map = new bg[this.mapIndex]();
-			this.bg_map.scaleX = 0.5;
-			this.bg_map.scaleY = 0.5;
-			this["popupMap"]["map"].addChild(this.bg_map);
+			this.bg_map.scaleX = 0.9;
+			this.bg_map.scaleY = 0.9;
+			this["popupMap"]["map"]["holder"].addChild(this.bg_map);
+			this.showMapEffectList(mapIndex);
+		}
+
+		public function showMapEffectList(mapIndex:int):void
+		{
+			this["popupMap"]["buffTxt"].htmlText = "Map Buff:";
+			this["popupMap"]["debuffTxt"].htmlText = "Map Debuff:";
+			var mapEffect = MapEffect.getMapByIndex(mapIndex);
+			this["popupMap"]["nameTxt"].htmlText = mapEffect["name"];
+			var chance = mapEffect["chance"];
+			if (useMapEffect == false)
+			{
+				chance = 0;
+			}
+			if (chance <= 0)
+			{
+				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: None";
+			}
+			else if (chance < 35)
+			{
+				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#FF0000\">Low</font>";
+			}
+			else if (chance < 70)
+			{
+				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#FFFF00\">Medium</font>";
+			}
+			else
+			{
+				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#00FF00\">High</font>";
+			}
+
+			for (var i in mapEffect["buff"])
+			{
+				this["popupMap"]["buffTxt"].htmlText += "<font size =\"12\" color=\"#00FF00\">" + effectToStr(mapEffect["buff"][i]) + "</font>";
+			}
+			for (var j in mapEffect["debuff"])
+			{
+				this["popupMap"]["debuffTxt"].htmlText += "<font size =\"12\" color=\"#FF0000\">" + effectToStr(mapEffect["debuff"][j]) + "</font>";
+			}
+		}
+
+		public function onMapEffectSwitch(e:MouseEvent)
+		{
+			this.useMapEffect = !useMapEffect;
+			if (useMapEffect == false)
+			{
+				this["popupMap"]["btnEffect"].gotoAndStop(1);
+			}
+			else
+			{
+				this["popupMap"]["btnEffect"].gotoAndStop(2);
+			}
+			this.showMapEffectList(mapIndex);
 		}
 
 		public function onControlMode(e:MouseEvent)
@@ -362,11 +425,11 @@
 			this.controlParty = !controlParty;
 			if (controlParty == false)
 			{
-				this["popupMap"].btnControl.gotoAndStop(1);
+				this["btnControl"].gotoAndStop(1);
 			}
 			else
 			{
-				this["popupMap"].btnControl.gotoAndStop(2);
+				this["btnControl"].gotoAndStop(2);
 			}
 		}
 
@@ -375,11 +438,11 @@
 			this.atbMode = !atbMode;
 			if (atbMode == false)
 			{
-				this["popupMap"].btnATB.gotoAndStop(1);
+				this["btnATB"].gotoAndStop(1);
 			}
 			else
 			{
-				this["popupMap"].btnATB.gotoAndStop(2);
+				this["btnATB"].gotoAndStop(2);
 			}
 		}
 
@@ -1317,6 +1380,23 @@
 			battleStatus("0", skillTarget);
 		}
 
+		private function handleAfterSelectSkill(id, attacker, skillTarget):void
+		{
+			var mc = attacker.getPet();
+
+			baseSelectSkill(mc, id, skillTarget);
+
+			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
+			skillNameTxt = mc.allActions[id]["name"];
+			this["popupInfo"].gotoAndPlay("show");
+			BattleUtils.updateSkillCooldown(mc, mc.skillData.indexOf(mc.allActions[id]));
+			// Add Map Effect
+			if (useMapEffect)
+			{
+				MapEffectUtils.addRandomEffect(mapIndex, attacker, overheadEffect);
+			}
+		}
+
 		public function AISelectSkill()
 		{
 			// trace("AI select skill start");
@@ -1345,18 +1425,18 @@
 				// trace("AI select skill finish pass");
 				return;
 			}
-			// 1
-			var dmg = "";
-			var randEffect, skillEffect, point;
-			var dmgToCp, sereneMind;
+			// var dmg = "";
+			// var randEffect, skillEffect, point;
+			// var dmgToCp, sereneMind;
 			var id = Math.floor(Math.random() * mc.allActions.length);
-			// 
-			baseSelectSkill(mc, id, skillTarget);
-			// 
-			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
-			skillNameTxt = mc.allActions[id]["name"];
-			this["popupInfo"].gotoAndPlay("show");
-			BattleUtils.updateSkillCooldown(attacker.getPet(), mc.skillData.indexOf(mc.allActions[id]));
+
+			// baseSelectSkill(mc, id, skillTarget);
+
+			// BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
+			// skillNameTxt = mc.allActions[id]["name"];
+			// this["popupInfo"].gotoAndPlay("show");
+			// BattleUtils.updateSkillCooldown(attacker.getPet(), mc.skillData.indexOf(mc.allActions[id]));
+			handleAfterSelectSkill(id, attacker, skillTarget);
 			// battleStatus(dmg, skillTarget);
 			// trace("AI select skill finish");
 		}
@@ -1384,25 +1464,25 @@
 				// trace("Pleayer select skill finish pass");
 				return;
 			}
-			// 1
-			var dmg = "";
-			var randEffect, skillEffect, point;
-			var dmgToCp, sereneMind;
+			// var dmg = "";
+			// var randEffect, skillEffect, point;
+			// var dmgToCp, sereneMind;
 			var id = int(e.target.parent.name.split("_")[1]);
-			// 
-			baseSelectSkill(mc, id, skillTarget);
-			// 
-			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
-			skillNameTxt = mc.allActions[id]["name"]; // skillNameTxt = mc.skillData[id]["name"];
-			this["popupInfo"].gotoAndPlay("show");
+
+			// baseSelectSkill(mc, id, skillTarget);
+
+			// BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
+			// skillNameTxt = mc.allActions[id]["name"];
+			// this["popupInfo"].gotoAndPlay("show");
+			// BattleUtils.updateSkillCooldown(attacker.getPet(), id);
+			handleAfterSelectSkill(id, attacker, skillTarget);
 			skillDisplay(false);
-			BattleUtils.updateSkillCooldown(attacker.getPet(), id);
 			hideTarget(true);
 			// battleStatus(dmg, skillTarget);
 			// trace("Pleayer select skill finish");
 		}
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////
-		public function effectToStr(effect)
+		public function effectToStr(effect, mapEffect:Boolean = false)
 		{
 			// trace(effect);
 			var effType = effect["type"] != "no effect" ? (effect["type"] + " ") : "";
@@ -1411,7 +1491,7 @@
 			// trace(effect["type"] + ":(duration:" + effect["duration"] + ")(amount:" + effect["amount"] + ")");
 			// trace(effType + duration);
 			// trace(BattleData.displaySpecialText(effect));
-			return BattleData.displaySpecialText(effect);
+			return BattleData.displaySpecialText(effect, mapEffect);
 		}
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////
 		public function petMcVisible(show:Boolean)
@@ -1786,21 +1866,21 @@
 			obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
 		}
 
-		public function overheadEffect(show:Boolean, effect, typeEffect, obj)
+		public function overheadEffect(show:Boolean, effect, typeEffect, obj, mapEffect:Boolean = false)
 		{
 			var color = typeEffect == BattleUtils.BUFF_TYPE ? "#00FF00" : "#FF0000";
 			if (typeEffect == BattleUtils.BUFF_TYPE)
 			{
 				obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
 				obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].visible = show;
-				obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect) + "</font>";
+				obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
 				obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
 			}
 			else
 			{
 				obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
 				obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].visible = show;
-				obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect) + "</font>";
+				obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
 				obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
 			}
 		}

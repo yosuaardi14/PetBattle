@@ -7,6 +7,20 @@
 - Refactor Battle and SelectCharacter to AS File (?)
 
 ## v0.2
+### 15 Apr
+#### Game UI
+- Add Map Effect Info (WIP)
+- Move Control Party, Agility System to Select Char
+#### Feature
+- Add Map Effect System (WIP) -> All Map Effect will be overturn effect
+#### Map Effect
+- Stun, Restriction, Heal
+
+### 14 Apr
+#### Game UI
+#### Characters
+- Little Minotaur, Cerberus, Griffin, Wanyudo, Gashadokuro (DONE)
+- Raita, Zoshi, Dorimaru, Chick, Baby Bird (DONE)
 ### 13 Apr
 #### Game UI
 - Change UI Select Character add AP, Pet Type, Show All Character Body not Icon (DONE)
