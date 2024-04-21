@@ -48,6 +48,16 @@
                 "pet_190",
                 "pet_227",
                 "pet_193",
+
+                "pet_191",
+                "pet_195",
+                "pet_200",
+                "pet_212",
+                "pet_228",
+
+                "dog_2", "dummy_pet",
+                "bird_8",
+                "egg_01", "egg_02",
             ];
 
         public static const PET_LIST_UNRELEASE:Array = [

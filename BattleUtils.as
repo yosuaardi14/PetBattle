@@ -9,17 +9,21 @@
 
         public static const PURIFY_ACTION_OBJ = {"type": "purify"};
 
-        public static const BUFF_TYPE = "buff";
+        public static const BUFF_TYPE:String = "buff";
 
-        public static const DEBUFF_TYPE = "debuff";
+        public static const DEBUFF_TYPE:String = "debuff";
 
-        public static const TARGET_MASTER = "master";
+        public static const TARGET_MASTER:String = "master";
 
-        public static const TARGET_SELF = "self";
+        public static const TARGET_SELF:String = "self";
 
-        public static const TARGET_ALL = "all";
+        public static const TARGET_ALL:String = "all";
         // new
-        public static const TARGET_TEAM = "team";
+        public static const TARGET_TEAM:String = "team";
+
+        public static const BUFF:Boolean = true;
+
+        public static const DEBUFF:Boolean = false;
 
         public static function checkTargetIsDead(selected:uint, charArr:Vector.<Pet>):*
         {
@@ -106,7 +110,7 @@
         {
             // FUTURE
             var tempChakra = chakra;
-            var petSaveCP = hasEffect("pet_save_cp", obj, true);
+            var petSaveCP = hasEffect("pet_save_cp", obj, BUFF);
             if (petSaveCP["has"])
             {
                 tempChakra = chakra * (petSaveCP["amount"] / 100);
@@ -133,18 +137,18 @@
         {
             var baseAmount = 25;
             var chargeAmount = baseAmount;
-            var chargeDisable = hasEffect("restrict_charge", target, false);
+            var chargeDisable = hasEffect("restrict_charge", target, DEBUFF);
             if (chargeDisable["has"])
             {
                 updateCP(target, 0);
                 return;
             }
-            var chargeBonus = hasEffect("charge_cp_bonus", target, true);
+            var chargeBonus = hasEffect("charge_cp_bonus", target, BUFF);
             if (chargeBonus["has"])
             {
                 chargeAmount += chargeBonus["amount"];
             }
-            var reduceCharge = hasEffect("pet_reduce_charge", target, false);
+            var reduceCharge = hasEffect("pet_reduce_charge", target, DEBUFF);
             if (reduceCharge["has"])
             {
                 chargeAmount -= reduceCharge["amount"];
@@ -155,12 +159,12 @@
         public static function getFinalDamage(damage, attacker, defender)
         {
             // trace("getFinalDamage start");
-            if (hasEffect("guard", defender, true)["duration"] > 1)
+            if (hasEffect("guard", defender, BUFF)["duration"] > 1)
             {
                 // trace("getFinalDamage finish guard");
                 return 0;
             }
-            var strength = hasEffect("pet_damage_bonus", attacker, true);
+            var strength = hasEffect("pet_damage_bonus", attacker, BUFF);
             var tempDamage = damage;
             if (strength["has"])
             {
@@ -168,91 +172,91 @@
                 damage = damage + tempDamage;
                 trace(damage + " strength");
             }
-            var fearWeaken = hasEffect("fear_weaken", attacker, false);
+            var fearWeaken = hasEffect("fear_weaken", attacker, DEBUFF);
             if (fearWeaken["has"])
             {
                 tempDamage = damage * (fearWeaken["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " fear weaken");
             }
-            var weaken = hasEffect("pet_weaken", attacker, false);
+            var weaken = hasEffect("pet_weaken", attacker, DEBUFF);
             if (weaken["has"])
             {
                 tempDamage = damage * (weaken["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " weaken");
             }
-            var protection = hasEffect("damage_reduction", defender, false);
+            var protection = hasEffect("damage_reduction", defender, BUFF);
             if (protection["duration"] > 1)
             {
                 tempDamage = damage * (protection["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " protection");
             }
-            var petProtection = hasEffect("pet_damage_reduction", defender, false);
+            var petProtection = hasEffect("pet_damage_reduction", defender, BUFF);
             if (petProtection["duration"] > 1)
             {
                 tempDamage = damage * (petProtection["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " protection");
             }
-            var frozen = hasEffect("pet_freeze", attacker, false);
+            var frozen = hasEffect("pet_freeze", attacker, DEBUFF);
             if (frozen["has"])
             {
                 tempDamage = damage * (frozen["amount"] / 100);
                 damage = damage - tempDamage;
                 // trace(damage + " frozen");
             }
-            var bleeding = hasEffect("bleeding", defender, false);
+            var bleeding = hasEffect("bleeding", defender, DEBUFF);
             if (bleeding["duration"] > 1)
             {
                 tempDamage = damage * (bleeding["amount"] / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " bleeding");
             }
-            var petBleeding = hasEffect("pet_bleeding", defender, false);
+            var petBleeding = hasEffect("pet_bleeding", defender, DEBUFF);
             if (petBleeding["duration"] > 1)
             {
                 tempDamage = damage * (petBleeding["amount"] / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " petBleeding");
             }
-            var petBunnyFrenzyDef = hasEffect("bunny_frenzy", defender, true);
+            var petBunnyFrenzyDef = hasEffect("bunny_frenzy", defender, BUFF);
             if (petBunnyFrenzyDef["duration"] > 1)
             {
                 tempDamage = damage * (20 / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " bunny_frenzy defender side effect");
             }
-            var petBunnyFrenzyAtt = hasEffect("bunny_frenzy", attacker, true);
+            var petBunnyFrenzyAtt = hasEffect("bunny_frenzy", attacker, BUFF);
             if (petBunnyFrenzyAtt["has"])
             {
                 tempDamage = damage * 2;
                 damage = damage + tempDamage;
                 // trace(damage + " bunny_frenzy");
             }
-            var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", attacker, true);
+            var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", attacker, BUFF);
             if (battleBunnyFrenzy["has"])
             {
                 tempDamage = damage * 0.25;
                 damage = damage + tempDamage;
                 // trace(damage + " battleBunnyF");
             }
-            var catalyticMatter = hasEffect("catalytic_matter", attacker, true);
+            var catalyticMatter = hasEffect("catalytic_matter", attacker, BUFF);
             if (catalyticMatter["has"])
             {
                 tempDamage = damage * (catalyticMatter["amount"] / 100);
                 damage = damage + tempDamage;
                 // trace(damage + " catalyticMatter");
             }
-            var petLightning = hasEffect("pet_lightning", attacker, true);
+            var petLightning = hasEffect("pet_lightning", attacker, BUFF);
             if (petLightning["has"])
             {
                 tempDamage = damage * (petLightning["amount"] / 100);
                 damage = damage + tempDamage;
                 trace(damage + " petLightning");
             }
-            var ecstasy = hasEffect("ecstatic_sound", attacker, false);
+            var ecstasy = hasEffect("ecstatic_sound", attacker, DEBUFF);
             if (ecstasy["has"])
             {
                 tempDamage = damage * (ecstasy["amount"] / 100);
@@ -288,14 +292,19 @@
             // TEST
             var criticalDamageBase = 150;
             var criticalDamageAmount = criticalDamageBase;
-            var critRate = hasEffect("crit_chance_dmg", attacker, true);
+            var critRate = hasEffect("crit_chance_dmg", attacker, BUFF);
             if (critRate["has"])
             {
                 criticalDamageBase += critRate["amount"];
                 trace(criticalDamageBase + " crit_chance_dmg");
             }
-            var hamstring = hasEffect("hamstring", attacker, true);
+            var hamstring = hasEffect("hamstring", attacker, BUFF);
             if (hamstring["has"])
+            {
+                criticalDamageAmount -= 25;
+            }
+            var lightImpluse = hasEffect("light_impluse", attacker, BUFF);
+            if (lightImpluse["has"])
             {
                 criticalDamageAmount -= 25;
             }
@@ -305,13 +314,13 @@
 
         public static function checkDamageRebound(damage, attacker, defender)
         {
-            var sereneMind = hasEffect("serene_mind", defender, true);
+            var sereneMind = hasEffect("serene_mind", defender, BUFF);
             var dmgToCp;
             if (sereneMind["duration"] > 1)
             {
                 trace(sereneMind["duration"]);
                 updateHP(attacker, -damage);
-                dmgToCp = hasEffect("pet_damage_to_cp", attacker, true);
+                dmgToCp = hasEffect("pet_damage_to_cp", attacker, BUFF);
                 if (dmgToCp["has"])
                 {
                     updateCP(attacker, (dmgToCp["amount"] / 100) * damage);
@@ -321,7 +330,7 @@
             else
             {
                 updateHP(defender, -damage);
-                dmgToCp = hasEffect("pet_damage_to_cp", defender, true);
+                dmgToCp = hasEffect("pet_damage_to_cp", defender, BUFF);
                 if (dmgToCp["duration"] > 1)
                 {
                     updateCP(defender, (dmgToCp["amount"] / 100) * damage);
@@ -332,7 +341,7 @@
 
         public static function handleActiveBuffAfterAttack(dmg, attacker, defender):int
         {
-            var bloodfeed = hasEffect("pet_drain_hp_kekkai", attacker, true);
+            var bloodfeed = hasEffect("pet_drain_hp_kekkai", attacker, BUFF);
             if (bloodfeed["duration"] > 0)
             {
                 var hp = Math.round((bloodfeed["amount"] / 100) * dmg);
@@ -377,43 +386,43 @@
 
             var criticalRandom = Math.floor(Math.random() * 100);
             var criticalChance = charObj.getCritical();
-            var critObj = hasEffect("critical_chance_bonus", charObj, true);
+            var critObj = hasEffect("critical_chance_bonus", charObj, BUFF);
             if (critObj["has"])
             {
                 criticalChance += critObj["amount"];
                 // trace("cc bonus");
             }
-            var bunnyFrenzy = hasEffect("bunny_frenzy", charObj, true);
+            var bunnyFrenzy = hasEffect("bunny_frenzy", charObj, BUFF);
             if (bunnyFrenzy["has"])
             {
                 criticalChance += 25;
                 // trace("bunny frenzy");
             }
-            var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", charObj, true);
+            var battleBunnyFrenzy = hasEffect("battle_bunny_frenzy", charObj, BUFF);
             if (battleBunnyFrenzy["has"])
             {
                 criticalChance += 25;
                 // trace("bunny frenzy");
             }
-            var petEnergize = hasEffect("pet_energize", charObj, true);
+            var petEnergize = hasEffect("pet_energize", charObj, BUFF);
             if (petEnergize["has"])
             {
                 criticalChance += petEnergize["amount"];
                 // trace("energize");
             }
-            var petDiso = hasEffect("pet_disoriented", charObj, true);
+            var petDiso = hasEffect("pet_disoriented", charObj, BUFF);
             if (petDiso["has"])
             {
                 criticalChance -= petDiso["amount"];
                 // trace("disoriented");
             }
-            var critRate = hasEffect("crit_chance_dmg", charObj, true);
+            var critRate = hasEffect("crit_chance_dmg", charObj, BUFF);
             if (critRate["has"])
             {
                 criticalChance += 15;
                 // trace("crit_chance_dmg");
             }
-            var petLightning = hasEffect("pet_lightning", charObj, true);
+            var petLightning = hasEffect("pet_lightning", charObj, BUFF);
             if (petLightning["has"])
             {
                 criticalChance += petLightning["amount"];
@@ -431,43 +440,43 @@
         {
             var dodgeRandom = Math.floor(Math.random() * 100);
             var dodgeChance = defender.getDodge();
-            var dodgeObj = hasEffect("dodge_bonus", defender, true);
+            var dodgeObj = hasEffect("dodge_bonus", defender, BUFF);
             if (dodgeObj["duration"] > 1)
             {
                 dodgeChance += dodgeObj["amount"];
                 // trace("dodge bonus");
             }
-            var petDodgeObj = hasEffect("pet_dodge_bonus", defender, true);
+            var petDodgeObj = hasEffect("pet_dodge_bonus", defender, BUFF);
             if (petDodgeObj["duration"] > 1)
             {
                 dodgeChance += petDodgeObj["amount"];
                 // trace("pet dodge bonus");
             }
-            var dodgeReduce = hasEffect("dodge_reduction", defender, false);
+            var dodgeReduce = hasEffect("dodge_reduction", defender, DEBUFF);
             if (dodgeReduce["duration"] > 1)
             {
                 dodgeChance -= dodgeReduce["amount"];
                 // trace("dodge reduce");
             }
-            var blindObj = hasEffect("blind", attacker, false);
+            var blindObj = hasEffect("blind", attacker, DEBUFF);
             if (blindObj["has"])
             {
                 dodgeChance += blindObj["amount"];
                 // trace("blind attacker");
             }
-            var petBlindObj = hasEffect("pet_blind", attacker, false);
+            var petBlindObj = hasEffect("pet_blind", attacker, DEBUFF);
             if (petBlindObj["has"])
             {
                 dodgeChance += petBlindObj["amount"];
                 // trace("pet blind attacker");
             }
-            var petDiso = hasEffect("pet_disoriented", attacker, false);
+            var petDiso = hasEffect("pet_disoriented", attacker, DEBUFF);
             if (petDiso["has"])
             {
                 dodgeChance -= petDiso["amount"];
                 // trace("disoriented");
             }
-            var petEnergize = hasEffect("pet_energize", attacker, true);
+            var petEnergize = hasEffect("pet_energize", attacker, BUFF);
             if (petEnergize["has"])
             {
                 dodgeChance += petEnergize["amount"];
@@ -486,25 +495,25 @@
             var purifyRandom = Math.floor(Math.random() * 100);
             // trace(purifyRandom);
             var purifyChance = charObj.getPurify();
-            var petEnergize = hasEffect("pet_energize", charObj, true);
+            var petEnergize = hasEffect("pet_energize", charObj, BUFF);
             if (petEnergize["has"])
             {
                 purifyChance += petEnergize["amount"];
                 // trace("energize");
             }
-            var purifyBonus = hasEffect("add_purify_chance", charObj, true);
+            var purifyBonus = hasEffect("add_purify_chance", charObj, BUFF);
             if (purifyBonus["has"])
             {
                 purifyChance += purifyBonus["amount"];
                 // trace("add purify");
             }
-            var purifyReduce = hasEffect("reduce_purify_chance", charObj, true);
+            var purifyReduce = hasEffect("reduce_purify_chance", charObj, BUFF);
             if (purifyReduce["has"])
             {
                 purifyChance -= purifyReduce["amount"];
                 // trace("reduce purify");
             }
-            var petDiso = hasEffect("pet_disoriented", charObj, true);
+            var petDiso = hasEffect("pet_disoriented", charObj, BUFF);
             if (petDiso["has"])
             {
                 purifyChance -= petDiso["amount"];
@@ -517,15 +526,15 @@
         {
             var accRandom = Math.floor(Math.random() * 100);
             var accPoints = 100;
-            if (hasEffect("sleep", defender, false)["has"])
+            if (hasEffect("sleep", defender, DEBUFF)["has"])
             {
                 defender.getDebuffArr()["sleep"]["duration"] = 0;
             }
-            if (hasEffect("random_sleep", defender, false)["has"])
+            if (hasEffect("random_sleep", defender, DEBUFF)["has"])
             {
                 defender.getDebuffArr()["random_sleep"]["duration"] = 0;
             }
-            var fireWall = hasEffect("pet_reflect_attack", defender, true);
+            var fireWall = hasEffect("pet_reflect_attack", defender, BUFF);
             if (fireWall["has"])
             {
                 attacker.getDebuffArr()["pet_burn"] = {
@@ -534,18 +543,18 @@
                         "amount": fireWall["amount"]
                     };
             }
-            if (hasEffect("hundred_percent_attack", attacker, true)["has"])
+            if (hasEffect("hundred_percent_attack", attacker, BUFF)["has"])
             {
                 return true;
             }
             var accBonus = getDodgeChance(attacker, defender);
             accPoints -= accBonus;
-            var petAttention = hasEffect("pet_attention", attacker, true);
+            var petAttention = hasEffect("pet_attention", attacker, BUFF);
             if (petAttention["has"])
             {
                 accPoints += petAttention["amount"];
             }
-            var petLightning = hasEffect("pet_lightning", attacker, true);
+            var petLightning = hasEffect("pet_lightning", attacker, BUFF);
             if (petLightning["has"])
             {
                 accPoints += petLightning["amount"];
@@ -683,12 +692,12 @@
             else if (effectObj["type"] == "flame_eater")
             {
                 var hasBurn = false;
-                if (hasEffect("burn", target, false)["has"])
+                if (hasEffect("burn", target, DEBUFF)["has"])
                 {
                     target.getDebuffArr()["burn"]["duration"] = 0;
                     hasBurn = true;
                 }
-                if (hasEffect("pet_burn", target, false)["has"])
+                if (hasEffect("pet_burn", target, DEBUFF)["has"])
                 {
                     target.getDebuffArr()["pet_burn"]["duration"] = 0;
                     hasBurn = true;
@@ -703,7 +712,20 @@
                 }
                 overheadNumber(true, "-" + burnHP, "", target);
                 updateHP(target, -burnHP);
-                trace("flame_eater HP - "+burnHP);
+                trace("flame_eater HP - " + burnHP);
+                return true;
+            }
+            else if (effectObj["type"] == "add_all_cooldown")
+            {
+                // TODO
+                var cooldownTemp1 = target.getCooldown();
+                for (var i in cooldownTemp1)
+                {
+                    // if(cooldownTemp1[i] > 0){
+                        cooldownTemp1[i] += (effectObj["amount"] - 1);
+                    // }
+                }
+                target.setCooldown(cooldownTemp1);
                 return true;
             }
             return false;
@@ -723,7 +745,7 @@
             {
                 // done
                 var heal = effectObj["amount"];
-                if (target.getIsDead() || hasEffect("internal_injury", target, false)["has"])
+                if (target.getIsDead() || hasEffect("internal_injury", target, DEBUFF)["has"])
                 {
                     heal = 0;
                 }
@@ -782,7 +804,7 @@
             {
                 case "pet_heal":
                     recoverHP = Math.round(obj.getMaxHP() * (buff["amount"] / 100));
-                    if (obj.getIsDead() || hasEffect("internal_injury", obj, false)["has"])
+                    if (obj.getIsDead() || hasEffect("internal_injury", obj, DEBUFF)["has"])
                     {
                         recoverHP = 0;
                     }
@@ -873,7 +895,7 @@
 
         public static function addBuffEffect(skillEffect, target)
         {
-            if (!directBuff(skillEffect, target) && !isDupliEffect(skillEffect, target, true))
+            if (!directBuff(skillEffect, target) && !isDupliEffect(skillEffect, target, BUFF))
             {
                 target.getBuffArr()[skillEffect["type"]] = (skillEffect);
             }
@@ -881,7 +903,7 @@
 
         public static function addDebuffEffect(skillEffect, target, attacker, master, overheadNumber)
         {
-            if (!directDebuff(skillEffect, attacker, target, master, overheadNumber) && !isDupliEffect(skillEffect, target, false))
+            if (!directDebuff(skillEffect, attacker, target, master, overheadNumber) && !isDupliEffect(skillEffect, target, DEBUFF))
             {
                 target.getDebuffArr()[skillEffect["type"]] = (skillEffect);
             }
@@ -895,11 +917,11 @@
 
         public static function skipAddDebuffEffect(target):Boolean
         {
-            if (hasEffect("debuff_resist", target, true)["duration"] > 1)
+            if (hasEffect("debuff_resist", target, BUFF)["duration"] > 1)
             {
                 return true;
             }
-            if (hasEffect("pet_debuff_resist", target, true)["duration"] > 1)
+            if (hasEffect("pet_debuff_resist", target, BUFF)["duration"] > 1)
             {
                 return true;
             }
