@@ -4,9 +4,43 @@
 - add Effect: pet_save_cp (when CP System Added)
 
 ## TODO
-- Refactor Battle and SelectCharacter to AS File (?)
+- Refactor Battle and SelectCharacter to AS File (?) -> Using Linkage (?)
+- Add Battle ATB Bar (TODO ?)
 
 ## v0.2
+### 24 Apr
+#### Game UI
+#### Characters
+#### Feature
+- rearrange the background sequence (DONE)
+#### Other
+- refactor many codes
+
+### 23 Apr
+#### Game UI
+-add special skill button (DONE)
+#### Characters
+#### Feature
+
+### 22 Apr
+#### Game UI
+-add map effect resistance (WIP)
+#### Characters
+-update Chick and Baby Bird Icon (DONE)
+#### Feature
+-show overheadeffect when character start turn (DONE)
+-add map effect resistance system (DONE)
+
+### 21 Apr
+#### Game UI
+-update OverheadNumber MovieClip (DONE)
+#### Feature
+-show overheadeffect when character start turn (TODO)
+
+### 16 - 19 Apr
+#### Map Effect
+- Strengthen, Protection, Weaken, Blind, Numb, Dodge +
+
 ### 15 Apr
 #### Game UI
 - Add Map Effect Info (WIP)

@@ -1665,19 +1665,19 @@
 									"type": "pet_random_effect_on_master",
 									"EffectArray": [ {
 											"id": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "heal",
 											"amount": 50,
 											"heal": 50
 										}, {
 											"id": 2,
-											"chance": 0.33,
+											// "chance": 0.33,
 											"type": "restore_cp",
 											"amount": 50,
 											"heal": 50
 										}, {
 											"id": 3,
-											"chance": 0.66,
+											// "chance": 0.66,
 											"type": "cooldown_reduction",
 											"amount": 1
 										}]
@@ -1700,20 +1700,20 @@
 									"EffectArray": [ {
 											"id": 1,
 											"isDebuff": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "stun",
 											"duration": 2
 										}, {
 											"id": 2,
 											"isDebuff": 1,
-											"chance": 0.33,
+											// "chance": 0.33,
 											"type": "poison",
 											"duration": 2,
 											"amount": 5
 										}, {
 											"id": 3,
 											"isDebuff": 1,
-											"chance": 0.66,
+											// "chance": 0.66,
 											"type": "pet_burn",
 											"duration": 2,
 											"amount": 5
@@ -1737,27 +1737,27 @@
 									"EffectArray": [ {
 											"id": 1,
 											"isDebuff": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "stun",
 											"duration": 2
 										}, {
 											"id": 2,
 											"isDebuff": 1,
-											"chance": 0.25,
+											// "chance": 0.25,
 											"type": "bundle",
 											"duration": 2,
 											"amount": 20
 										}, {
 											"id": 3,
 											"isDebuff": 1,
-											"chance": 0.5,
+											// "chance": 0.5,
 											"type": "dodge_reduction",
 											"duration": 2,
 											"amount": 5
 										}, {
 											"id": 4,
 											"isDebuff": 1,
-											"chance": 0.75,
+											// "chance": 0.75,
 											"type": "fear_weaken",
 											"duration": 2,
 											"amount": 5
@@ -1781,27 +1781,27 @@
 									"EffectArray": [ {
 											"id": 1,
 											"isDebuff": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "coilding_wave",
 											"duration": 2,
 											"amount": 2
 										}, {
 											"id": 2,
 											"isDebuff": 1,
-											"chance": 0.25,
+											// "chance": 0.25,
 											"type": "hamstring",
 											"duration": 2,
 											"amount": 5
 										}, {
 											"id": 3,
 											"isDebuff": 1,
-											"chance": 0.5,
+											// "chance": 0.5,
 											"type": "internal_injury",
 											"duration": 2
 										}, {
 											"id": 4,
 											"isDebuff": 1,
-											"chance": 0.75,
+											// "chance": 0.75,
 											"type": "blind",
 											"duration": 2,
 											"amount": 5
@@ -2217,8 +2217,8 @@
 							"skill_cp": 0,
 							"effect": [ {
 									"type": "pet_damage_bonus",
-									"duration": "3",
-									"amount": "15"
+									"duration": 3,
+									"amount": 15
 								}]
 						}, {
 							"id": 4,
@@ -2235,8 +2235,8 @@
 							"skill_cp": 0,
 							"effect": [ {
 									"type": "pet_burn",
-									"duration": "2",
-									"amount": "2"
+									"duration": 2,
+									"amount": 2
 								}]
 						}]
 				},
@@ -4656,19 +4656,19 @@
 									"type": "pet_random_effect_on_master",
 									"EffectArray": [ {
 											"id": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "heal",
 											"amount": 50,
 											"heal": 50
 										}, {
 											"id": 2,
-											"chance": 0.33,
+											// "chance": 0.33,
 											"type": "restore_cp",
 											"amount": 50,
 											"heal": 50
 										}, {
 											"id": 3,
-											"chance": 0.66,
+											// "chance": 0.66,
 											"type": "cooldown_reduction",
 											"amount": 1
 										}]
@@ -4695,20 +4695,20 @@
 									"EffectArray": [ {
 											"id": 1,
 											"isDebuff": 1,
-											"chance": 0,
+											// "chance": 0,
 											"type": "stun",
 											"duration": 2
 										}, {
 											"id": 2,
 											"isDebuff": 1,
-											"chance": 0.33,
+											// "chance": 0.33,
 											"type": "poison",
 											"duration": 2,
 											"amount": 5
 										}, {
 											"id": 3,
 											"isDebuff": 1,
-											"chance": 0.66,
+											// "chance": 0.66,
 											"type": "pet_burn",
 											"duration": 2,
 											"amount": 5
@@ -6473,7 +6473,7 @@
 							"description": "<b>Soul of Blade</b><br>Target's damage reduces 15% (3 turns)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range1",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {

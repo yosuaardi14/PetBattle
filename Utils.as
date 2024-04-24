@@ -8,6 +8,9 @@
 	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
 	import flash.filters.GlowFilter;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLLoader;
+	import flash.utils.getQualifiedClassName;
 
 	public class Utils
 	{
@@ -29,12 +32,20 @@
 			loader.load(new URLRequest(urlPath));
 		}
 
-		public static function searchClassByPetName(obj:Object, petName:String):*
+		public static function loadJson(urlPath:String, callbackFunc:*):void
+		{
+			var loader:URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.addEventListener(Event.COMPLETE, callbackFunc);
+			loader.load(new URLRequest(urlPath));
+		}
+
+		public static function searchClassBySwfName(obj:Object, petName:String):*
 		{
 			return obj[petName];
 		}
 
-		public static function initButton(btn, func, labelTxt, vis = true)
+		public static function initButton(btn, func, labelTxt = "", vis = true)
 		{
 			if (labelTxt != "")
 			{
@@ -152,19 +163,64 @@
 			}
 		}
 
-		public static function addMouseEventClick(obj:*, callback:*):*
+		public static function addMouseEvent(obj:*, mouseEvent:*, callback:*):*
 		{
-			obj.addEventListener(MouseEvent.CLICK, callback);
+			obj.addEventListener(mouseEvent, callback);
 		}
 
-		public static function removeMouseEventClick(obj:*, callback:*):*
+		public static function removeMouseEvent(obj:*, mouseEvent:*, callback:*):*
 		{
-			obj.removeEventListener(MouseEvent.CLICK, callback);
+			obj.removeEventListener(mouseEvent, callback);
+		}
+
+		public static function hasMouseEvent(obj:*, mouseEvent:*):Boolean
+		{
+			return obj.hasEventListener(mouseEvent);
+		}
+
+		public static function addMouseEventClick(obj:*, callback:*):void
+		{
+			addMouseEvent(obj, MouseEvent.CLICK, callback);
+		}
+
+		public static function removeMouseEventClick(obj:*, callback:*):void
+		{
+			removeMouseEvent(obj, MouseEvent.CLICK, callback);
 		}
 
 		public static function hasMouseEventClick(obj:*):Boolean
 		{
-			return obj.hasEventListener(MouseEvent.CLICK);
+			return hasMouseEvent(obj, MouseEvent.CLICK);
+		}
+
+		public static function addMouseEventRollOver(obj:*, callback:*):void
+		{
+			addMouseEvent(obj, MouseEvent.ROLL_OVER, callback);
+		}
+
+		public static function removeMouseEventRollOver(obj:*, callback:*):void
+		{
+			removeMouseEvent(obj, MouseEvent.ROLL_OVER, callback);
+		}
+
+		public static function hasMouseEventRollOver(obj:*):Boolean
+		{
+			return hasMouseEvent(obj, MouseEvent.ROLL_OVER);
+		}
+
+		public static function addMouseEventRollOut(obj:*, callback:*):void
+		{
+			addMouseEvent(obj, MouseEvent.ROLL_OUT, callback);
+		}
+
+		public static function removeMouseEventRollOut(obj:*, callback:*):void
+		{
+			removeMouseEvent(obj, MouseEvent.ROLL_OUT, callback);
+		}
+
+		public static function hasMouseEventRollOut(obj:*):Boolean
+		{
+			return hasMouseEvent(obj, MouseEvent.ROLL_OUT);
 		}
 
 		public static function removeChildIfExistAt(obj:*, index:int):*
@@ -175,11 +231,42 @@
 			}
 		}
 
-		public static function addActiveGlowFilter(mc, active = false)
+		public static function getLinkageName(mc:*):String
 		{
-			if (active)
+			return getQualifiedClassName(mc);
+		}
+
+		public static function switchButtonBaseFunction(value:Boolean, buttonMc:*, callback:Function = null):void
+		{
+			if (value == false)
 			{
-				var glow:GlowFilter = new GlowFilter();
+				buttonMc.gotoAndStop(1);
+			}
+			else
+			{
+				buttonMc.gotoAndStop(2);
+			}
+
+			if (callback != null)
+			{
+				callback();
+			}
+		}
+
+		public static function addGlowFilter(mc, active = false, target = false)
+		{
+			var glow:GlowFilter = new GlowFilter();
+			if (target)
+			{
+				glow.color = 0xFF0000;
+				glow.blurX = 3;
+				glow.blurY = 3;
+				glow.strength = 4;
+				glow.quality = 3; // BitmapFilterQuality.HIGH;
+				mc.filters = [glow];
+			}
+			else if (active)
+			{
 				glow.color = 0x00FF00;
 				glow.blurX = 3;
 				glow.blurY = 3;
@@ -192,7 +279,6 @@
 				mc.filters = [];
 			}
 		}
-
 	}
 
 }

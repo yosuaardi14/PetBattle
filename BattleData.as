@@ -593,7 +593,12 @@
 			}*/
 			var duration:String = String(int(param1["duration"]) - 1);
 			var amount:String = String(param1["amount"]);
-			var durationTxt:String = "";// (int(param1["duration"]) - 1) > 1 ? " turns" : " turn";
+			var durationTxt:String = ""; // (int(param1["duration"]) - 1) > 1 ? " turns" : " turn";
+			var durationDesc:String = "(" + duration + durationTxt + ")";
+			if (duration == "0")
+			{
+				durationDesc = "Faded";
+			}
 			if (mapEffect)
 			{
 				return MapEffectData.displaySpecialText(param1);
@@ -601,15 +606,15 @@
 			switch (param1["type"])
 			{
 				case EFFECT_PET_BURN:
-					return "Burn -" + amount + "% (" + duration + durationTxt + ")";
+					return "Burn -" + amount + "% " + durationDesc;
 				case EFFECT_PET_DISORIENTED:
-					return "Disoriented (" + duration + durationTxt + ")";
+					return "Disoriented " + durationDesc;
 				case EFFECT_DISMANTLE:
-					return "Dismantle (" + duration + durationTxt + ")";
+					return "Dismantle " + durationDesc;
 				case EFFECT_CHAOS:
-					return "Chaos (" + duration + durationTxt + ")";
+					return "Chaos " + durationDesc;
 				case EFFECT_PET_ATTENTION:
-					return "Attention (" + duration + durationTxt + ")";
+					return "Attention " + durationDesc;
 				case EFFECT_BURN_CP:
 					return "CP -" + amount + "%";
 				case EFFECT_BURN_HP:
@@ -617,61 +622,61 @@
 				case EFFECT_BURN_CP_HP:
 					return "HP & CP -" + amount + "%";
 				case EFFECT_PET_WEAKEN:
-					return "Weaken " + amount + "% (" + duration + durationTxt + ")";
+					return "Weaken " + amount + "% " + durationDesc;
 				case EFFECT_GUARD:
-					return "Guard (" + duration + durationTxt + ")";
+					return "Guard " + durationDesc;
 				case EFFECT_PET_ENERGIZE:
-					return "Energize (" + duration + durationTxt + ")";
+					return "Energize " + durationDesc;
 				case EFFECT_PET_DAMAGE_BONUS:
-					return "Strengthen "+ amount + "% (" + duration + durationTxt + ")";
+					return "Strengthen " + amount + "% " + durationDesc;
 				case EFFECT_POISON:
-					return "Poison " + amount + "% (" + duration + durationTxt + ")";
+					return "Poison " + amount + "% " + durationDesc;
 				case EFFECT_HAMSTRING:
-					return "Hamstring " + amount + "% (" + duration + durationTxt + ")";
+					return "Hamstring " + amount + "% " + durationDesc;
 				case EFFECT_HEAL:
-					return "Heal +" + amount + " (" + duration + durationTxt + ")";
+					return "Heal +" + amount + " " + durationDesc;
 				case EFFECT_DODGE_REDUCTION:
-					return "Numb " + amount + "% (" + duration + durationTxt + ")";
+					return "Numb " + amount + "% " + durationDesc;
 				case EFFECT_COILDING_WAVE:
-					return "Prison " + amount + "% (" + duration + durationTxt + ")";
+					return "Prison " + amount + "% " + durationDesc;
 				case EFFECT_INTERNAL_INJURY:
-					return "Internal Injury (" + duration + durationTxt + ")";
+					return "Internal Injury " + durationDesc;
 				case EFFECT_PET_INTERNAL_INJURY:
-					return "Internal Injury (" + duration + durationTxt + ")";
+					return "Internal Injury " + durationDesc;
 				case EFFECT_COOLDOWN_REDUCTION:
 					return "Rapid Cooldown";
 				case EFFECT_RESTORE_CP:
 					return "CP +" + amount;
 				case EFFECT_FEAR_WEAKEN:
-					return "Fear (Weaken) (" + duration + durationTxt + ")";
+					return "Fear (Weaken) " + durationDesc;
 				case EFFECT_FEAR:
-					return "Fear (" + duration + durationTxt + ")";
+					return "Fear " + durationDesc;
 				case EFFECT_STUN_RANDOM:
-					return "Stun (" + duration + durationTxt + ")";
+					return "Stun " + durationDesc;
 				case EFFECT_PET_BLEEDING:
-					return "Bleeding (" + duration + durationTxt + ")";
+					return "Bleeding " + durationDesc;
 				case EFFECT_ADD_DAMAGE_BONUS:
-					return "Strengthen "+ amount + "% (" + duration + durationTxt + ")";
+					return "Strengthen " + amount + "% " + durationDesc;
 				case EFFECT_DAMAGE_REDUCTION:
-					return "Protection "+ amount + "% (" + duration + durationTxt + ")";
+					return "Protection " + amount + "% " + durationDesc;
 				case EFFECT_DODGE:
 					return "Dodge";
 				case EFFECT_PET_REDUCE_CHARGE:
-					return "Charge -" + amount + "% (" + duration + durationTxt + ")";
+					return "Charge -" + amount + "% " + durationDesc;
 				case EFFECT_PET_DAMAGE_TO_CP:
-					return "Stubborn (" + duration + durationTxt + ")";
+					return "Stubborn " + durationDesc;
 				case EFFECT_PET_BLIND:
-					return "Blind " + amount + "% (" + duration + durationTxt + ")";
+					return "Blind " + amount + "% " + durationDesc;
 				case EFFECT_BUNNY_FRENZY:
-					return "Frenzy (" + duration + durationTxt + ")";
+					return "Frenzy " + durationDesc;
 				case EFFECT_DISTRACT:
-					return "Distract " + amount + "% (" + duration + durationTxt + ")";
+					return "Distract " + amount + "% " + durationDesc;
 				case EFFECT_PET_HEAL:
-					return "Heal +" + amount + "% (" + duration + durationTxt + ")";
+					return "Heal +" + amount + "% " + durationDesc;
 				case EFFECT_PET_DEBUFF_RESIST:
-					return "Debuff Resist (" + duration + durationTxt + ")";
+					return "Debuff Resist " + durationDesc;
 				case EFFECT_SERENE_MIND:
-					return "Serene Mind (" + duration + durationTxt + ")";
+					return "Serene Mind " + durationDesc;
 				case EFFECT_DRAIN_HP:
 					return "Drain HP " + amount + "%";
 				case EFFECT_PET_DRAIN_HP:
@@ -685,84 +690,84 @@
 				case EFFECT_CLEAR_BUFF:
 					return "Disperse";
 				case EFFECT_RANDOM_SLEEP:
-					return "Sleep (" + duration + durationTxt + ")";
+					return "Sleep " + durationDesc;
 				case EFFECT_PET_DAMAGE_REDUCTION:
-					return "Protection "+ amount + "% (" + duration + durationTxt + ")";
+					return "Protection " + amount + "% " + durationDesc;
 				case EFFECT_RESTRICT_CHARGE:
-					return "Charge Disabled (" + duration + durationTxt + ")";
+					return "Charge Disabled " + durationDesc;
 				case EFFECT_CRIT_CHANCE_DMG:
-					return "Mortal (" + duration + durationTxt + ")";
+					return "Mortal " + durationDesc;
 				case EFFECT_CATALYTIC_MATTER:
-					return "Catalytic (" + duration + durationTxt + ")";
+					return "Catalytic " + durationDesc;
 				case EFFECT_PET_LIGHTNING:
-					return "Lightning Armor (" + duration + durationTxt + ")";
+					return "Lightning Armor " + durationDesc;
 				case EFFECT_PET_SAVE_CP:
-					return "- CP Cost " + amount + "% (" + duration + durationTxt + ")";
+					return "- CP Cost " + amount + "% " + durationDesc;
 				case EFFECT_HEAL_DAMAGE:
 					return "Heal +" + amount + ")";
 				case EFFECT_ECSTATIC_SOUND:
-					return "Ecstasy " + amount + "% (" + duration + ") turns";
+					return "Ecstasy " + amount + "% " + durationDesc;
 				case EFFECT_FLAME_EATER:
 					return "Flame Eater";
 				case EFFECT_PET_REFLECT_ATTACK:
-					return "Fire Wall (" + duration + ") turns";
+					return "Fire Wall " + durationDesc;
 				case EFFECT_PET_DRAIN_HP_KEKKAI:
-					return "Bloodfeed " + amount + "% (" + duration + ") turns";
+					return "Bloodfeed " + amount + "% " + durationDesc;
 				case EFFECT_INTERNAL_INJURY_RANDOM:
-					return "Internal Injury (" + duration + durationTxt + ")";
+					return "Internal Injury " + durationDesc;
 				case EFFECT_LIGHT_IMPLUSE:
-					return "Hamstring (" + duration + durationTxt + ")";
+					return "Hamstring " + durationDesc;
 				case EFFECT_ADD_ALL_COOLDOWN:
 					return "All Cooldown +" + amount + "";
 					// /////////////////////////////////////////////////////////////////////////
 				case EFFECT_STUN:
-					return "Stun (" + duration + durationTxt + ")";
+					return "Stun " + durationDesc;
 
 				case EFFECT_SLEEP:
-					return "Sleep (" + duration + durationTxt + ")";
+					return "Sleep " + durationDesc;
 
 				case EFFECT_DAMAGE_REDUCTION:
-					return "Damage -" + amount + "% (" + duration + durationTxt + ")";
+					return "Damage -" + amount + "% " + durationDesc;
 
 				case EFFECT_DAMAGE_BONUS:
-					return "Damage +" + amount + "% (" + duration + durationTxt + ")";
+					return "Damage +" + amount + "% " + durationDesc;
 
 				case EFFECT_AGILITY_BONUS:
-					return "Agility +" + amount + "% (" + duration + durationTxt + ")";
+					return "Agility +" + amount + "% " + durationDesc;
 
 				case EFFECT_DODGE_BONUS:
 				case EFFECT_PET_DODGE_BONUS:
-					return "Dodge +" + amount + "% (" + duration + durationTxt + ")";
+					return "Dodge +" + amount + "% " + durationDesc;
 
 				case EFFECT_CRITICAL_CHANCE_BONUS:
-					return "Critical " + amount + "% (" + duration + durationTxt + ")";
+					return "Critical " + amount + "% " + durationDesc;
 
 				case EFFECT_REGENERATE_CHAKRA:
-					return "Regenerate CP " + amount + "% (" + duration + durationTxt + ")";
+					return "Regenerate CP " + amount + "% " + durationDesc;
 
 				case EFFECT_REGENERATE_HP:
-					return "Regenerate HP " + amount + "% (" + duration + durationTxt + ")";
+					return "Regenerate HP " + amount + "% " + durationDesc;
 
 				case EFFECT_COMBUSTION:
-					return "Combustion +" + amount + "% damage (" + duration + durationTxt + ")";
+					return "Combustion +" + amount + "% damage " + durationDesc;
 
 				case EFFECT_PURIFY:
 					return "Purify";
 
 				case EFFECT_REACTIVE_FORCE:
-					return "Reactive Force " + amount + "% damage) (" + duration + durationTxt + ")";
+					return "Reactive Force " + amount + "% damage) " + durationDesc;
 
 				case EFFECT_BLEEDING:
-					return "Bleeding (" + duration + durationTxt + ")";
+					return "Bleeding " + durationDesc;
 
 				case EFFECT_BURN:
-					return "Burning " + amount + "% (" + duration + durationTxt + ")";
+					return "Burning " + amount + "% " + durationDesc;
 
 				case EFFECT_BLIND:
-					return "Blind " + amount + "% (" + duration + durationTxt + ")";
+					return "Blind " + amount + "% " + durationDesc;
 
 				case EFFECT_BUNDLE:
-					return "Restriction (" + duration + durationTxt + ")";
+					return "Restriction " + durationDesc;
 
 				case EFFECT_DRAIN_CHAKRA:
 					return "Drain CP " + amount + "%";
