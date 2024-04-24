@@ -1,4 +1,4 @@
-package
+﻿package
 {
     public class MapEffect
     {
@@ -23,7 +23,9 @@ package
                             "duration": 2,
                             "amount": 5
                         }
-                    ]
+                    ],
+                    "resistanceChance": 100,
+                    "resistance": ["stun", "pet_burn"]
                 },
                 "map1": {
                     "name": "Rock Cave",
@@ -39,10 +41,12 @@ package
                             "duration": 2,
                             "amount": 3
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map2": {
-                    "name": "Forest",
+                    "name": "Hidden Forest",
                     "chance": 50,
                     "buff": [
                         {
@@ -56,7 +60,9 @@ package
                             "type": "bundle",
                             "duration": 2
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map3": {
                     "name": "Hidden Cave",
@@ -74,7 +80,9 @@ package
                             "duration": 2,
                             "amount": 5
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map4": {
                     "name": "Field",
@@ -92,7 +100,9 @@ package
                             "duration": 2,
                             "amount": 10
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map5": {
                     "name": "Hidden Laboratory",
@@ -104,7 +114,9 @@ package
                             "duration": 2,
                             "amount": 3
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map6": {
                     "name": "Hidden Laboratory II",
@@ -115,7 +127,9 @@ package
                             "type": "stun",
                             "duration": 3
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map7": {
                     "name": "Arena",
@@ -132,7 +146,9 @@ package
                             "type": "stun",
                             "duration": 3
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map8": {
                     "name": "Saint Palace Arena",
@@ -160,7 +176,9 @@ package
                             "duration": 2,
                             "amount": 50
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map9": {
                     "name": "Soul Forest",
@@ -172,10 +190,12 @@ package
                             "amount": 10
                         }
                     ],
-                    "debuff": []
+                    "debuff": [],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map10": {
-                    "name": "City",
+                    "name": "Fire Village Street",
                     "chance": 75,
                     "buff": [
                         {
@@ -190,7 +210,9 @@ package
                             "duration": 2,
                             "amount": 10
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
                 },
                 "map11": {
                     "name": "Battle Arena II",
@@ -208,7 +230,178 @@ package
                             "duration": 2,
                             "amount": 5
                         }
-                    ]
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map12": {
+                    "name": "Forest",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map13": {
+                    "name": "Practice",
+                    "chance": 0,
+                    "buff": [],
+                    "debuff": [],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map14": {
+                    "name": "Easter Field",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map15": {
+                    "name": "Volcano",
+                    "chance": 75,
+                    "buff": [
+                        {
+                            "type": "pet_damage_bonus",
+                            "duration": 2,
+                            "amount": 25
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "pet_burn",
+                            "amount": 5,
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 100,
+                    "resistance": ["pet_heal", "heal"]
+                },
+                "map16": {
+                    "name": "Snow Village",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        },
+                        {
+                            "type": "stun",
+                            "duration": 2
+                        },
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map17": {
+                    "name": "Kojima Cave",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map18": {
+                    "name": "Thanksgiving Park",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map19": {
+                    "name": "Halloween Desert",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        }
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": []
+                },
+                "map20": {
+                    "name": "Snow Field",
+                    "chance": 50,
+                    "buff": [
+                        {
+                            "type": "pet_heal",
+                            "amount": 2,
+                            "duration": 2
+                        }
+                    ],
+                    "debuff": [
+                        {
+                            "type": "bundle",
+                            "duration": 2
+                        },
+                        {
+                            "type": "stun",
+                            "duration": 2
+                        },
+                    ],
+                    "resistanceChance": 0,
+                    "resistance": ["pet_burn"]
                 }
             };
     }

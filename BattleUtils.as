@@ -430,6 +430,7 @@
             if (Math.round(criticalChance) >= criticalRandom)
             {
                 // trace("checkCritical finish true");
+                charObj.isCritical = true;
                 return true;
             }
             // trace("checkCritical finish false");
@@ -539,7 +540,7 @@
             {
                 attacker.getDebuffArr()["pet_burn"] = {
                         "type": "pet_burn",
-                        "duration": 1,
+                        "duration": 2,
                         "amount": fireWall["amount"]
                     };
             }
@@ -592,21 +593,23 @@
 
         }
 
-        public static function directDebuff(effectObj, attacker, target, master, overheadNumber)
+        public static function directDebuff(effectObj, attacker, target, master, overheadNumber, overheadEffect)
         {
             // var targetStats = target["stats"];
             var burnHP, burnCP, burnHPMaster, burnCPMaster;
             if (effectObj["type"] == "burn_hp")
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
-                overheadNumber(true, "-" + burnHP, "", target);
+                // overheadNumber(true, "-" + burnHP, "", target);
+                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
                 updateHP(target, -burnHP);
                 return true;
             }
             else if (effectObj["type"] == "burn_cp")
             {
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-                overheadNumber(true, "-" + burnCP + " CP", "", target);
+                // overheadNumber(true, "-" + burnCP + " CP", "", target);
+                overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
                 updateCP(target, -burnCP);
                 return true;
             }
@@ -614,7 +617,8 @@
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-                overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", target);
+                // overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", target);
+                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP & -" + burnCP + " CP");
                 updateHP(target, -burnHP);
                 updateCP(target, -burnCP);
                 return true;
@@ -632,8 +636,10 @@
                 {
                     burnHPMaster = 0;
                 }
-                overheadNumber(true, "+" + burnHPMaster, "self", master);
-                overheadNumber(true, "-" + burnHP, "", target);
+                // overheadNumber(true, "+" + burnHPMaster, "self", master);
+                // overheadNumber(true, "-" + burnHP, "", target);
+                overheadEffect(true, null, "buff", master, false, "+" + burnHPMaster + " HP");
+                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
                 updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
@@ -646,8 +652,10 @@
                 {
                     burnHPMaster = 0;
                 }
-                overheadNumber(true, "+" + burnHPMaster, "self", master);
-                overheadNumber(true, "-" + burnHP, "", target);
+                // overheadNumber(true, "+" + burnHPMaster, "self", master);
+                // overheadNumber(true, "-" + burnHP, "", target);
+                overheadEffect(true, null, "buff", master, false, "+" + burnHPMaster + " HP");
+                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
                 updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
@@ -660,8 +668,10 @@
                 {
                     burnCPMaster = 0;
                 }
-                overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
-                overheadNumber(true, "-" + burnCP + " CP", "", target);
+                // overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
+                // overheadNumber(true, "-" + burnCP + " CP", "", target);
+                overheadEffect(true, null, "buff", master, false, "+" + burnCPMaster + " CP");
+                overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
                 updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
@@ -675,8 +685,10 @@
                 {
                     burnCPMaster = 0;
                 }
-                overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
-                overheadNumber(true, "-" + burnCP + " CP", "", target);
+                // overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
+                // overheadNumber(true, "-" + burnCP + " CP", "", target);
+                overheadEffect(true, null, "buff", master, false, "+" + burnCPMaster + " CP");
+                overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
                 updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
@@ -710,7 +722,8 @@
                 {
                     burnHP = Math.round(target.getMaxHP() * (1 / 100));
                 }
-                overheadNumber(true, "-" + burnHP, "", target);
+                // overheadNumber(true, "-" + burnHP, "", target);
+                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
                 updateHP(target, -burnHP);
                 trace("flame_eater HP - " + burnHP);
                 return true;
@@ -722,7 +735,7 @@
                 for (var i in cooldownTemp1)
                 {
                     // if(cooldownTemp1[i] > 0){
-                        cooldownTemp1[i] += (effectObj["amount"] - 1);
+                    cooldownTemp1[i] += (effectObj["amount"] - 1);
                     // }
                 }
                 target.setCooldown(cooldownTemp1);
@@ -731,7 +744,7 @@
             return false;
         }
 
-        public static function directBuff(effectObj, target)
+        public static function directBuff(effectObj, target, overheadNumber, overheadEffect)
         {
             var cooldown;
             if (effectObj["type"] == "oil_bottle")
@@ -749,6 +762,7 @@
                 {
                     heal = 0;
                 }
+                overheadEffect(true, null, "buff", target, false, "+" + heal + " HP");
                 updateHP(target, heal);
                 return true;
             }
@@ -760,6 +774,7 @@
                 {
                     restoreCP = 0;
                 }
+                overheadEffect(true, null, "buff", target, false, "+" + restoreCP + " CP");
                 updateCP(target, restoreCP);
                 return true;
             }
@@ -779,6 +794,7 @@
                     }
                 }
                 target.getPet().setSkillCooldown(cooldown);
+                overheadEffect(true, null, "buff", target, false, "Cooldown -" + reduceCd);
                 return true;
             }
             else if (effectObj["type"] == "bloodlust_dedication")
@@ -786,6 +802,11 @@
                 // done
                 target.setDebuffArr( {});
                 var heal1 = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
+                if (target.getIsDead())
+                {
+                    heal1 = 0;
+                }
+                overheadEffect(true, null, "buff", target, false, "+" + heal1 + " HP");
                 updateHP(target, heal1);
                 return true;
             }
@@ -793,7 +814,7 @@
         }
 
         // CHECK BUFF
-        public static function applyBuffEffects(buff, obj, overheadNumber):void
+        public static function applyBuffEffects(buff, obj, overheadNumber, overheadEffect):void
         {
             if (buff["duration"] <= 0)
             {
@@ -813,13 +834,14 @@
                     break;
                 case "catalytic_matter":
                     trace("catalytic_matter side effect");
-                    reduceHP = -Math.round(obj.getMaxHP() * 0.02);
+                    reduceHP = Math.round(obj.getMaxHP() * 0.02);
                     if (obj.getIsDead())
                     {
                         reduceHP = 0;
                     }
-                    overheadNumber(true, "-" + reduceHP, "", obj);
-                    updateHP(obj, reduceHP);
+                    // overheadNumber(true, "-" + reduceHP, "", obj);
+                    overheadEffect(true, null, "debuff", obj, false, "Catalytic (-" + reduceHP + " HP)");
+                    updateHP(obj, -reduceHP);
                     break;
 
             }
@@ -847,7 +869,7 @@
             return pass;
         }
 
-        public static function applyDebuffEffects(debuff, obj, overheadNumber):void
+        public static function applyDebuffEffects(debuff, obj, overheadNumber, overheadEffect):void
         {
             if (debuff["duration"] <= 0)
             {
@@ -858,7 +880,8 @@
             {
                 case "pet_burn":
                     burn = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
-                    overheadNumber(true, "-" + burn, "", obj);
+                    // overheadNumber(true, "-" + burn, "", obj);
+                    overheadEffect(true, null, "debuff", obj, false, "Burn (-" + burn + ")");
                     updateHP(obj, -burn);
                     break;
                 case "dismantle":
@@ -869,13 +892,16 @@
                 case "coilding_wave":
                     burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
                     burnCP = Math.round(obj.getMaxCP() * (debuff["amount"] / 100));
-                    overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", obj);
+                    // overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", obj);
+                    overheadEffect(true, null, "debuff", obj, false, "-" + burnHP + " HP & -" + burnCP + " CP");
+                    // overheadEffect(true, debuff, "debuff", obj, false);
                     updateHP(obj, -burnHP);
                     updateCP(obj, -burnCP);
                     break;
                 case "poison":
                     burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
-                    overheadNumber(true, "-" + burnHP, "", obj);
+                    // overheadNumber(true, "-" + burnHP, "", obj);
+                    overheadEffect(true, null, "debuff", obj, false, "Poison (-" + burnHP + ")");
                     updateHP(obj, -burnHP);
                     break;
             }
@@ -893,17 +919,17 @@
                 };
         }
 
-        public static function addBuffEffect(skillEffect, target)
+        public static function addBuffEffect(skillEffect, target, overheadNumber, overheadEffect)
         {
-            if (!directBuff(skillEffect, target) && !isDupliEffect(skillEffect, target, BUFF))
+            if (!directBuff(skillEffect, target, overheadNumber, overheadEffect) && !isDupliEffect(skillEffect, target, BUFF))
             {
                 target.getBuffArr()[skillEffect["type"]] = (skillEffect);
             }
         }
 
-        public static function addDebuffEffect(skillEffect, target, attacker, master, overheadNumber)
+        public static function addDebuffEffect(skillEffect, target, attacker, master, overheadNumber, overheadEffect)
         {
-            if (!directDebuff(skillEffect, attacker, target, master, overheadNumber) && !isDupliEffect(skillEffect, target, DEBUFF))
+            if (!directDebuff(skillEffect, attacker, target, master, overheadNumber, overheadEffect) && !isDupliEffect(skillEffect, target, DEBUFF))
             {
                 target.getDebuffArr()[skillEffect["type"]] = (skillEffect);
             }

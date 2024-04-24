@@ -74,5 +74,21 @@ package
             }
             overheadEffect(true, effectObj, randomEffect["effectType"], target, true);
         }
+
+        public static function checkEffectResistance(mapIndex:int, effectObj:Object):Boolean
+        {
+            var mapObj = MapEffect.MAP["map" + mapIndex];
+            if (mapObj["resistanceChance"] == 0)
+            {
+                return false;
+            }
+            var chance = Math.floor(Math.random() * 100);
+            trace("map_effect resistance chance:" + chance);
+            if (chance <= mapObj["resistanceChance"])
+            {
+                return mapObj["resistance"].indexOf(effectObj["type"]) >= 0;
+            }
+            return false;
+        }
     }
 }

@@ -6,7 +6,6 @@
 	import flash.geom.Point;
 	import flash.filters.GlowFilter;
 	import flash.utils.setTimeout;
-	import Constant;
 
 	public class Main extends MovieClip
 	{
@@ -23,24 +22,34 @@
 		public var petLib;
 		public var petList:Array;
 		public var bg = [
+				background13,
 				background0,
+				background11,
 				background1,
-				background2,
 				background3,
-				background4,
+				background12,
+				background2,
 				background5,
 				background6,
+				background4,
+				background17,
+				background15,
 				background7,
-				background8,
 				background9,
+				background8,
 				background10,
-				background11,
+				background14,
+				background19,
+				background18,
+				background16,
+				background20,
 			];
 		public var mapIndex:int = 0;
 		public var bg_map:*;
 		public var controlParty = false;
 		public var atbMode = false;
 		public var useMapEffect = true;
+		public var useMapEffectResistance = true;
 		// FRAME 2 - SELECT CHARACTER
 		public var newPlayerArr:Vector.<Pet> = new Vector.<Pet>();
 		public var newEnemyArr:Vector.<Pet> = new Vector.<Pet>();
@@ -117,7 +126,7 @@
 			this.bg_map.scaleX = 0.9;
 			this.bg_map.scaleY = 0.9;
 			this["popupMap"]["map"]["holder"].addChild(bg_map);
-			this.showMapEffectList(mapIndex);
+			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
 			this["popupMap"].visible = false;
 
 			this.newPlayerArr.splice(0, newPlayerArr.length);
@@ -146,6 +155,7 @@
 			this.controlParty = false;
 			this.atbMode = false;
 			this.useMapEffect = true;
+			this.useMapEffectResistance = true;
 
 			this["btnControl"].gotoAndStop(1);
 			this["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
@@ -154,6 +164,10 @@
 
 			this["popupMap"]["btnEffect"].gotoAndStop(2);
 			this["popupMap"]["btnEffect"].addEventListener(MouseEvent.CLICK, this.onMapEffectSwitch);
+
+			this["popupMap"]["btnResistance"].gotoAndStop(2);
+			this["popupMap"]["btnResistance"].addEventListener(MouseEvent.CLICK, this.onMapResistanceEffectSwitch);
+
 			this["popupMap"]["btnNext"].addEventListener(MouseEvent.CLICK, changeBg);
 			this["popupMap"]["btnPrev"].addEventListener(MouseEvent.CLICK, changeBg);
 
@@ -183,8 +197,9 @@
 			this["popup"].visible = false;
 
 			Utils.initButton(this["popup"]["btnBack"], this.backtoMenu, "Back to Menu", true);
-			// Utils.initButton(this["btnSpecial"], this.onSpecilClicked, "Special", true);
+			Utils.initButton(this["btnSpecial"], this.onSpecialClicked, "Special", true);
 			Utils.initButton(this["btnPass"], this.onPassClicked, "Pass", true);
+			Utils.initButton(this["btnRun"], this.onRunClicked, "Run", true);
 
 			this["btnSurrend"].visible = false;
 			this["btnSurrend"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
@@ -194,7 +209,6 @@
 			back.scaleX = 2;
 			back.scaleY = 2;
 			stage.addChildAt(back, 0);
-
 			this.startBattle();
 		}
 
@@ -365,85 +379,144 @@
 			this.bg_map.scaleX = 0.9;
 			this.bg_map.scaleY = 0.9;
 			this["popupMap"]["map"]["holder"].addChild(this.bg_map);
-			this.showMapEffectList(mapIndex);
+			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
+		}
+
+		private function getMapIndexByLinkageName(mc:*):int
+		{
+			var linkageName = Utils.getLinkageName(mc);
+			return int(linkageName.replace("background", ""));
 		}
 
 		public function showMapEffectList(mapIndex:int):void
 		{
 			this["popupMap"]["buffTxt"].htmlText = "Map Buff:";
 			this["popupMap"]["debuffTxt"].htmlText = "Map Debuff:";
+			this["popupMap"]["resistanceTxt"].htmlText = "Resistance Effect:";
 			var mapEffect = MapEffect.getMapByIndex(mapIndex);
 			this["popupMap"]["nameTxt"].htmlText = mapEffect["name"];
 			var chance = mapEffect["chance"];
+			var resistanceChance = mapEffect["resistanceChance"];
 			if (useMapEffect == false)
 			{
 				chance = 0;
 			}
-			if (chance <= 0)
-			{
-				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: None";
-			}
-			else if (chance < 35)
-			{
-				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#FF0000\">Low</font>";
-			}
-			else if (chance < 70)
-			{
-				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#FFFF00\">Medium</font>";
-			}
-			else
-			{
-				this["popupMap"]["chanceTxt"].htmlText = "Effect Chance: <font size =\"20\" color=\"#00FF00\">High</font>";
-			}
-
+			this.setChanceDescription("Effect Chance", this["popupMap"]["chanceTxt"], chance);
+			// BUFF
 			for (var i in mapEffect["buff"])
 			{
 				this["popupMap"]["buffTxt"].htmlText += "<font size =\"12\" color=\"#00FF00\">" + effectToStr(mapEffect["buff"][i]) + "</font>";
 			}
+			// DEBUFF
 			for (var j in mapEffect["debuff"])
 			{
 				this["popupMap"]["debuffTxt"].htmlText += "<font size =\"12\" color=\"#FF0000\">" + effectToStr(mapEffect["debuff"][j]) + "</font>";
 			}
+
+			if (useMapEffectResistance == false)
+			{
+				resistanceChance = 0;
+			}
+			this.setChanceDescription("Resistance Chance", this["popupMap"]["resistanceChanceTxt"], resistanceChance);
+			// RESISTANCE LIST
+			var resistanceList = [];
+			for (var k in mapEffect["resistance"])
+			{
+				var tempEffect = {
+						"type": mapEffect["resistance"][k],
+						"amount": 0,
+						"duration": 0
+					};
+				var effectName = effectToStr(tempEffect).split(" ")[0];
+				if (resistanceList.indexOf(effectName) < 0)
+				{
+					resistanceList.push(effectName);
+				}
+			}
+			var resistanceListTxt = resistanceList.join(", ");
+			if (resistanceList.length == 0)
+			{
+				resistanceListTxt = "-";
+			}
+			this["popupMap"]["resistanceTxt"].htmlText += "<font size =\"14\" color=\"#FFFFFF\">" + resistanceListTxt + "</font>";
+		}
+
+		private function setChanceDescription(title:String, txtMc:*, chance:int):void
+		{
+			if (chance <= 0)
+			{
+				txtMc.htmlText = title + ":<br> None";
+			}
+			else if (chance < 35)
+			{
+				txtMc.htmlText = title + ":<br> <font size =\"20\" color=\"#FF0000\">Low</font>";
+			}
+			else if (chance < 70)
+			{
+				txtMc.htmlText = title + ":<br> <font size =\"20\" color=\"#FFFF00\">Medium</font>";
+			}
+			else
+			{
+				txtMc.htmlText = title + ":<br> <font size =\"20\" color=\"#00FF00\">High</font>";
+			}
+		}
+
+		public function onMapResistanceEffectSwitch(e:MouseEvent)
+		{
+			this.useMapEffectResistance = !useMapEffectResistance;
+			Utils.switchButtonBaseFunction(this.useMapEffectResistance, this["popupMap"]["btnResistance"]);
+			// if (useMapEffectResistance == false)
+			// {
+			// this["popupMap"]["btnResistance"].gotoAndStop(1);
+			// }
+			// else
+			// {
+			// this["popupMap"]["btnResistance"].gotoAndStop(2);
+			// }
+			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
 		}
 
 		public function onMapEffectSwitch(e:MouseEvent)
 		{
 			this.useMapEffect = !useMapEffect;
-			if (useMapEffect == false)
-			{
-				this["popupMap"]["btnEffect"].gotoAndStop(1);
-			}
-			else
-			{
-				this["popupMap"]["btnEffect"].gotoAndStop(2);
-			}
-			this.showMapEffectList(mapIndex);
+			Utils.switchButtonBaseFunction(this.useMapEffect, this["popupMap"]["btnEffect"]);
+			// if (useMapEffect == false)
+			// {
+			// this["popupMap"]["btnEffect"].gotoAndStop(1);
+			// }
+			// else
+			// {
+			// this["popupMap"]["btnEffect"].gotoAndStop(2);
+			// }
+			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
 		}
 
 		public function onControlMode(e:MouseEvent)
 		{
 			this.controlParty = !controlParty;
-			if (controlParty == false)
-			{
-				this["btnControl"].gotoAndStop(1);
-			}
-			else
-			{
-				this["btnControl"].gotoAndStop(2);
-			}
+			Utils.switchButtonBaseFunction(this.controlParty, this["btnControl"]);
+			// if (controlParty == false)
+			// {
+			// this["btnControl"].gotoAndStop(1);
+			// }
+			// else
+			// {
+			// this["btnControl"].gotoAndStop(2);
+			// }
 		}
 
 		public function onATBMode(e:MouseEvent)
 		{
 			this.atbMode = !atbMode;
-			if (atbMode == false)
-			{
-				this["btnATB"].gotoAndStop(1);
-			}
-			else
-			{
-				this["btnATB"].gotoAndStop(2);
-			}
+			Utils.switchButtonBaseFunction(this.atbMode, this["btnATB"]);
+			// if (atbMode == false)
+			// {
+			// this["btnATB"].gotoAndStop(1);
+			// }
+			// else
+			// {
+			// this["btnATB"].gotoAndStop(2);
+			// }
 		}
 
 		public function hidePopupMap(e:MouseEvent)
@@ -601,16 +674,18 @@
 			for (var j = 0; j < playerNum; j++)
 			{
 				// Utils.initButton(this["player_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
-				this["player_" + j]["btnRemove"].visible = false;
-				this["player_" + j]["btnInfo"].visible = false;
-				Utils.addMouseEventClick(this["player_" + j]["btnRemove"], removeSelectedChar);
+				// this["player_" + j]["btnRemove"].visible = false;
+				// this["player_" + j]["btnInfo"].visible = false;
+				// Utils.addMouseEventClick(this["player_" + j]["btnRemove"], removeSelectedChar);
+				initSelectedCharUI(this["player_" + j]);
 			}
 			for (j = 0; j < opponentNum; j++)
 			{
 				// Utils.initButton(this["enemy_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
-				this["enemy_" + j]["btnRemove"].visible = false;
-				this["enemy_" + j]["btnInfo"].visible = false;
-				Utils.addMouseEventClick(this["enemy_" + j]["btnRemove"], removeSelectedChar);
+				// this["enemy_" + j]["btnRemove"].visible = false;
+				// this["enemy_" + j]["btnInfo"].visible = false;
+				// Utils.addMouseEventClick(this["enemy_" + j]["btnRemove"], removeSelectedChar);
+				initSelectedCharUI(this["enemy_" + j]);
 			}
 
 			this.hidePet();
@@ -619,6 +694,13 @@
 				this.showPet();
 				return;
 			}
+		}
+
+		private function initSelectedCharUI(mc:*):void
+		{
+			mc["btnRemove"].visible = false;
+			mc["btnInfo"].visible = false;
+			Utils.addMouseEventClick(mc["btnRemove"], removeSelectedChar);
 		}
 
 		public function buttonVisibility()
@@ -658,7 +740,7 @@
 			var index = 0;
 			for (var i = start; i < end; i++)
 			{
-				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petList[i]), "StaticFullBody");
+				var cls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petList[i]), "StaticFullBody");
 				var petMC = cls;
 				petMC.x = 25;
 				petMC.y = 32;
@@ -711,7 +793,7 @@
 			var petObj = PetLibrary.getPetBySwfName(petSwfName);
 			var clsName = petObj["clsName"];
 
-			var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), clsName);
+			var cls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petSwfName), clsName);
 			cls.name = "petMc";
 			cls.scaleX = -0.6;
 			if (selectTurn == "e")
@@ -731,12 +813,12 @@
 				cls.setupDamage(Constant.CUSTOM_CHAR_STATS[this.customStats]);
 			}
 
-			var iconCls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), "icon");
+			var iconCls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petSwfName), "icon");
 			iconCls.scaleX = 0.75;
 			iconCls.scaleY = 0.75;
 			iconCls.y = 36;
 
-			var bodyCls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petSwfName), "StaticFullBody");
+			var bodyCls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petSwfName), "StaticFullBody");
 			bodyCls.scaleX = 0.75;
 			bodyCls.scaleY = 0.75;
 
@@ -904,6 +986,11 @@
 
 		}
 
+		public function onRunClicked(e:MouseEvent)
+		{
+			trace("onRunClicked");
+		}
+
 		public function onInfo()
 		{
 			if (messageTxt == "")
@@ -915,6 +1002,35 @@
 				this["popupInfo"].msgTxt.text = messageTxt;
 				messageTxt = "";
 			}
+		}
+
+		public function showOverheadNumber(param1:String, param2:String, obj):void
+		{
+			var _loc3_:MovieClip = obj.getPet().parent.parent;
+			_loc3_["ohNumber"].showNumber(param1, param2);
+			// if (param1 == "NORMAL")
+			// {
+			// if (obj.getPet().scaleX > 0)
+			// {
+
+			// _loc3_["ohNumber"].x = _loc3_.x + 20;
+			// }
+			// else
+			// {
+			// _loc3_["ohNumber"].x = _loc3_.x - 500;
+			// }
+			// trace(_loc3_.x);
+			// }
+			/*var _loc4_:Object = this.getHitArea();
+			if (this.swf.scaleX > 0)
+			{
+				_loc3_["ohNumber"].x = this.charMc.x - _loc4_.width * Data.BATTLE_CHAR_SCALE / 2;
+			}
+			else
+			{
+				_loc3_["ohNumber"].x = this.charMc.x + _loc4_.width * Data.BATTLE_CHAR_SCALE / 2;
+			}
+			_loc3_["ohNumber"].y = this.charMc.y - _loc4_.height * Data.BATTLE_CHAR_SCALE;*/
 		}
 
 		public function addSpecialEffect(mc:MovieClip)
@@ -954,7 +1070,7 @@
 			for (var i in petObj.getPet().skillData)
 			{
 				var skillName:String = "Skill_" + i;
-				var cls = Utils.getAsset(Utils.searchClassByPetName(allSwfData, petObj.getPet().getPetObj()["swfName"]), skillName);
+				var cls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petObj.getPet().getPetObj()["swfName"]), skillName);
 				if (cls != null)
 				{
 					var temp = cls;
@@ -1002,15 +1118,43 @@
 				{
 					txt.visible = false;
 				});
-			/*btnSpecial.visible = true;
-			btnSpecial.addEventListener(MouseEvent.CLICK, specialSkill);
-			btnSpecial.addEventListener(MouseEvent.ROLL_OVER, infoAction);
-			btnSpecial.addEventListener(MouseEvent.ROLL_OUT, function (e: MouseEvent) {
-				txt.visible = false;
-			});
-			if(!(nowTurn == getMaster(attacker) && newPlayerArr.indexOf(attacker) >= 0)){
-				btnSpecial.visible = false;
-			}*/
+			this["btnSpecial"].visible = false;
+			this.showSpecialButton(petObj.getPetType());
+			// this["btnSpecial"].visible = true;
+			// this["btnSpecial"].addEventListener(MouseEvent.CLICK, specialSkill);
+			// this["btnSpecial"].addEventListener(MouseEvent.ROLL_OVER, infoAction);
+			// this["btnSpecial"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent)
+			// {
+			// txt.visible = false;
+			// });
+			// if (!(nowTurn == getMaster(attacker) && newPlayerArr.indexOf(attacker) >= 0))
+			// {
+			// this["btnSpecial"].visible = false;
+			// }
+		}
+
+		private function showSpecialButton(type:int)
+		{
+			this["btnOffensiveSpecial"].visible = false;
+			this["btnDefensiveSpecial"].visible = false;
+			this["btnSupportiveSpecial"].visible = false;
+			if (nowTurn == getMaster(attacker) || nowTurn == getMaster(defender))
+			{
+				switch (type)
+				{
+					case 1:
+						this["btnOffensiveSpecial"].visible = true;
+						break;
+					case 2:
+						this["btnDefensiveSpecial"].visible = true;
+						break;
+					case 3:
+						this["btnSupportiveSpecial"].visible = true;
+						break;
+					default:
+						break;
+				}
+			}
 		}
 
 		public function infoSkill(e:MouseEvent)
@@ -1045,8 +1189,8 @@
 			if (e.target == this["btnPass"])
 			{
 				this["txt"].visible = true;
-				// this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Add CP 25%</font>";
 				this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Skip turn</font>";
+				// this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>Pass</b><br>Skip turn and Recover CP 25%</font>";
 				// trace("pass");
 			}
 			/*else if(e.target == btnSpecial){
@@ -1068,18 +1212,27 @@
 			this["txt"].alpha = 0.8;
 		}
 
-		public function skillDisplay(show:Boolean)
+		public function skillDisplay(show:Boolean, charObj:* = null)
 		{
+			var skillLength = -1;
+			if (charObj != null)
+			{
+				skillLength = charObj.getPet().skillData.length - 1;
+			}
 			for (var i = 0; i < 6; i++)
 			{
 				this["skillMC_" + i].visible = show;
-				if (i > attacker.getPet().skillData.length - 1)
+				if (i > skillLength)
 				{
 					this["skillMC_" + i].visible = false;
 				}
 			}
 			this["btnPass"].visible = show;
-			// btnSpecial.visible = show;
+			this["btnOffensiveSpecial"].visible = show;
+			this["btnDefensiveSpecial"].visible = show;
+			this["btnSupportiveSpecial"].visible = show;
+			this["btnSpecial"].visible = show;
+			this["btnRun"].visible = show;
 		}
 
 		public function getMaster(attackerObj:Pet):Pet
@@ -1190,7 +1343,7 @@
 					addEffect(mc.allActions[id], attacker, defender, false);
 					if (!BattleUtils.checkDamageRebound(dmg, attacker, defender))
 					{
-						overheadNumber(true, dmg, skillTarget, defender);
+						overheadNumber(true, dmg, skillTarget, defender, attacker.isCritical);
 						var activeBuff = BattleUtils.handleActiveBuffAfterAttack(dmg, attacker, defender);
 						if (activeBuff > 0)
 						{
@@ -1239,7 +1392,7 @@
 				}
 				if (!BattleUtils.checkDamageRebound(dmg, attacker, defender))
 				{
-					overheadNumber(true, dmg, skillTarget, defender);
+					overheadNumber(true, dmg, skillTarget, defender, attacker.isCritical);
 					var activeBuff = BattleUtils.handleActiveBuffAfterAttack(dmg, attacker, defender);
 					if (activeBuff > 0)
 					{
@@ -1349,7 +1502,7 @@
 			return skillEffect;
 		}
 
-		private function handleEffectAnimation(mc, id, skillEffect, attacker, defender, isBuff)
+		private function handleAddEffectAction(mc, id, skillEffect, attacker, defender, isBuff)
 		{
 		}
 
@@ -1390,6 +1543,7 @@
 			skillNameTxt = mc.allActions[id]["name"];
 			this["popupInfo"].gotoAndPlay("show");
 			BattleUtils.updateSkillCooldown(mc, mc.skillData.indexOf(mc.allActions[id]));
+			attacker.isCritical = false;
 			// Add Map Effect
 			if (useMapEffect)
 			{
@@ -1508,8 +1662,8 @@
 		{
 			for (var i = 0; i < 3; i++)
 			{
-				Utils.addActiveGlowFilter(this["playerPetMc_" + i]["activeMc"], show);
-				Utils.addActiveGlowFilter(this["enemyPetMc_" + i]["activeMc"], show);
+				Utils.addGlowFilter(this["playerPetMc_" + i]["activeMc"], show);
+				Utils.addGlowFilter(this["enemyPetMc_" + i]["activeMc"], show);
 			}
 		}
 
@@ -1535,18 +1689,118 @@
 			}
 			this["statusTxt"].htmlText = "<font color=\"#00FF00\">Battle Start</font>";
 			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
-			// characterArr = new Vector.<Pet> (playerNum + opponentNum);
 			characterArr = new Vector.<Pet>();
 			petMcVisible(false);
 			hideTarget(false);
 			updateBar();
-			for (var i = 0; i < newPlayerArr.length; i++)
+			initCharacterDisplayUI(newPlayerArr, "playerPetMc");
+			initCharacterDisplayUI(newEnemyArr, "enemyPetMc");
+			// for (var i = 0; i < newPlayerArr.length; i++)
+			// {
+			// newPlayerArr[i].getPet().setAttackHitCB(function():void
+			// {
+			// onAttackHit();
+			// });
+			// newPlayerArr[i].getPet().setActionFinishCB(function():void
+			// {
+			// this.x = 0;
+			// this.y = 0;
+			// updateBar();
+			// if (this.currentLabel != "hit" && this.currentLabel != "dodge")
+			// {
+			// setTimeout(function():void
+			// {
+			// turn++;
+			// startBattle();
+			// }, 300);
+			// }
+			// this.gotoStandby();
+			// });
+			// this["playerPetMc_" + i]["petType"].gotoAndStop(newPlayerArr[i].getPet().getPetObj()["type"]);
+			// this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
+			// this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+			// if (this["playerPetMc_" + i]["charMc"].numChildren > 0)
+			// {
+			// this["playerPetMc_" + i]["charMc"].removeChildAt(0);
+			// }
+			// this["playerPetMc_" + i]["charMc"].addChild(newPlayerArr[i].getPet());
+			// this["playerPetMc_" + i]["nameTxt"].text = newPlayerArr[i].getPet().getPetObj()["name"];
+			// this["playerPetMc_" + i]["target"].visible = false;
+			// this["playerPetMc_" + i].visible = true;
+			// // characterArr[i * 2] = newPlayerArr[i]; //TODO
+			// }
+			// for (i = 0; i < newEnemyArr.length; i++)
+			// {
+			// newEnemyArr[i].getPet().setAttackHitCB(function():void
+			// {
+			// onAttackHit();
+			// });
+			// newEnemyArr[i].getPet().setActionFinishCB(function():void
+			// {
+			// this.x = 0;
+			// this.y = 0;
+			// updateBar();
+			// if (this.currentLabel != "hit" && this.currentLabel != "dodge")
+			// {
+			// setTimeout(function()
+			// {
+			// turn++;
+			// startBattle();
+			// }, 300);
+			// }
+			// this.gotoStandby();
+			// });
+			// this["enemyPetMc_" + i]["petType"].gotoAndStop(newEnemyArr[i].getPet().getPetObj()["type"]);
+			// this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
+			// this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+			// if (this["enemyPetMc_" + i]["charMc"].numChildren > 0)
+			// {
+			// this["enemyPetMc_" + i]["charMc"].removeChildAt(0);
+			// }
+			// this["enemyPetMc_" + i]["charMc"].addChild(newEnemyArr[i].getPet());
+			// this["enemyPetMc_" + i]["nameTxt"].text = newEnemyArr[i].getPet().getPetObj()["name"];
+			// this["enemyPetMc_" + i].visible = true;
+			// // characterArr[i * 2 + 1] = newEnemyArr[i]; //TODO
+			// // this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+			// }
+			var maxNum:int = Math.max(playerNum, opponentNum);
+			for (var i = 0; i < maxNum; i++)
 			{
-				newPlayerArr[i].getPet().setAttackHitCB(function():void
+				if (i < playerNum)
+				{
+					characterArr.push(newPlayerArr[i]);
+					// trace("player"+i);
+				}
+				if (i < opponentNum)
+				{
+					characterArr.push(newEnemyArr[i]);
+					// trace("opponent"+i);
+				}
+			}
+
+			// attacker = characterArr[0];
+			// if (newPlayerArr.indexOf(attacker))
+			// {
+			// defender = newEnemyArr[selectedTargetPlayer];
+			// }
+			// else
+			// {
+			// defender = newPlayerArr[selectedTargetEnemy];
+			// }
+
+			skillDisplay(false);
+			initialized = true;
+		}
+
+		private function initCharacterDisplayUI(characterArr:*, mcName:String)
+		{
+			for (var i = 0; i < characterArr.length; i++)
+			{
+				characterArr[i].getPet().setAttackHitCB(function():void
 					{
 						onAttackHit();
 					});
-				newPlayerArr[i].getPet().setActionFinishCB(function():void
+				characterArr[i].getPet().setActionFinishCB(function():void
 					{
 						this.x = 0;
 						this.y = 0;
@@ -1561,80 +1815,18 @@
 						}
 						this.gotoStandby();
 					});
-				this["playerPetMc_" + i]["petType"].gotoAndStop(newPlayerArr[i].getPet().getPetObj()["type"]);
-				this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
-				this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
-				if (this["playerPetMc_" + i]["charMc"].numChildren > 0)
+				this[mcName + "_" + i]["petType"].gotoAndStop(characterArr[i].getPet().getPetObj()["type"]);
+				this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
+				this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+				if (this[mcName + "_" + i]["charMc"].numChildren > 0)
 				{
-					this["playerPetMc_" + i]["charMc"].removeChildAt(0);
+					this[mcName + "_" + i]["charMc"].removeChildAt(0);
 				}
-				this["playerPetMc_" + i]["charMc"].addChild(newPlayerArr[i].getPet());
-				this["playerPetMc_" + i]["nameTxt"].text = newPlayerArr[i].getPet().getPetObj()["name"];
-				this["playerPetMc_" + i]["target"].visible = false;
-				this["playerPetMc_" + i].visible = true;
-				// characterArr[i * 2] = newPlayerArr[i]; //TODO
+				this[mcName + "_" + i]["charMc"].addChild(characterArr[i].getPet());
+				this[mcName + "_" + i]["nameTxt"].text = characterArr[i].getPet().getPetObj()["name"];
+				this[mcName + "_" + i]["target"].visible = false;
+				this[mcName + "_" + i].visible = true;
 			}
-			for (i = 0; i < newEnemyArr.length; i++)
-			{
-				newEnemyArr[i].getPet().setAttackHitCB(function():void
-					{
-						onAttackHit();
-					});
-				newEnemyArr[i].getPet().setActionFinishCB(function():void
-					{
-						this.x = 0;
-						this.y = 0;
-						updateBar();
-						if (this.currentLabel != "hit" && this.currentLabel != "dodge")
-						{
-							setTimeout(function()
-								{
-									turn++;
-									startBattle();
-								}, 300);
-						}
-						this.gotoStandby();
-					});
-				this["enemyPetMc_" + i]["petType"].gotoAndStop(newEnemyArr[i].getPet().getPetObj()["type"]);
-				this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
-				this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
-				if (this["enemyPetMc_" + i]["charMc"].numChildren > 0)
-				{
-					this["enemyPetMc_" + i]["charMc"].removeChildAt(0);
-				}
-				this["enemyPetMc_" + i]["charMc"].addChild(newEnemyArr[i].getPet());
-				this["enemyPetMc_" + i]["nameTxt"].text = newEnemyArr[i].getPet().getPetObj()["name"];
-				this["enemyPetMc_" + i].visible = true;
-				// characterArr[i * 2 + 1] = newEnemyArr[i]; //TODO
-				this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
-			}
-			var maxNum:int = Math.max(playerNum, opponentNum);
-			for (i = 0; i < maxNum; i++)
-			{
-				if (i < playerNum)
-				{
-					characterArr.push(newPlayerArr[i]);
-					// trace("player"+i);
-				}
-				if (i < opponentNum)
-				{
-					characterArr.push(newEnemyArr[i]);
-					// trace("opponent"+i);
-				}
-			}
-
-			attacker = characterArr[0];
-			if (newPlayerArr.indexOf(attacker))
-			{
-				defender = newEnemyArr[selectedTargetPlayer];
-			}
-			else
-			{
-				defender = newPlayerArr[selectedTargetEnemy];
-			}
-
-			skillDisplay(false);
-			initialized = true;
 		}
 
 		// FRAME 3 - EFFECT BUFF DEBUFF - START
@@ -1648,7 +1840,11 @@
 					continue;
 				}
 				var skillEffect = BattleUtils.createSkillEffectObject(skillObj["effect"][i]);
-
+				if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(mapIndex, skillEffect))
+				{
+					// Map Effect Resistance
+					continue;
+				}
 				// check chance if not true effect not added
 				if (!BattleUtils.checkChanceEffect(skillEffect))
 				{
@@ -1663,7 +1859,7 @@
 						skillEffect["amount"] = skillEffect["amount"] + BattleUtils.calcDamage(Math.round(attacker.getPet().getDamage() * 10), skillEffect["heal"]);
 					}
 					overheadEffect(true, skillEffect, BattleUtils.BUFF_TYPE, target);
-					BattleUtils.addBuffEffect(skillEffect, target);
+					BattleUtils.addBuffEffect(skillEffect, target, overheadNumber, overheadEffect);
 				}
 				else
 				{
@@ -1672,7 +1868,7 @@
 						continue;
 					}
 					overheadEffect(true, skillEffect, BattleUtils.DEBUFF_TYPE, target);
-					BattleUtils.addDebuffEffect(skillEffect, target, attacker, getMaster(attacker), overheadNumber);
+					BattleUtils.addDebuffEffect(skillEffect, target, attacker, getMaster(attacker), overheadNumber, overheadEffect);
 				}
 			}
 			trace("add effect - finish");
@@ -1681,6 +1877,11 @@
 		public function checkPurify(charObj)
 		{
 			trace("checkPurify - start");
+			if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(mapIndex, BattleUtils.PURIFY_ACTION_OBJ))
+			{
+				trace("checkPurify - finish");
+				return;
+			}
 			if (BattleUtils.checkPurify(charObj))
 			{
 				overheadEffect(true, BattleUtils.PURIFY_ACTION_OBJ, BattleUtils.BUFF_TYPE, charObj);
@@ -1694,6 +1895,7 @@
 
 		public function checkBuff(obj)
 		{
+			showAllOverheadEffect(obj);
 			trace("checkBuff - start");
 			var buffArr = {};
 			for (var i in obj.getBuffArr())
@@ -1703,7 +1905,7 @@
 				{
 					buffArr[obj.getBuffArr()[i]["type"]] = (obj.getBuffArr()[i]);
 				}
-				BattleUtils.applyBuffEffects(obj.getBuffArr()[i], obj, overheadNumber);
+				BattleUtils.applyBuffEffects(obj.getBuffArr()[i], obj, overheadNumber, overheadEffect);
 			}
 			obj.setBuffArr(buffArr);
 			trace("checkBuff - finish");
@@ -1711,7 +1913,7 @@
 
 		public function checkDebuff(obj)
 		{
-			BattleUtils.checkPurify(obj);
+			checkPurify(obj);
 			checkBuff(obj);
 			trace("checkDebuff - start");
 			var pass = false;
@@ -1724,7 +1926,7 @@
 					debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
 				}
 				pass = pass || BattleUtils.shouldPass(obj.getDebuffArr()[i]);
-				BattleUtils.applyDebuffEffects(obj.getDebuffArr()[i], obj, overheadNumber);
+				BattleUtils.applyDebuffEffects(obj.getDebuffArr()[i], obj, overheadNumber, overheadEffect);
 			}
 			obj.setDebuffArr(debuffArr);
 			trace("checkDebuff - finish");
@@ -1770,45 +1972,71 @@
 		// FRAME 3 - TARGET FUNCTION - START
 		public function hideTarget(actionFinish:Boolean)
 		{
+			hideTargetUI(opponentNum, newEnemyArr, newPlayerArr, "enemyPetMc", actionFinish);
+			hideTargetUI(playerNum, newPlayerArr, newEnemyArr, "playerPetMc", actionFinish);
+			// for (var i = 0; i < 3; i++)
+			// {
+			// var isDead = false;
+			// if (i < opponentNum)
+			// {
+			// isDead = newEnemyArr[i].getIsDead();
+			// }
+			// if (((controlParty && nowTurnStr == "p") || newPlayerArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
+			// {
+			// this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+			// }
+			// else
+			// {
+			// if (this["enemyPetMc_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+			// {
+			// this["enemyPetMc_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+			// }
+			// }
+			// this["enemyPetMc_" + i]["target"].visible = false;
+			// }
+			// for (i = 0; i < 3; i++)
+			// {
+			// isDead = false;
+			// if (i < playerNum)
+			// {
+			// isDead = newPlayerArr[i].getIsDead();
+			// }
+			// if (((controlParty && nowTurnStr == "e") || newEnemyArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
+			// {
+			// this["playerPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+			// }
+			// else
+			// {
+			// if (this["playerPetMc_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+			// {
+			// this["playerPetMc_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+			// }
+			// }
+			// this["playerPetMc_" + i]["target"].visible = false;
+			// }
+		}
+
+		private function hideTargetUI(opponentTeamNum, defenderTeamArr, attackerTeamArr, opponentMCStr, actionFinish):void
+		{
 			for (var i = 0; i < 3; i++)
 			{
 				var isDead = false;
-				if (i < opponentNum)
+				if (i < opponentTeamNum)
 				{
-					isDead = newEnemyArr[i].getIsDead();
+					isDead = defenderTeamArr[i].getIsDead();
 				}
-				if (((controlParty && nowTurnStr == "p") || newPlayerArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
+				if (((controlParty && nowTurnStr == "p") || attackerTeamArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
 				{
-					this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
-				}
-				else
-				{
-					if (this["enemyPetMc_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
-					{
-						this["enemyPetMc_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
-					}
-				}
-				this["enemyPetMc_" + i]["target"].visible = false;
-			}
-			for (i = 0; i < 3; i++)
-			{
-				isDead = false;
-				if (i < playerNum)
-				{
-					isDead = newPlayerArr[i].getIsDead();
-				}
-				if (((controlParty && nowTurnStr == "e") || newEnemyArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
-				{
-					this["playerPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+					this[opponentMCStr + "_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
 				}
 				else
 				{
-					if (this["playerPetMc_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+					if (this[opponentMCStr + "_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
 					{
-						this["playerPetMc_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+						this[opponentMCStr + "_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
 					}
 				}
-				this["playerPetMc_" + i]["target"].visible = false;
+				this[opponentMCStr + "_" + i]["target"].visible = false;
 			}
 		}
 
@@ -1835,19 +2063,29 @@
 		{
 			for (var i = 0; i < opponentNum; i++)
 			{
-				this["enemyPetMc_" + i].hpTxt.text = newEnemyArr[i].getHP() + "/" + newEnemyArr[i].getMaxHP();
-				this["enemyPetMc_" + i]["hpBar"].scaleX = (newEnemyArr[i].getHP() / newEnemyArr[i].getMaxHP());
-				this["enemyPetMc_" + i].cpTxt.text = newEnemyArr[i].getCP() + "/" + newEnemyArr[i].getMaxCP();
-				this["enemyPetMc_" + i]["cpBar"].scaleX = (newEnemyArr[i].getCP() / newEnemyArr[i].getMaxCP()) * 0.8;
+				updateCharInfoUI(this["enemyPetMc_" + i], newEnemyArr[i]);
+				// this["enemyPetMc_" + i].hpTxt.text = newEnemyArr[i].getHP() + "/" + newEnemyArr[i].getMaxHP();
+				// this["enemyPetMc_" + i]["hpBar"].scaleX = (newEnemyArr[i].getHP() / newEnemyArr[i].getMaxHP());
+				// this["enemyPetMc_" + i].cpTxt.text = newEnemyArr[i].getCP() + "/" + newEnemyArr[i].getMaxCP();
+				// this["enemyPetMc_" + i]["cpBar"].scaleX = (newEnemyArr[i].getCP() / newEnemyArr[i].getMaxCP()) * 0.8;
 			}
 			for (i = 0; i < playerNum; i++)
 			{
-				this["playerPetMc_" + i].hpTxt.text = newPlayerArr[i].getHP() + "/" + newPlayerArr[i].getMaxHP();
-				this["playerPetMc_" + i]["hpBar"].scaleX = (newPlayerArr[i].getHP() / newPlayerArr[i].getMaxHP());
-				this["playerPetMc_" + i].cpTxt.text = newPlayerArr[i].getCP() + "/" + newPlayerArr[i].getMaxCP();
-				this["playerPetMc_" + i]["cpBar"].scaleX = (newPlayerArr[i].getCP() / newPlayerArr[i].getMaxCP()) * 0.8;
+				updateCharInfoUI(this["playerPetMc_" + i], newPlayerArr[i]);
+				// this["playerPetMc_" + i].hpTxt.text = newPlayerArr[i].getHP() + "/" + newPlayerArr[i].getMaxHP();
+				// this["playerPetMc_" + i]["hpBar"].scaleX = (newPlayerArr[i].getHP() / newPlayerArr[i].getMaxHP());
+				// this["playerPetMc_" + i].cpTxt.text = newPlayerArr[i].getCP() + "/" + newPlayerArr[i].getMaxCP();
+				// this["playerPetMc_" + i]["cpBar"].scaleX = (newPlayerArr[i].getCP() / newPlayerArr[i].getMaxCP()) * 0.8;
 			}
 			// refreshEffectList();
+		}
+
+		private function updateCharInfoUI(mc:*, char:*)
+		{
+			mc.hpTxt.text = char.getHP() + "/" + char.getMaxHP();
+			mc["hpBar"].scaleX = (char.getHP() / char.getMaxHP());
+			mc.cpTxt.text = char.getCP() + "/" + char.getMaxCP();
+			mc["cpBar"].scaleX = (char.getCP() / char.getMaxCP()) * 0.8;
 		}
 
 		public function checkHpCpZero(charStats:Pet)
@@ -1857,36 +2095,101 @@
 		}
 
 		// FRAME 3 - OVERHEAD - START
-		public function overheadNumber(show:Boolean, dmg, target, obj)
+		public function overheadNumber(show:Boolean, dmg, target, obj, isCritical = false)
 		{
-			var color = target == "self" || target == "master" ? "#00FF00" : "#FF0000";
-			obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
-			obj.getPet().parent.parent["ohMc"]["dmgMc"]["dmgTxt"].visible = show;
-			obj.getPet().parent.parent["ohMc"]["dmgMc"]["dmgTxt"].htmlText = "<font color=\"" + color + "\">" + dmg + "</font>";
-			obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
-		}
-
-		public function overheadEffect(show:Boolean, effect, typeEffect, obj, mapEffect:Boolean = false)
-		{
-			var color = typeEffect == BattleUtils.BUFF_TYPE ? "#00FF00" : "#FF0000";
-			if (typeEffect == BattleUtils.BUFF_TYPE)
+			if (target == "self" || target == "master")
 			{
-				obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
-				obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].visible = show;
-				obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
-				obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
+				showOverheadNumber("HEAL", dmg, obj);
 			}
 			else
 			{
-				obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
-				obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].visible = show;
-				obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
-				obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
+				if (isCritical)
+				{
+					showOverheadNumber("CRITICAL", dmg, obj);
+				}
+				else
+				{
+					showOverheadNumber("NORMAL", dmg, obj);
+				}
+			}
+
+			// var mcName = obj.getPet().parent.parent.name;
+			// displayEffectCharacterArr[mcName]["number"].push(dmg);
+			// onInitDisplayEffect();
+			// obj.getPet().parent.parent["ohMc"].gotoAndStop("idle");
+			// var color = target == "self" || target == "master" ? "#00FF00" : "#FF0000";
+			// obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
+			// obj.getPet().parent.parent["ohMc"]["dmgMc"]["dmgTxt"].visible = show;
+			// obj.getPet().parent.parent["ohMc"]["dmgMc"]["dmgTxt"].htmlText = "<font color=\"" + color + "\">" + dmg + "</font>";
+			// obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
+		}
+
+		public function overheadEffect(show:Boolean, effect, typeEffect, obj, mapEffect:Boolean = false, txt:String = null)
+		{
+			if (txt != null)
+			{
+				showOverheadNumber(typeEffect.toUpperCase(), txt, obj);
+			}
+			else
+			{
+				showOverheadNumber(typeEffect.toUpperCase(), effectToStr(effect, mapEffect), obj);
+			}
+
+			// var color = typeEffect == BattleUtils.BUFF_TYPE ? "#00FF00" : "#FF0000";
+			// var mcName = obj.getPet().parent.parent.name;
+			// if (typeEffect == BattleUtils.BUFF_TYPE)
+			// {
+			// displayEffectCharacterArr[mcName]["buff"].push(effectToStr(effect, mapEffect));
+			// onInitDisplayEffect();
+			// // obj.getPet().parent.parent["ohMc"].gotoAndStop("idle");
+			// // obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
+			// // obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].visible = show;
+			// // obj.getPet().parent.parent["ohMc"]["buffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
+			// // obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
+			// }
+			// else
+			// {
+			// displayEffectCharacterArr[mcName]["debuff"].push(effectToStr(effect, mapEffect));
+			// onInitDisplayEffect();
+			// // obj.getPet().parent.parent["ohMc"].gotoAndStop("idle");
+			// // obj.getPet().parent.parent["ohMc"].gotoAndStop(2);
+			// // obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].visible = show;
+			// // obj.getPet().parent.parent["ohMc"]["debuffMc"]["dmgTxt"].htmlText = "<font size =\"18\" color=\"" + color + "\">" + effectToStr(effect, mapEffect) + "</font>";
+			// // obj.getPet().parent.parent["ohMc"].gotoAndPlay("word");
+			// }
+		}
+
+		private function showOverheadEffectList(effectType, effectArr, charObj):void
+		{
+			for (var i in effectArr)
+			{
+				if (effectArr[i]["duration"] > 0)
+				{
+					showOverheadNumber(effectType, effectToStr(effectArr[i], false), charObj);
+				}
 			}
 		}
 
 		public function showAllOverheadEffect(charObj)
 		{
+			showOverheadEffectList("BUFF", charObj.getBuffArr(), charObj);
+			showOverheadEffectList("DEBUFF", charObj.getDebuffArr(), charObj);
+			// for (var i in charObj.getBuffArr())
+			// {
+			// if (charObj.getBuffArr()[i]["duration"] > 0)
+			// {
+			// showOverheadNumber("BUFF", effectToStr(charObj.getBuffArr()[i], false), charObj);
+			// }
+			// }
+
+			// for (var j in charObj.getDebuffArr())
+			// {
+			// if (charObj.getDebuffArr()[j]["duration"] > 0)
+			// {
+			// showOverheadNumber("DEBUFF", effectToStr(charObj.getDebuffArr()[j], false), charObj);
+			// }
+			// }
+
 			// pake button show or hide
 			// var effType, amount, duration;
 			// trace("==============" + charObj["mc"].getPetObj()["name"] + "================");
@@ -1949,27 +2252,29 @@
 			var charObj:Pet = mc.name.indexOf("player") >= 0 ? newPlayerArr[id] : newEnemyArr[id];
 			var effType, amount, duration;
 			this["effectListMc"].txt.htmlText = "Effect: ";
-			for (var i in charObj.getBuffArr())
-			{
-				effType = charObj.getBuffArr()[i]["type"] != "no effect" ? (charObj.getBuffArr()[i]["type"] + " ") : "";
-				amount = charObj.getBuffArr()[i]["amount"] != undefined ? (charObj.getBuffArr()[i]["amount"] + "% ") : "";
-				duration = charObj.getBuffArr()[i]["duration"] != undefined ? ("(" + charObj.getBuffArr()[i]["duration"] + ")") : "";
-				if (charObj.getBuffArr()[i]["duration"] > 0)
-				{
-					this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#00FF00\">" + effectToStr(charObj.getBuffArr()[i]) + "</font>";
-				}
-			}
+			setEffectListUI(charObj.getBuffArr(), true);
+			setEffectListUI(charObj.getDebuffArr(), false);
+			// for (var i in charObj.getBuffArr())
+			// {
+			// effType = charObj.getBuffArr()[i]["type"] != "no effect" ? (charObj.getBuffArr()[i]["type"] + " ") : "";
+			// amount = charObj.getBuffArr()[i]["amount"] != undefined ? (charObj.getBuffArr()[i]["amount"] + "% ") : "";
+			// duration = charObj.getBuffArr()[i]["duration"] != undefined ? ("(" + charObj.getBuffArr()[i]["duration"] + ")") : "";
+			// if (charObj.getBuffArr()[i]["duration"] > 0)
+			// {
+			// this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#00FF00\">" + effectToStr(charObj.getBuffArr()[i]) + "</font>";
+			// }
+			// }
 
-			for (var j in charObj.getDebuffArr())
-			{
-				effType = charObj.getDebuffArr()[j]["type"] != "no effect" ? (charObj.getDebuffArr()[j]["type"] + " ") : "";
-				amount = charObj.getDebuffArr()[j]["amount"] != undefined ? (charObj.getDebuffArr()[j]["amount"] + "% ") : "";
-				duration = charObj.getDebuffArr()[j]["duration"] != undefined ? ("(" + charObj.getDebuffArr()[j]["duration"] + ")") : "";
-				if (charObj.getDebuffArr()[j]["duration"] > 0)
-				{
-					this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#FF0000\">" + effectToStr(charObj.getDebuffArr()[j]) + "</font>";
-				}
-			}
+			// for (var j in charObj.getDebuffArr())
+			// {
+			// effType = charObj.getDebuffArr()[j]["type"] != "no effect" ? (charObj.getDebuffArr()[j]["type"] + " ") : "";
+			// amount = charObj.getDebuffArr()[j]["amount"] != undefined ? (charObj.getDebuffArr()[j]["amount"] + "% ") : "";
+			// duration = charObj.getDebuffArr()[j]["duration"] != undefined ? ("(" + charObj.getDebuffArr()[j]["duration"] + ")") : "";
+			// if (charObj.getDebuffArr()[j]["duration"] > 0)
+			// {
+			// this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#FF0000\">" + effectToStr(charObj.getDebuffArr()[j]) + "</font>";
+			// }
+			// }
 			this["effectListMc"].y = mc.y + 15;
 			if (mc.x < (1920 / 2))
 			{
@@ -1980,6 +2285,28 @@
 				this["effectListMc"].x = mc.x + 265;
 			}
 			Utils.moveToFront(this["effectListMc"]);
+		}
+
+		private function setEffectListUI(effectArr, isBuff):void
+		{
+			var effType, amount, duration;
+			for (var i in effectArr)
+			{
+				effType = effectArr[i]["type"] != "no effect" ? (effectArr[i]["type"] + " ") : "";
+				amount = effectArr[i]["amount"] != undefined ? (effectArr[i]["amount"] + "% ") : "";
+				duration = effectArr[i]["duration"] != undefined ? ("(" + effectArr[i]["duration"] + ")") : "";
+				if (effectArr[i]["duration"] > 0)
+				{
+					if (isBuff)
+					{
+						this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#00FF00\">" + effectToStr(effectArr[i]) + "</font>";
+					}
+					else
+					{
+						this["effectListMc"]["txt"].htmlText += "<font size =\"20\" color=\"#FF0000\">" + effectToStr(effectArr[i]) + "</font>";
+					}
+				}
+			}
 		}
 
 		public function refreshEffectList()
@@ -2117,7 +2444,59 @@
 			trace("getAliveCharTurn - finish");
 		}
 
-		private function controlCharacter()
+		private function controlCharacter():void
+		{
+			trace("controlCharacter - start");
+			nowTurnStr = newPlayerArr.indexOf(nowTurn) >= 0 ? "p" : "e";
+			var isPlayerTurn:Boolean = nowTurnStr == "p";
+			var index:int;
+
+			if (controlParty || newPlayerArr.indexOf(nowTurn) == 0 || this.gameMode == Constant.GAME_MODE_PVP)
+			{
+				index = isPlayerTurn ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
+				Utils.addGlowFilter(this[(isPlayerTurn ? "playerPetMc_" : "enemyPetMc_") + index]["activeMc"], true);
+				attacker = nowTurn;
+				if (!checkDebuff(nowTurn))
+				{
+					updateBar();
+					if (this.gameMode == Constant.GAME_MODE_PVP || isPlayerTurn)
+					{
+						addSkillDisplay(nowTurn);
+					}
+					else
+					{
+						AISelectSkill();
+					}
+				}
+				if (isPlayerTurn)
+				{
+					this["enemyPetMc_" + selectedTargetPlayer]["target"].visible = true;
+				}
+				else
+				{
+					this["playerPetMc_" + selectedTargetEnemy]["target"].visible = true;
+				}
+				updateBar();
+			}
+			else
+			{
+				hideTarget(true);
+				skillDisplay(false);
+				index = isPlayerTurn ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
+				Utils.addGlowFilter(this[(isPlayerTurn ? "playerPetMc_" : "enemyPetMc_") + index]["activeMc"], true);
+				attacker = nowTurn;
+				if (!checkDebuff(nowTurn))
+				{
+					updateBar();
+					AISelectSkill();
+				}
+				updateBar();
+			}
+
+			trace("controlCharacter - finish");
+		}
+
+		private function controlCharacterOld()
 		{
 			trace("controlCharacter - start");
 			nowTurnStr = newPlayerArr.indexOf(nowTurn) >= 0 ? "p" : "e";
@@ -2129,11 +2508,11 @@
 					var index = nowTurnStr == "p" ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 					if (nowTurnStr == "p")
 					{
-						Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+						Utils.addGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 					}
 					else
 					{
-						Utils.addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
+						Utils.addGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
 					}
 					attacker = nowTurn;
 					if (!checkDebuff(nowTurn))
@@ -2157,11 +2536,11 @@
 					{
 						if (nowTurnStr == "p")
 						{
-							Utils.addActiveGlowFilter(this["playerPetMc_0"]["activeMc"], true);
+							Utils.addGlowFilter(this["playerPetMc_0"]["activeMc"], true);
 						}
 						else
 						{
-							Utils.addActiveGlowFilter(this["enemyPetMc_0"]["activeMc"], true);
+							Utils.addGlowFilter(this["enemyPetMc_0"]["activeMc"], true);
 						}
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
@@ -2186,11 +2565,11 @@
 						index = nowTurnStr == "p" ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 						if (nowTurnStr == "p")
 						{
-							Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 						}
 						else
 						{
-							Utils.addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
 						}
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
@@ -2209,7 +2588,7 @@
 					var playerIndex = newPlayerArr.indexOf(nowTurn);
 					if (playerIndex >= 0)
 					{
-						Utils.addActiveGlowFilter(this["playerPetMc_" + playerIndex]["activeMc"], true);
+						Utils.addGlowFilter(this["playerPetMc_" + playerIndex]["activeMc"], true);
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
 						{
@@ -2226,11 +2605,11 @@
 						index = nowTurnStr == "p" ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 						if (nowTurnStr == "p")
 						{
-							Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 						}
 						else
 						{
-							Utils.addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
 						}
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
@@ -2245,7 +2624,7 @@
 				{
 					if (newPlayerArr.indexOf(nowTurn) == 0)
 					{
-						Utils.addActiveGlowFilter(this["playerPetMc_0"]["activeMc"], true);
+						Utils.addGlowFilter(this["playerPetMc_0"]["activeMc"], true);
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
 						{
@@ -2262,11 +2641,11 @@
 						index = nowTurnStr == "p" ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 						if (nowTurnStr == "p")
 						{
-							Utils.addActiveGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["playerPetMc_" + index]["activeMc"], true);
 						}
 						else
 						{
-							Utils.addActiveGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
+							Utils.addGlowFilter(this["enemyPetMc_" + index]["activeMc"], true);
 						}
 						attacker = nowTurn;
 						if (!checkDebuff(nowTurn))
@@ -2317,28 +2696,42 @@
 			}
 			if (newEnemyArr[selectedTargetPlayer].getIsDead())
 			{
-				for (var j = 0; j < opponentNum; j++)
-				{
-					if (!newEnemyArr[j].getIsDead())
-					{
-						selectedTargetPlayer = j;
-						break;
-					}
-				}
+				selectedTargetPlayer = getAliveTarget(opponentNum, newEnemyArr);
+				// for (var j = 0; j < opponentNum; j++)
+				// {
+				// if (!newEnemyArr[j].getIsDead())
+				// {
+				// selectedTargetPlayer = j;
+				// break;
+				// }
+				// }
 			}
 			if (newPlayerArr[selectedTargetEnemy].getIsDead())
 			{
-				for (j = 0; j < playerNum; j++)
-				{
-					if (!newPlayerArr[j].getIsDead())
-					{
-						selectedTargetEnemy = j;
-						break;
-					}
-				}
+				selectedTargetEnemy = getAliveTarget(playerNum, newPlayerArr);
+				// for (j = 0; j < playerNum; j++)
+				// {
+				// if (!newPlayerArr[j].getIsDead())
+				// {
+				// selectedTargetEnemy = j;
+				// break;
+				// }
+				// }
 			}
 			updateBar();
 			checkGameFinish();
+		}
+
+		private function getAliveTarget(charArrNum, charArr):int
+		{
+			for (var i = 0; i < charArrNum; i++)
+			{
+				if (!charArr[i].getIsDead())
+				{
+					return i;
+				}
+			}
+			return 0;
 		}
 
 		public function checkGameFinish()
