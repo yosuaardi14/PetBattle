@@ -6,15 +6,46 @@
 ## TODO
 - Refactor Battle and SelectCharacter to AS File (?) -> Using Linkage (?)
 - Add Battle ATB Bar (TODO ?)
+- Refactor code using Utils
 
 ## v0.2
-### 24 Apr
+### 26 Apr
+#### Game UI
+- add Action Bar, Total Turn / Char
+- add Confirmation Dialog for Run
+- add Timeout after Game Finish
+#### Characters
+#### Effect
+#### Feature
+- Attribute Skill System (TODO)
+- Overhead Effect Fix and Update using EffectData (TODO)
+#### Other
+- Refactor switchButton
+
+### 25 Apr
 #### Game UI
 #### Characters
+- ponpoco animation bug (DONE)
+#### Effect
+- check guard turn (0 or 1) (TODO TEST)
+#### Feature
+- testing special skill feature (WIP)
+- can use cooldown last skill (DONE) -> because LINE 1167-1169 (btnPass)
+
+### 24 Apr
+#### Game UI
+- update PetType Visibility in Character List
+#### Characters
+- update character position animation
+- update Mini Treefolk Skill Effect
 #### Feature
 - rearrange the background sequence (DONE)
+- add Run feature -> TODO Confirmation Popup
 #### Other
 - refactor many codes
+- add mapId -> mapEffect id
+- fix bug control party button not appear when PvP Opponent has more than 1 char 
+- fix bug player target visible when control party activated and PVE, opponent turn
 
 ### 23 Apr
 #### Game UI
@@ -30,6 +61,8 @@
 #### Feature
 -show overheadeffect when character start turn (DONE)
 -add map effect resistance system (DONE)
+#### Map Effect
+- Burn
 
 ### 21 Apr
 #### Game UI

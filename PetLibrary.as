@@ -6,16 +6,143 @@
 		public static const TYPE_OFFENSIVE = 1;
 		public static const TYPE_DEFENSIVE = 2;
 		public static const TYPE_SUPPORTIVE = 3;
+		public static const TYPE_WIND = "wind";
+		public static const TYPE_FIRE = "fire";
+		public static const TYPE_LIGHTNING = "lightning";
+		public static const TYPE_EARTH = "earth";
+		public static const TYPE_WATER = "water";
+		public static const TYPE_ELEMENT = "null";
 
-		public static function getType(swfName:String):String
+		public static function getSpecialSkill(petType:int):Object
 		{
-			switch (getPetBySwfName(swfName)["type"])
+			var skillObj = {};
+			switch (petType)
 			{
-				case 1:
+				case TYPE_OFFENSIVE:
+					skillObj = {
+							"target": "team",
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"duration": 2,
+									"amount": 100
+								}]
+						};
+					break;
+				case TYPE_DEFENSIVE:
+					skillObj = {
+							"target": "team",
+							"effect": [
+								{
+									"type": "guard",
+									"duration": 2
+								}]
+						};
+					break;
+				case TYPE_SUPPORTIVE:
+					skillObj = {
+							"target": "all",
+							"effect": [
+								{
+									"type": "clear_buff"
+								}]
+						};
+					break;
+				default:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "no effect"
+								}]
+						};
+			}
+			return skillObj;
+		}
+
+		public static function getAttributeSkill(attributeType:String):Object
+		{
+			var skillObj = {};
+			switch (attributeType)
+			{
+				case TYPE_WIND:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"duration": 2,
+									"amount": 100
+								}]
+						};
+					break;
+				case TYPE_FIRE:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "guard",
+									"duration": 2
+								}]
+						};
+					break;
+				case TYPE_LIGHTNING:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "clear_buff"
+								}]
+						};
+					break;
+				case TYPE_EARTH:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "clear_buff"
+								}]
+						};
+					break;
+				case TYPE_WATER:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "clear_buff"
+								}]
+						};
+					break;
+				case TYPE_ELEMENT:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "clear_buff"
+								}]
+						};
+					break;
+				default:
+					skillObj = {
+							"target": "self",
+							"effect": [
+								{
+									"type": "no effect"
+								}]
+						};
+			}
+			return skillObj;
+		}
+
+		public static function getTypeTxt(petType:int):String
+		{
+			switch (petType)
+			{
+				case TYPE_OFFENSIVE:
 					return "Offensive";
-				case 2:
+				case TYPE_DEFENSIVE:
 					return "Defensive";
-				case 3:
+				case TYPE_SUPPORTIVE:
 					return "Supportive";
 				default:
 					return "Balance";
@@ -899,7 +1026,7 @@
 							"description": "<b>Shining Eyes</b><br>Charge master with 100CP.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -1548,7 +1675,7 @@
 							"description": "<b>Dummy Block</b><br>Block attack for master, 50% chance resist attack damage (2 turns)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2106,7 +2233,7 @@
 							"description": "<b>Thunder Scream</b><br>Takachi's scream will increase master 5% damage.(5 turn)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2719,7 +2846,7 @@
 							"description": "<b>Healing!</b><br>Heal master's HP by 2% in each turn (3 turns)",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -3204,7 +3331,7 @@
 							"level": 20,
 							"damageBonus": 1.4,
 							"cooldown": 12,
-							"target": "self",
+							"target": "",
 							"name": "Secret: Absolute Chakra Shield",
 							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to crash target - 50% chance to stun target for 1 turn.",
 							"action": "attack",
@@ -3308,7 +3435,7 @@
 							"level": 20,
 							"damageBonus": 1.4,
 							"cooldown": 12,
-							"target": "self",
+							"target": "",
 							"name": "Secret: Absolute Chakra Shield",
 							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to to stun target (1 turn).",
 							"action": "attack",
@@ -3744,7 +3871,7 @@
 							"level": 20,
 							"damageBonus": 1.4,
 							"cooldown": 12,
-							"target": "self",
+							"target": "",
 							"name": "Secret: Absolute Chakra Shield",
 							"description": "<b>Secret: Absolute Chakra Shield</b><br>Emit a lot of chakra to to stun target (1 turn).",
 							"action": "attack",
@@ -4128,7 +4255,7 @@
 							"description": "<b>Candy Rain</b><br>40% chance to remove all buff from target",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4145,7 +4272,7 @@
 							"description": "<b>Red's Voice</b><br>70% to inflict sleep on target (2 turns)",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4328,7 +4455,7 @@
 							"description": "<b>Red Card</b><br>Prevents the target from using skills with the power of the red card. Restricts the target for 2 turns.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4345,7 +4472,7 @@
 							"description": "<b>Dual Tearing Slash</b><br>A consecutive claw strike that disables the target's attack ability. Prevents the target from using weapon attack for 2 turns.",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4427,7 +4554,7 @@
 							"description": "<b>Shield Wall</b><br>Creates a magic barrier to protect the master. Increases master's defense by 10% for 3 turns.",
 							"action": "special",
 							"animation": "attack_02",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4611,6 +4738,7 @@
 					"gold": 0,
 					"token": 10000,
 					"skill": [ {
+							"id": 0,
 							"level": 1,
 							"damageBonus": 2,
 							"cooldown": 0,
@@ -4624,6 +4752,7 @@
 							"skill_cp": 0,
 							"effect": [ {"type": "no effect"}]
 						}, {
+							"id": 1,
 							"level": 5,
 							"damageBonus": 1,
 							"cooldown": 11,
@@ -4641,15 +4770,16 @@
 									"amount": 20
 								}]
 						}, {
+							"id": 2,
 							"level": 10,
-							"damageBonus": 2,
+							"damageBonus": 0,
 							"cooldown": 8,
 							"target": "master",
 							"name": "RANDOM EFFECT to master",
-							"description": "<b>RANDOM EFFECT to master</b><br>Add random effect on master (Heal or Recover CP or Reduce Skill Cooldown).",
+							"description": "<b>RANDOM EFFECT to master</b><br>Add random effect on master (Heal or Strengthen or Protection) for 4 turns.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4657,20 +4787,21 @@
 									"EffectArray": [ {
 											"id": 1,
 											// "chance": 0,
-											"type": "heal",
-											"amount": 50,
-											"heal": 50
+											"type": "pet_heal",
+											"amount": 2,
+											"duration": 4
 										}, {
 											"id": 2,
 											// "chance": 0.33,
-											"type": "restore_cp",
-											"amount": 50,
-											"heal": 50
+											"type": "pet_damage_bonus",
+											"amount": 5,
+											"duration": 4
 										}, {
 											"id": 3,
 											// "chance": 0.66,
-											"type": "cooldown_reduction",
-											"amount": 1
+											"type": "pet_damage_reduction",
+											"amount": 10,
+											"duration": 4
 										}]
 								}]
 							// [ {"type": "no effect"}]
@@ -4679,15 +4810,16 @@
 							// "duration": 4
 							// }]
 						}, {
+							"id": 3,
 							"level": 15,
 							"damageBonus": 0,
 							"cooldown": 15,
 							"target": "",
 							"name": "RANDOM EFFECT to defender",
-							"description": "<b>RANDOM EFFECT to defender</b><br>Add random effect on defender (Stun or Poison or Burn).",
+							"description": "<b>RANDOM EFFECT to defender</b><br>Add random effect on defender (Stun or Poison or Burn) for 3 turns.",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -4697,20 +4829,20 @@
 											"isDebuff": 1,
 											// "chance": 0,
 											"type": "stun",
-											"duration": 2
+											"duration": 3
 										}, {
 											"id": 2,
 											"isDebuff": 1,
 											// "chance": 0.33,
 											"type": "poison",
-											"duration": 2,
+											"duration": 3,
 											"amount": 5
 										}, {
 											"id": 3,
 											"isDebuff": 1,
 											// "chance": 0.66,
 											"type": "pet_burn",
-											"duration": 2,
+											"duration": 3,
 											"amount": 5
 										}]
 								}]
@@ -4720,15 +4852,16 @@
 							// "duration": 3
 							// }]
 						}, {
+							"id": 4,
 							"level": 20,
-							"damageBonus": 2,
+							"damageBonus": 0,
 							"cooldown": 9,
 							"target": "master",
 							"name": "HEAL",
 							"description": "<b>HEAL</b><br>Recover master 10% HP, 2 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -5184,7 +5317,7 @@
 							"description": "<b>Ocean Atmosphere</b><br>Reduces master’s CP consumption when using skills by 25% for 1 turn.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
