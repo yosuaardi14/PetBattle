@@ -54,10 +54,44 @@
 				btn.buttonMode = true;
 			}
 			btn.visible = vis;
+			if (btn["clickMask"].hasEventListener(MouseEvent.CLICK))
+			{
+				btn["clickMask"].removeEventListener(MouseEvent.CLICK, func);
+			}
 			btn["clickMask"].addEventListener(MouseEvent.CLICK, func);
+			if (btn["clickMask"].hasEventListener(MouseEvent.MOUSE_OVER))
+			{
+				btn["clickMask"].removeEventListener(MouseEvent.MOUSE_OVER, onHover);
+			}
 			btn["clickMask"].addEventListener(MouseEvent.MOUSE_OVER, onHover);
+			if (btn["clickMask"].hasEventListener(MouseEvent.MOUSE_OUT))
+			{
+				btn["clickMask"].removeEventListener(MouseEvent.MOUSE_OUT, onRollOut);
+			}
 			btn["clickMask"].addEventListener(MouseEvent.MOUSE_OUT, onRollOut);
+			if (btn["clickMask"].hasEventListener(MouseEvent.MOUSE_DOWN))
+			{
+				btn["clickMask"].removeEventListener(MouseEvent.MOUSE_DOWN, onPress);
+			}
 			btn["clickMask"].addEventListener(MouseEvent.MOUSE_DOWN, onPress);
+		}
+
+		public static function initSwitchButton(btn, func, labelTxt:String = "", initialValue:Boolean=true, vis:Boolean = true)
+		{
+			btn["txt"].text = labelTxt;
+			btn.stop();
+			btn.buttonMode = true;
+			btn.visible = vis;
+			if(initialValue){
+				btn.gotoAndStop(2);
+			}else{
+				btn.gotoAndStop(1);
+			}
+			if (btn.hasEventListener(MouseEvent.CLICK))
+			{
+				btn.removeEventListener(MouseEvent.CLICK, func);
+			}
+			btn.addEventListener(MouseEvent.CLICK, func);
 		}
 
 		private static function onHover(e:MouseEvent)
@@ -178,6 +212,23 @@
 			return obj.hasEventListener(mouseEvent);
 		}
 
+		public static function removeMouseEventIfExist(obj:*, mouseEvent:*, callback:*):void
+		{
+			if (obj.hasEventListener(mouseEvent))
+			{
+				obj.removeEventListener(mouseEvent, callback);
+			}
+		}
+
+		public static function addMouseEventIfNotExist(obj:*, mouseEvent:*, callback:*):void
+		{
+			if (obj.hasEventListener(mouseEvent))
+			{
+				obj.removeEventListener(mouseEvent, callback);
+			}
+			obj.addEventListener(mouseEvent, callback);
+		}
+
 		public static function addMouseEventClick(obj:*, callback:*):void
 		{
 			addMouseEvent(obj, MouseEvent.CLICK, callback);
@@ -191,6 +242,16 @@
 		public static function hasMouseEventClick(obj:*):Boolean
 		{
 			return hasMouseEvent(obj, MouseEvent.CLICK);
+		}
+
+		public static function addMouseEventClickIfNotExist(obj:*, callback:*):void
+		{
+			addMouseEventIfNotExist(obj, MouseEvent.CLICK, callback);
+		}
+
+		public static function removeMouseClickIfExist(obj:*, callback:*):void
+		{
+			removeMouseEventIfExist(obj, MouseEvent.CLICK, callback);
 		}
 
 		public static function addMouseEventRollOver(obj:*, callback:*):void
@@ -208,6 +269,16 @@
 			return hasMouseEvent(obj, MouseEvent.ROLL_OVER);
 		}
 
+		public static function addMouseEventRollOverIfNotExist(obj:*, callback:*):void
+		{
+			addMouseEventIfNotExist(obj, MouseEvent.ROLL_OVER, callback);
+		}
+
+		public static function removeMouseRollOverIfExist(obj:*, callback:*):void
+		{
+			removeMouseEventIfExist(obj, MouseEvent.ROLL_OVER, callback);
+		}
+
 		public static function addMouseEventRollOut(obj:*, callback:*):void
 		{
 			addMouseEvent(obj, MouseEvent.ROLL_OUT, callback);
@@ -221,6 +292,16 @@
 		public static function hasMouseEventRollOut(obj:*):Boolean
 		{
 			return hasMouseEvent(obj, MouseEvent.ROLL_OUT);
+		}
+
+		public static function addMouseEventRollOutIfNotExist(obj:*, callback:*):void
+		{
+			addMouseEventIfNotExist(obj, MouseEvent.ROLL_OUT, callback);
+		}
+
+		public static function removeMouseRollOutIfExist(obj:*, callback:*):void
+		{
+			removeMouseEventIfExist(obj, MouseEvent.ROLL_OUT, callback);
 		}
 
 		public static function removeChildIfExistAt(obj:*, index:int):*
@@ -279,6 +360,19 @@
 				mc.filters = [];
 			}
 		}
+
+		public static function setMCText(mc:*, text:String, isHtml:Boolean = false):void
+		{
+			if (isHtml)
+			{
+				mc.text = text;
+			}
+			else
+			{
+				mc.htmlText = text;
+			}
+		}
+
 	}
 
 }

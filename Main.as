@@ -38,22 +38,24 @@
 				background9,
 				background8,
 				background10,
-				background14,
-				background19,
-				background18,
-				background16,
-				background20,
+				// background14,
+				// background19,
+				// background18,
+				// background16,
+				// background20,
 			];
 		public var mapIndex:int = 0;
+		public var mapId:int = 0;
 		public var bg_map:*;
 		public var controlParty = false;
 		public var atbMode = false;
 		public var useMapEffect = true;
 		public var useMapEffectResistance = true;
+		public var isTestMode = true;
 		// FRAME 2 - SELECT CHARACTER
 		public var newPlayerArr:Vector.<Pet> = new Vector.<Pet>();
 		public var newEnemyArr:Vector.<Pet> = new Vector.<Pet>();
-		public var charNum:int;
+		public var charListNum:int;
 		public var playerMaster;
 		public var enemyMaster;
 		public var selectedChar;
@@ -85,7 +87,7 @@
 			this.gameMode = Constant.GAME_MODE_PVE;
 			this.petLib = PetLibrary.PET;
 			this.petList = Constant.PET_LIST;
-			this.charNum = petList.length;
+			this.charListNum = petList.length;
 			this.selectTurn = "p";
 			loadPetSwf();
 			addFrameScript(0, this.frame1, 1, this.frame2, 2, this.frame3);
@@ -123,21 +125,31 @@
 			// var selectChar = new SelectCharacter(this.mode, playerNum, opponentNum);
 			this.mapIndex = 0;
 			this.bg_map = new bg[this.mapIndex]();
+			this.mapId = getMapIndexByLinkageName(this.bg_map);
 			this.bg_map.scaleX = 0.9;
 			this.bg_map.scaleY = 0.9;
 			this["popupMap"]["map"]["holder"].addChild(bg_map);
-			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
+			this.showMapEffectList(this.mapId);
 			this["popupMap"].visible = false;
 
-			this.newPlayerArr.splice(0, newPlayerArr.length);
-			this.newEnemyArr.splice(0, newEnemyArr.length);
+			this.newPlayerArr = new Vector.<Pet>(); // .splice(0, newPlayerArr.length);
+			this.newEnemyArr = new Vector.<Pet>(); // .splice(0, newEnemyArr.length);
 			this.selectTurn = "p";
 			this.currentPage = 1;
 			this.maxPage = Math.ceil(petList.length / Constant.MAX_CHAR_IN_GAME);
+			this.controlParty = false;
+			this.atbMode = false;
+			this.useMapEffect = true;
+			this.useMapEffectResistance = true;
+
 			Utils.addMouseEventClick(this["btnPrev"], this.changeCharPage);
 			Utils.addMouseEventClick(this["btnNext"], this.changeCharPage);
+
+			Utils.initSwitchButton(this["btnSwitchTest"], this.onTestMode, "Test Mode", true, false);
+			Utils.initSwitchButton(this["btnControl"], this.onControlMode, "Control Party", this.controlParty, true);
+			Utils.initSwitchButton(this["btnATB"], this.onATBMode, "Agility System", this.atbMode, true);
 			this.loadAllPet();
-			if (this.mode == 1 || this.playerNum == 1)
+			if (this.mode == 1 || (this.playerNum == 1 && this.gameMode == Constant.GAME_MODE_PVE) || (this.playerNum == 1 && this.opponentNum == 1 && this.gameMode == Constant.GAME_MODE_PVP))
 			{
 				this["btnControl"].visible = false;
 			}
@@ -152,30 +164,35 @@
 				this["enemy_" + i].visible = false;
 			}
 
-			this.controlParty = false;
-			this.atbMode = false;
-			this.useMapEffect = true;
-			this.useMapEffectResistance = true;
+			// this["btnControl"].gotoAndStop(1);
+			// // this["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
+			// Utils.addMouseEventClickIfNotExist(this["btnControl"], this.onControlMode);
+			// this["btnATB"].gotoAndStop(1);
+			// // this["btnATB"].addEventListener(MouseEvent.CLICK, this.onATBMode);
+			// Utils.addMouseEventClickIfNotExist(this["btnATB"], this.onATBMode);
 
-			this["btnControl"].gotoAndStop(1);
-			this["btnControl"].addEventListener(MouseEvent.CLICK, this.onControlMode);
-			this["btnATB"].gotoAndStop(1);
-			this["btnATB"].addEventListener(MouseEvent.CLICK, this.onATBMode);
+			// this["popupMap"]["btnEffect"].gotoAndStop(2);
+			// // this["popupMap"]["btnEffect"].addEventListener(MouseEvent.CLICK, this.onMapEffectSwitch);
+			// Utils.addMouseEventClickIfNotExist(this["popupMap"]["btnEffect"], this.onMapEffectSwitch);
 
-			this["popupMap"]["btnEffect"].gotoAndStop(2);
-			this["popupMap"]["btnEffect"].addEventListener(MouseEvent.CLICK, this.onMapEffectSwitch);
+			// this["popupMap"]["btnResistance"].gotoAndStop(2);
+			// // this["popupMap"]["btnResistance"].addEventListener(MouseEvent.CLICK, this.onMapResistanceEffectSwitch);
+			// Utils.addMouseEventClickIfNotExist(this["popupMap"]["btnResistance"], this.onMapResistanceEffectSwitch);
 
-			this["popupMap"]["btnResistance"].gotoAndStop(2);
-			this["popupMap"]["btnResistance"].addEventListener(MouseEvent.CLICK, this.onMapResistanceEffectSwitch);
+			// this["popupMap"]["btnNext"].addEventListener(MouseEvent.CLICK, changeBg);
+			// this["popupMap"]["btnPrev"].addEventListener(MouseEvent.CLICK, changeBg);
+			Utils.initSwitchButton(this["popupMap"]["btnEffect"], this.onMapEffectSwitch, "Map Effect", this.useMapEffect, true);
+			Utils.initSwitchButton(this["popupMap"]["btnResistance"], this.onMapResistanceEffectSwitch, "Effect Resistance", this.useMapEffectResistance, true);
+			Utils.addMouseEventClickIfNotExist(this["popupMap"]["btnNext"], this.changeBg);
+			Utils.addMouseEventClickIfNotExist(this["popupMap"]["btnPrev"], this.changeBg);
 
-			this["popupMap"]["btnNext"].addEventListener(MouseEvent.CLICK, changeBg);
-			this["popupMap"]["btnPrev"].addEventListener(MouseEvent.CLICK, changeBg);
-
-			this["btnBack"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
+			// this["btnBack"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
+			Utils.addMouseEventClickIfNotExist(this["btnBack"], this.gotoMenu);
 			Utils.initButton(this["btnBattle"], this.onStartBattle, "Start", true);
 
-			messageTxt = "Player Turn";
-			this["popupInfo"].gotoAndPlay("show");
+			// messageTxt = "Player Turn";
+			// this["popupInfo"].gotoAndPlay("show");
+			showPopupMessage("Player Turn", true);
 		}
 
 		internal function frame3()
@@ -202,30 +219,53 @@
 			Utils.initButton(this["btnRun"], this.onRunClicked, "Run", true);
 
 			this["btnSurrend"].visible = false;
-			this["btnSurrend"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
+			// this["btnSurrend"].addEventListener(MouseEvent.CLICK, this.gotoMenu);
+			Utils.addMouseEventClickIfNotExist(this["btnSurrend"], this.gotoMenu);
 			this["txt"].visible = false;
 
-			back = bg_map;
-			back.scaleX = 2;
-			back.scaleY = 2;
+			this.back = bg_map;
+			this.back.scaleX = 2;
+			this.back.scaleY = 2;
 			stage.addChildAt(back, 0);
 			this.startBattle();
 		}
 
 		// NAVIGATION
-		private function gotoSelectChar(e:MouseEvent)
+		public function gotoSelectChar(e:MouseEvent)
 		{
 			this.gotoAndStop("selectChar");
 		}
 
-		private function gotoMenu(e:MouseEvent)
+		public function gotoMenu(e:MouseEvent)
 		{
 			this.gotoAndStop("menu");
 		}
 
-		private function gotoBattle(e:MouseEvent)
+		public function gotoBattle(e:MouseEvent)
 		{
 			this.gotoAndStop("battle");
+		}
+
+		public function showConfirmationDialog(message:String, callback:Function):void
+		{
+			var confirmationDialog = new ConfirmationDialog();
+			confirmationDialog["txt"].text = message;
+			Utils.addMouseEventClickIfNotExist(confirmationDialog["btnOk"], function(e:MouseEvent)
+				{
+					if (stage.contains(confirmationDialog))
+					{
+						stage.removeChild(confirmationDialog);
+					}
+					callback();
+				});
+			Utils.addMouseEventClickIfNotExist(confirmationDialog["btnCancel"], function(e:MouseEvent)
+				{
+					if (stage.contains(confirmationDialog))
+					{
+						stage.removeChild(confirmationDialog);
+					}
+				});
+			stage.addChild(confirmationDialog);
 		}
 
 		// FRAME 1
@@ -256,6 +296,28 @@
 			}
 		}
 
+		public function onLoadFinish(e:Event):void
+		{
+			try
+			{
+				var petName = e.target.url;
+				petName = petName.slice(petName.lastIndexOf("/") + 1);
+				petName = petName.slice(0, -4);
+
+				var objNew:MovieClip = MovieClip(e.currentTarget.content);
+				this.allSwfData[petName] = objNew;
+				this.allSwfData["length"] = allSwfData["length"] + 1;
+			}
+			catch (err:Error)
+			{
+				trace("Error");
+			}
+			// if (this.allSwfData["length"] == this.petList.length)
+			// {
+			// this.showPetList();
+			// }
+		}
+
 		public function initCustomPopup()
 		{
 			this["popupCustom"]["txtPlayerNum"].text = playerNum.toString();
@@ -264,17 +326,29 @@
 			this["popupCustom"]["txtGameMode"].text = this.gameMode.toString();
 
 			Utils.initButton(this["popupCustom"]["btnStart"], this.gotoSelectChar, "Start", true);
-			this["popupCustom"]["btnExit"].addEventListener(MouseEvent.CLICK, this.hidePopupCustom);
-			this["popupCustom"]["btnMinP"].addEventListener(MouseEvent.CLICK, changeNum);
-			this["popupCustom"]["btnMinO"].addEventListener(MouseEvent.CLICK, changeNum);
-			this["popupCustom"]["btnPlusP"].addEventListener(MouseEvent.CLICK, changeNum);
-			this["popupCustom"]["btnPlusO"].addEventListener(MouseEvent.CLICK, changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnExit"], this.hidePopupCustom);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnMinP"], this.changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnMinO"], this.changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnPlusP"], this.changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnPlusO"], this.changeNum);
 
-			this["popupCustom"]["btnStatsPrev"].addEventListener(MouseEvent.CLICK, changeNum);
-			this["popupCustom"]["btnStatsNext"].addEventListener(MouseEvent.CLICK, changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnStatsPrev"], this.changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnStatsNext"], this.changeNum);
 
-			this["popupCustom"]["btnModePrev"].addEventListener(MouseEvent.CLICK, changeNum);
-			this["popupCustom"]["btnModeNext"].addEventListener(MouseEvent.CLICK, changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnModePrev"], this.changeNum);
+			Utils.addMouseEventClickIfNotExist(this["popupCustom"]["btnModeNext"], this.changeNum);
+			// this["popupCustom"]["btnExit"].addEventListener(MouseEvent.CLICK, this.hidePopupCustom);
+			// this["popupCustom"]["btnMinP"].addEventListener(MouseEvent.CLICK, changeNum);
+			// this["popupCustom"]["btnMinO"].addEventListener(MouseEvent.CLICK, changeNum);
+			// this["popupCustom"]["btnPlusP"].addEventListener(MouseEvent.CLICK, changeNum);
+			// this["popupCustom"]["btnPlusO"].addEventListener(MouseEvent.CLICK, changeNum);
+
+			// this["popupCustom"]["btnStatsPrev"].addEventListener(MouseEvent.CLICK, changeNum);
+			// this["popupCustom"]["btnStatsNext"].addEventListener(MouseEvent.CLICK, changeNum);
+
+			// this["popupCustom"]["btnModePrev"].addEventListener(MouseEvent.CLICK, changeNum);
+			// this["popupCustom"]["btnModeNext"].addEventListener(MouseEvent.CLICK, changeNum);
+
 		}
 
 		private function hidePopupCustom(e:MouseEvent)
@@ -353,6 +427,13 @@
 		}
 
 		// FRAME 2
+		public function onTestMode(e:MouseEvent)
+		{
+			// SWITCH TEST
+			this.isTestMode = !isTestMode;
+			Utils.switchButtonBaseFunction(this.isTestMode, this["btnSwitchTest"]);
+		}
+
 		public function changeBg(e:MouseEvent)
 		{
 			if (this["popupMap"]["map"]["holder"].numChildren > 0)
@@ -376,10 +457,11 @@
 				}
 			}
 			this.bg_map = new bg[this.mapIndex]();
+			this.mapId = getMapIndexByLinkageName(this.bg_map);
 			this.bg_map.scaleX = 0.9;
 			this.bg_map.scaleY = 0.9;
 			this["popupMap"]["map"]["holder"].addChild(this.bg_map);
-			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
+			this.showMapEffectList(this.mapId);
 		}
 
 		private function getMapIndexByLinkageName(mc:*):int
@@ -473,7 +555,7 @@
 			// {
 			// this["popupMap"]["btnResistance"].gotoAndStop(2);
 			// }
-			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
+			this.showMapEffectList(this.mapId);
 		}
 
 		public function onMapEffectSwitch(e:MouseEvent)
@@ -488,7 +570,7 @@
 			// {
 			// this["popupMap"]["btnEffect"].gotoAndStop(2);
 			// }
-			this.showMapEffectList(getMapIndexByLinkageName(this.bg_map));
+			this.showMapEffectList(this.mapId);
 		}
 
 		public function onControlMode(e:MouseEvent)
@@ -534,8 +616,9 @@
 			}
 			else
 			{
-				this.messageTxt = "Please choose character";
-				this["popupInfo"].gotoAndPlay("show");
+				// this.messageTxt = "Please choose character";
+				// this["popupInfo"].gotoAndPlay("show");
+				showPopupMessage("Please Choose Character", true);
 			}
 			if (e.target.parent == this["popupMap"]["btnBattle"])
 			{
@@ -670,7 +753,8 @@
 		public function loadAllPet()
 		{
 			Utils.initButton(this["popupMap"]["btnBattle"], onStartBattle, "Battle", true);
-			this["popupMap"]["btnExit"].addEventListener(MouseEvent.CLICK, hidePopupMap);
+			// this["popupMap"]["btnExit"].addEventListener(MouseEvent.CLICK, hidePopupMap);
+			Utils.addMouseEventClickIfNotExist(this["popupMap"]["btnExit"], this.hidePopupMap);
 			for (var j = 0; j < playerNum; j++)
 			{
 				// Utils.initButton(this["player_" + j]["btnRemove"], removeSelectedChar, "Remove", false);
@@ -688,10 +772,10 @@
 				initSelectedCharUI(this["enemy_" + j]);
 			}
 
-			this.hidePet();
+			this.hidePetList();
 			if (this.allSwfData["length"] == this.petList.length)
 			{
-				this.showPet();
+				this.showPetList();
 				return;
 			}
 		}
@@ -716,8 +800,8 @@
 				if (this.currentPage < this.maxPage)
 				{
 					this.currentPage += 1;
-					this.hidePet();
-					this.showPet();
+					this.hidePetList();
+					this.showPetList();
 				}
 			}
 			else if (e.target == this["btnPrev"])
@@ -725,14 +809,14 @@
 				if (this.currentPage > 1)
 				{
 					this.currentPage -= 1;
-					this.hidePet();
-					this.showPet();
+					this.hidePetList();
+					this.showPetList();
 				}
 			}
-			buttonVisibility();
+			this.buttonVisibility();
 		}
 
-		public function showPet()
+		public function showPetList()
 		{
 			this.buttonVisibility();
 			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
@@ -749,7 +833,9 @@
 				var petObj = PetLibrary.getPetBySwfName(petList[i]);
 				this["charMC_" + index]["petType"].gotoAndStop(petObj["type"]);
 				this["charMC_" + index]["attributeType"].gotoAndStop(petObj["attribute_type"]);
-				this["charMC_" + index].gotoAndStop(PetLibrary.getType(petList[i]));
+				this["charMC_" + index]["petType"].visible = false;
+				this["charMC_" + index]["attributeType"].visible = false;
+				this["charMC_" + index].gotoAndStop(PetLibrary.getTypeTxt(petObj["type"]));
 				this["charMC_" + index].visible = true;
 				// this["charMC_" + i]["holder"].addChild(petMC);
 				// this["charMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, loadCharacter);
@@ -762,28 +848,6 @@
 				Utils.addMouseEventClick(this["charMC_" + index]["maskMC"], loadCharacter);
 				index++;
 			}
-		}
-
-		public function onLoadFinish(e:Event):void
-		{
-			try
-			{
-				var petName = e.target.url;
-				petName = petName.slice(petName.lastIndexOf("/") + 1);
-				petName = petName.slice(0, -4);
-
-				var objNew:MovieClip = MovieClip(e.currentTarget.content);
-				this.allSwfData[petName] = objNew;
-				this.allSwfData["length"] = allSwfData["length"] + 1;
-			}
-			catch (err:Error)
-			{
-				trace("Error");
-			}
-			// if (this.allSwfData["length"] == this.petList.length)
-			// {
-			// this.showPet();
-			// }
 		}
 
 		public function loadPetById(id:int):Object
@@ -836,8 +900,9 @@
 		{
 			if (this.newPlayerArr.length == this.playerNum && this.newEnemyArr.length == this.opponentNum)
 			{
-				messageTxt = "Click Start to Begin the Battle";
-				this["popupInfo"].gotoAndPlay("show");
+				// messageTxt = "Click Start to Begin the Battle";
+				// this["popupInfo"].gotoAndPlay("show");
+				showPopupMessage("Click Start to Begin the Battle", true);
 			}
 			var id = e.target.parent.name.split("_")[1];
 			var petObj = loadPetById(id);
@@ -859,15 +924,17 @@
 				this.selectTurn = "e";
 				if (this.newEnemyArr.length < this.opponentNum)
 				{
-					messageTxt = "Opponent Turn";
-					this["popupInfo"].gotoAndPlay("show");
+					// messageTxt = "Opponent Turn";
+					// this["popupInfo"].gotoAndPlay("show");
+					showPopupMessage("Opponent Turn", true);
 				}
 			}
 			if (this.selectTurn == "e" && this.newPlayerArr.length < this.playerNum)
 			{
 				selectTurn = "p";
-				messageTxt = "Player Turn";
-				this["popupInfo"].gotoAndPlay("show");
+				// messageTxt = "Player Turn";
+				// this["popupInfo"].gotoAndPlay("show");
+				showPopupMessage("Player Turn", true);
 			}
 		}
 
@@ -881,7 +948,7 @@
 				charMc["hpTxt"].text = charObj.getHP() + "/" + charObj.getMaxHP();
 				charMc["cpTxt"].text = charObj.getCP() + "/" + charObj.getMaxCP();
 				charMc["btnRemove"].visible = true;
-				charMc["typeTxt"].text = PetLibrary.getType(charObj.getPetSwfName());
+				charMc["typeTxt"].text = PetLibrary.getTypeTxt(charObj.getPetType());
 				if (attributeType != "null")
 				{
 					charMc["attributeTxt"].text = attributeType.replace(attributeType.substring(0, 1), attributeType.substring(0, 1).toUpperCase());
@@ -947,16 +1014,17 @@
 			if (this.selectTurn == "e" && this.newPlayerArr.length < this.playerNum)
 			{
 				this.selectTurn = "p";
-				messageTxt = "Player Turn";
-				this["popupInfo"].gotoAndPlay("show");
+				// messageTxt = "Player Turn";
+				// this["popupInfo"].gotoAndPlay("show");
+				showPopupMessage("Player Turn", true);
 			}
 			this.showSelectedChar();
 		}
 
-		public function hidePet()
+		public function hidePetList()
 		{
 			var start = (currentPage - 1) * Constant.MAX_CHAR_IN_GAME;
-			var end = Math.min(this.charNum, this.currentPage * Constant.MAX_CHAR_IN_GAME);
+			var end = Math.min(this.charListNum, this.currentPage * Constant.MAX_CHAR_IN_GAME);
 			for (var i = (end - start - 1); i < Constant.MAX_CHAR_IN_GAME; i++)
 			{
 				Utils.removeChildIfExistAt(this["charMC_" + i]["holder"], 2);
@@ -976,21 +1044,6 @@
 			gotoAndStop("menu");
 		}
 
-		public function onPassClicked(e:MouseEvent)
-		{
-
-		}
-
-		public function onSpecialClicked(e:MouseEvent)
-		{
-
-		}
-
-		public function onRunClicked(e:MouseEvent)
-		{
-			trace("onRunClicked");
-		}
-
 		public function onInfo()
 		{
 			if (messageTxt == "")
@@ -1004,7 +1057,26 @@
 			}
 		}
 
-		public function showOverheadNumber(param1:String, param2:String, obj):void
+		public function showPopupMessage(strTxt:String, message:Boolean = false):void
+		{
+			if (message)
+			{
+				messageTxt = strTxt;
+			}
+			else
+			{
+				skillNameTxt = strTxt;
+			}
+			this["popupInfo"].gotoAndPlay("show");
+		}
+
+		public function hidePopupMessage():void
+		{
+			skillNameTxt = "";
+			this["popupInfo"].gotoAndPlay("idle");
+		}
+
+		public function showOverheadText(param1:String, param2:String, obj):void
 		{
 			var _loc3_:MovieClip = obj.getPet().parent.parent;
 			_loc3_["ohNumber"].showNumber(param1, param2);
@@ -1070,7 +1142,7 @@
 			for (var i in petObj.getPet().skillData)
 			{
 				var skillName:String = "Skill_" + i;
-				var cls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petObj.getPet().getPetObj()["swfName"]), skillName);
+				var cls = Utils.getAsset(Utils.searchClassBySwfName(allSwfData, petObj.getPetInfo()["swfName"]), skillName);
 				if (cls != null)
 				{
 					var temp = cls;
@@ -1080,9 +1152,15 @@
 						this["skillMC_" + i]["holder"].removeChildAt(1);
 					}
 					this["skillMC_" + i]["holder"].addChild(temp);
-					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, selectSkill);
-					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OVER, infoSkill);
-					this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
+					// this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, selectSkill);
+					// this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OVER, infoSkill);
+					// this["skillMC_" + i]["maskMC"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
+					// {
+					// txt.visible = false;
+					// });
+					Utils.addMouseEventClickIfNotExist(this["skillMC_" + i]["maskMC"], this.selectSkill);
+					Utils.addMouseEventRollOver(this["skillMC_" + i]["maskMC"], this.infoSkill);
+					Utils.addMouseEventRollOutIfNotExist(this["skillMC_" + i]["maskMC"], function(e:MouseEvent):void
 						{
 							txt.visible = false;
 						});
@@ -1095,31 +1173,43 @@
 					{
 						trace("not enough chakra" + skillName);
 						this["skillMC_" + i]["cdFilter"].visible = true;
-						if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
-						{
-							this["skillMC_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, selectSkill);
-						}
+						// if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+						// {
+						// this["skillMC_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, selectSkill);
+						// }
+						Utils.removeMouseClickIfExist(this["skillMC_" + i]["maskMC"], this.selectSkill);
+
 					}
 					if (petObj.getPet().getSkillCooldown()[i] > 0)
 					{
+						trace("The skill still cooldown" + skillName);
 						this["skillMC_" + i]["cdFilter"].visible = true;
 						this["skillMC_" + i]["cdTxt"].text = petObj.getPet().getSkillCooldown()[i];
-						if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
-						{
-							this["skillMC_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, selectSkill);
-						}
+						// if (this["skillMC_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+						// {
+						// this["skillMC_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, selectSkill);
+						// }
+						Utils.removeMouseClickIfExist(this["skillMC_" + i]["maskMC"], this.selectSkill);
 					}
 				}
 			}
 			this["btnPass"].visible = true;
-			this["btnPass"].addEventListener(MouseEvent.CLICK, selectSkill);
-			this["btnPass"].addEventListener(MouseEvent.ROLL_OVER, infoAction);
-			this["btnPass"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
+			// this["btnPass"].addEventListener(MouseEvent.CLICK, selectSkill);
+			// this["btnPass"].addEventListener(MouseEvent.ROLL_OVER, infoAction);
+			// this["btnPass"].addEventListener(MouseEvent.ROLL_OUT, function(e:MouseEvent):void
+			// {
+			// txt.visible = false;
+			// });
+			Utils.addMouseEventClickIfNotExist(this["btnPass"], this.selectSkill);
+			Utils.addMouseEventRollOverIfNotExist(this["btnPass"], this.infoAction);
+			Utils.addMouseEventRollOutIfNotExist(this["btnPass"], function(e:MouseEvent):void
 				{
 					txt.visible = false;
 				});
 			this["btnSpecial"].visible = false;
+			this["btnRun"].visible = true;
 			this.showSpecialButton(petObj.getPetType());
+			this.showAttributeButton(petObj.getPetAttributeType());
 			// this["btnSpecial"].visible = true;
 			// this["btnSpecial"].addEventListener(MouseEvent.CLICK, specialSkill);
 			// this["btnSpecial"].addEventListener(MouseEvent.ROLL_OVER, infoAction);
@@ -1138,20 +1228,66 @@
 			this["btnOffensiveSpecial"].visible = false;
 			this["btnDefensiveSpecial"].visible = false;
 			this["btnSupportiveSpecial"].visible = false;
-			if (nowTurn == getMaster(attacker) || nowTurn == getMaster(defender))
+			if ((nowTurn == getMaster(attacker) || nowTurn == getMaster(defender)) && !nowTurn.hasUseSpecial)
 			{
 				switch (type)
 				{
 					case 1:
 						this["btnOffensiveSpecial"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnOffensiveSpecial"], specialSkill);
 						break;
 					case 2:
 						this["btnDefensiveSpecial"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnDefensiveSpecial"], specialSkill);
 						break;
 					case 3:
 						this["btnSupportiveSpecial"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnSupportiveSpecial"], specialSkill);
 						break;
 					default:
+						break;
+				}
+			}
+		}
+		private function showAttributeButton(type:String)
+		{
+			this["btnWind"].visible = false;
+			this["btnFire"].visible = false;
+			this["btnLightning"].visible = false;
+			this["btnEarth"].visible = false;
+			this["btnWater"].visible = false;
+			this["btnElement"].visible = false;
+			if (nowTurn.getCP() == nowTurn.getMaxCP())
+			{
+				switch (type)
+				{
+					case "wind":
+						this["btnWind"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnWind"], onAttributeSpecialClicked);
+						break;
+					case "fire":
+						this["btnFire"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnFire"], onAttributeSpecialClicked);
+						break;
+					case "lightning":
+						this["btnLightning"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnLightning"], onAttributeSpecialClicked);
+						break;
+					case "earth":
+						this["btnEarth"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnEarth"], onAttributeSpecialClicked);
+						break;
+					case "water":
+						this["btnWater"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnWater"], onAttributeSpecialClicked);
+						break;
+					case "null":
+						this["btnElement"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnElement"], onAttributeSpecialClicked);
+						break;
+					default:
+						this["btnElement"].visible = true;
+						Utils.addMouseEventClickIfNotExist(this["btnElement"], onAttributeSpecialClicked);
 						break;
 				}
 			}
@@ -1196,7 +1332,7 @@
 			/*else if(e.target == btnSpecial){
 				var master = getMaster(attacker);
 				this["txt"].visible = true;
-				this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>"+PetLibrary.getType(master.getPetInfo()["swfName"])+"Special</b><br>Only once per battle</font>";
+				this["txt"].htmlText = "<font size=\"20\" color=\"#FFFFFF\"><b>"+PetLibrary.getTypeTxt(master.getPetType())+"Special</b><br>Only once per battle</font>";
 				this["txt"].htmlText += "<font size=\"20\" color=\"#00FF00\">" + ("Target: " + "All") + "</font>";
 				this["txt"].htmlText += "<font size=\"20\" color=\"#00BFFF\">" + ("Chakra: " + master.getMaxCP()) + "</font>";
 			}*/
@@ -1233,6 +1369,12 @@
 			this["btnSupportiveSpecial"].visible = show;
 			this["btnSpecial"].visible = show;
 			this["btnRun"].visible = show;
+			this["btnWind"].visible = show;
+			this["btnFire"].visible = show;
+			this["btnLightning"].visible = show;
+			this["btnEarth"].visible = show;
+			this["btnWater"].visible = show;
+			this["btnElement"].visible = show;
 		}
 
 		public function getMaster(attackerObj:Pet):Pet
@@ -1247,27 +1389,86 @@
 			}
 		}
 
+		public function onPassClicked(e:MouseEvent)
+		{
+			defender = attacker;
+			passAction(attacker.getPet(), attacker, defender, "pass");
+		}
+
+		public function onSpecialClicked(e:MouseEvent)
+		{
+			var master:Pet = getMaster(attacker);
+			if (master.getCP() == master.getMaxCP())
+			{
+				specialSkillAction(master);
+			}
+			else
+			{
+				showPopupMessage("Not Enough Chakra");
+			}
+		}
+
+		public function onRunClicked(e:MouseEvent)
+		{
+			showConfirmationDialog("Are you sure want to run?", function()
+				{
+					disposeBattle();
+					gotoAndStop("menu");
+				});
+		}
+
+		public function onAttributeSpecialClicked(e:MouseEvent)
+		{
+			if (attacker.getCP() == attacker.getMaxCP())
+			{
+				atrributeSkill();
+			}
+			else
+			{
+				showPopupMessage("Not Enough Chakra");
+			}
+		}
+
+		private function atrributeSkill()
+		{
+			var skillEffect = PetLibrary.getAttributeSkill(attacker.getPetAttributeType());
+			// TODO Attribute Skilll Logic
+			var attributeName = attacker.getPetAttributeType();
+			attributeName = attributeName.replace(attributeName.substring(0, 1), attributeName.substring(0, 1).toUpperCase());
+			if (attributeName == "Null")
+			{
+				attributeName = "Elemental";
+			}
+			BattleUtils.updateCP(attacker, -attacker.getMaxCP());
+			attacker.getPet().gotoAction("pass");
+			showPopupMessage(attributeName + " Attribute Skill");
+			skillDisplay(false);
+			BattleUtils.updateSkillCooldown(attacker.getPet(), -1);
+			hideTarget(true);
+			// battleStatus("0", "pass");
+		}
+
 		public function specialSkill(e:MouseEvent)
 		{
 			var master:Pet = getMaster(attacker);
 			if (master.getCP() == master.getMaxCP())
 			{
-				switch (master.getPetType())
-				{
-					case 0: // balance
-						// add effect
-						break;
-					case 1:
-						// add effect all strength 100% 1 turn
-						break;
-					case 2:
-						// add effect all guard 1 turn
-						break;
-					case 3:
-						// add effect all enemy clear buff ???
-						break;
-
-				}
+				specialSkillAction(master);
+				// switch (master.getPetType())
+				// {
+				// case 0: // balance
+				// // add effect
+				// break;
+				// case 1:
+				// // add effect all strength 100% 1 turn
+				// break;
+				// case 2:
+				// // add effect all guard 1 turn
+				// break;
+				// case 3:
+				// // add effect all enemy clear buff ???
+				// break;
+				// }
 				/*if(btnSpecial.hasEventListener(MouseEvent.CLICK)){
 					btnSpecial.removeEventListener(MouseEvent.CLICK, specialSkill);
 				}*/
@@ -1275,8 +1476,31 @@
 			}
 			else
 			{
+				showPopupMessage("Not Enough Chakra");
 				// trace("not enough chakra");
 			}
+		}
+
+		private function specialSkillAction(master)
+		{
+			var teamArr = newPlayerArr.indexOf(attacker) >= 0 ? newPlayerArr : newEnemyArr;
+			var opponentArr = newPlayerArr.indexOf(attacker) >= 0 ? newEnemyArr : newPlayerArr;
+			var skillEffect = PetLibrary.getSpecialSkill(master.getPetType());
+			var targetArr = skillEffect["target"] == "all" ? opponentArr : teamArr;
+			var isBuff = skillEffect["target"] == "all" ? false : true;
+			for (var i in targetArr)
+			{
+				defender = targetArr[i];
+				addEffect(skillEffect, master, defender, isBuff);
+			}
+			master.hasUseSpecial = true;
+			BattleUtils.updateCP(master, -master.getMaxCP());
+			attacker.getPet().gotoAction("pass");
+			showPopupMessage(PetLibrary.getTypeTxt(master.getPetType()) + " Special Skill");
+			skillDisplay(false);
+			BattleUtils.updateSkillCooldown(attacker.getPet(), -1);
+			hideTarget(true);
+			battleStatus("0", "pass");
 		}
 
 		// ACTION////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1527,6 +1751,7 @@
 		{
 			BattleUtils.charge(attacker);
 			mc.gotoAction(skillTarget);
+			showPopupMessage("Pass");
 			skillDisplay(false);
 			BattleUtils.updateSkillCooldown(attacker.getPet(), -1);
 			hideTarget(true);
@@ -1540,14 +1765,15 @@
 			baseSelectSkill(mc, id, skillTarget);
 
 			BattleUtils.handleCPCost(mc.allActions[id]["skill_cp"], attacker);
-			skillNameTxt = mc.allActions[id]["name"];
-			this["popupInfo"].gotoAndPlay("show");
+			// skillNameTxt = mc.allActions[id]["name"];
+			// this["popupInfo"].gotoAndPlay("show");
+			showPopupMessage(mc.allActions[id]["name"]);
 			BattleUtils.updateSkillCooldown(mc, mc.skillData.indexOf(mc.allActions[id]));
 			attacker.isCritical = false;
 			// Add Map Effect
 			if (useMapEffect)
 			{
-				MapEffectUtils.addRandomEffect(mapIndex, attacker, overheadEffect);
+				MapEffectUtils.addRandomEffect(this.mapId, attacker, overheadEffect);
 			}
 		}
 
@@ -1645,7 +1871,7 @@
 			// trace(effect["type"] + ":(duration:" + effect["duration"] + ")(amount:" + effect["amount"] + ")");
 			// trace(effType + duration);
 			// trace(BattleData.displaySpecialText(effect));
-			return BattleData.displaySpecialText(effect, mapEffect);
+			return EffectData.displaySpecialText(effect, mapEffect);
 		}
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////
 		public function petMcVisible(show:Boolean)
@@ -1692,9 +1918,9 @@
 			characterArr = new Vector.<Pet>();
 			petMcVisible(false);
 			hideTarget(false);
-			updateBar();
 			initCharacterDisplayUI(newPlayerArr, "playerPetMc");
 			initCharacterDisplayUI(newEnemyArr, "enemyPetMc");
+			updateBar();
 			// for (var i = 0; i < newPlayerArr.length; i++)
 			// {
 			// newPlayerArr[i].getPet().setAttackHitCB(function():void
@@ -1716,7 +1942,7 @@
 			// }
 			// this.gotoStandby();
 			// });
-			// this["playerPetMc_" + i]["petType"].gotoAndStop(newPlayerArr[i].getPet().getPetObj()["type"]);
+			// this["playerPetMc_" + i]["petType"].gotoAndStop(newPlayerArr[i].getPetInfo()["type"]);
 			// this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
 			// this["playerPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
 			// if (this["playerPetMc_" + i]["charMc"].numChildren > 0)
@@ -1724,7 +1950,7 @@
 			// this["playerPetMc_" + i]["charMc"].removeChildAt(0);
 			// }
 			// this["playerPetMc_" + i]["charMc"].addChild(newPlayerArr[i].getPet());
-			// this["playerPetMc_" + i]["nameTxt"].text = newPlayerArr[i].getPet().getPetObj()["name"];
+			// this["playerPetMc_" + i]["nameTxt"].text = newPlayerArr[i].getPetInfo()["name"];
 			// this["playerPetMc_" + i]["target"].visible = false;
 			// this["playerPetMc_" + i].visible = true;
 			// // characterArr[i * 2] = newPlayerArr[i]; //TODO
@@ -1750,7 +1976,7 @@
 			// }
 			// this.gotoStandby();
 			// });
-			// this["enemyPetMc_" + i]["petType"].gotoAndStop(newEnemyArr[i].getPet().getPetObj()["type"]);
+			// this["enemyPetMc_" + i]["petType"].gotoAndStop(newEnemyArr[i].getPetInfo()["type"]);
 			// this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
 			// this["enemyPetMc_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
 			// if (this["enemyPetMc_" + i]["charMc"].numChildren > 0)
@@ -1758,7 +1984,7 @@
 			// this["enemyPetMc_" + i]["charMc"].removeChildAt(0);
 			// }
 			// this["enemyPetMc_" + i]["charMc"].addChild(newEnemyArr[i].getPet());
-			// this["enemyPetMc_" + i]["nameTxt"].text = newEnemyArr[i].getPet().getPetObj()["name"];
+			// this["enemyPetMc_" + i]["nameTxt"].text = newEnemyArr[i].getPetInfo()["name"];
 			// this["enemyPetMc_" + i].visible = true;
 			// // characterArr[i * 2 + 1] = newEnemyArr[i]; //TODO
 			// // this["enemyPetMc_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
@@ -1777,7 +2003,6 @@
 					// trace("opponent"+i);
 				}
 			}
-
 			// attacker = characterArr[0];
 			// if (newPlayerArr.indexOf(attacker))
 			// {
@@ -1792,10 +2017,52 @@
 			initialized = true;
 		}
 
+		private function initActionBar(char):void
+		{
+			if (this.atbMode)
+			{
+				var petBody = char.getBody();
+				petBody.name = char.getPet().parent.parent.name;
+				trace(petBody.name);
+				petBody.scaleX = -0.4;
+				petBody.scaleY = 0.4;
+				this["actionBar"].addChild(petBody);
+			}
+			else
+			{
+				this["actionBar"].visible = false;
+			}
+		}
+
+		private function updateActionBar(char)
+		{
+			if (this.atbMode)
+			{
+
+				var mcName:String = char.getMcId();
+				var value:int = char.getATB();
+				if (value > Constant.ATB_MAX_VALUE)
+				{
+					value = Constant.ATB_MAX_VALUE;
+				}
+				this["actionBar"].getChildByName(mcName).x = (value / Constant.ATB_MAX_VALUE) * 595;
+			}
+		}
+
+		private function removeActionBar(char)
+		{
+			if (this.atbMode)
+			{
+				var mcName:String = char.getMcId();
+				this["actionBar"].getChildByName(mcName).visible = false;
+			}
+		}
+
 		private function initCharacterDisplayUI(characterArr:*, mcName:String)
 		{
 			for (var i = 0; i < characterArr.length; i++)
 			{
+				characterArr[i].setMcId(mcName + "_" + i);
 				characterArr[i].getPet().setAttackHitCB(function():void
 					{
 						onAttackHit();
@@ -1815,18 +2082,49 @@
 						}
 						this.gotoStandby();
 					});
-				this[mcName + "_" + i]["petType"].gotoAndStop(characterArr[i].getPet().getPetObj()["type"]);
-				this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
-				this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+				this[mcName + "_" + i]["petType"].gotoAndStop(characterArr[i].getPetInfo()["type"]);
+				// this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OVER, showEffectList);
+				// this[mcName + "_" + i]["petType"].addEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+				Utils.addMouseEventRollOverIfNotExist(this[mcName + "_" + i]["petType"], this.showEffectList);
+				Utils.addMouseEventRollOutIfNotExist(this[mcName + "_" + i]["petType"], this.hideEffectList);
 				if (this[mcName + "_" + i]["charMc"].numChildren > 0)
 				{
 					this[mcName + "_" + i]["charMc"].removeChildAt(0);
 				}
 				this[mcName + "_" + i]["charMc"].addChild(characterArr[i].getPet());
-				this[mcName + "_" + i]["nameTxt"].text = characterArr[i].getPet().getPetObj()["name"];
+				this[mcName + "_" + i]["nameTxt"].text = characterArr[i].getPetInfo()["name"];
 				this[mcName + "_" + i]["target"].visible = false;
 				this[mcName + "_" + i].visible = true;
+				initActionBar(characterArr[i]);
 			}
+		}
+
+		private function disposeCharacterDisplayUI(characterArr:*, mcName:String)
+		{
+			for (var i = 0; i < characterArr.length; i++)
+			{
+				characterArr[i].getPet().setAttackHitCB(null);
+				characterArr[i].getPet().setActionFinishCB(null);
+				// this[mcName + "_" + i]["petType"].removeEventListener(MouseEvent.ROLL_OVER, showEffectList);
+				// this[mcName + "_" + i]["petType"].removeEventListener(MouseEvent.ROLL_OUT, hideEffectList);
+				Utils.removeMouseEventRollOver(this[mcName + "_" + i]["petType"], this.showEffectList);
+				Utils.removeMouseEventRollOut(this[mcName + "_" + i]["petType"], this.showEffectList);
+				if (this[mcName + "_" + i]["charMc"].numChildren > 0)
+				{
+					this[mcName + "_" + i]["charMc"].removeChildAt(0);
+				}
+				this[mcName + "_" + i].visible = false;
+			}
+		}
+
+		public function disposeBattle():void
+		{
+			petMcVisible(false);
+			hideTarget(false);
+			skillDisplay(false);
+			disposeCharacterDisplayUI(newPlayerArr, "playerPetMc");
+			disposeCharacterDisplayUI(newEnemyArr, "enemyPetMc");
+			Utils.removeAllChild(this["actionBar"]);
 		}
 
 		// FRAME 3 - EFFECT BUFF DEBUFF - START
@@ -1840,7 +2138,7 @@
 					continue;
 				}
 				var skillEffect = BattleUtils.createSkillEffectObject(skillObj["effect"][i]);
-				if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(mapIndex, skillEffect))
+				if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(this.mapId, skillEffect))
 				{
 					// Map Effect Resistance
 					continue;
@@ -1877,7 +2175,7 @@
 		public function checkPurify(charObj)
 		{
 			trace("checkPurify - start");
-			if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(mapIndex, BattleUtils.PURIFY_ACTION_OBJ))
+			if (useMapEffectResistance && MapEffectUtils.checkEffectResistance(this.mapId, BattleUtils.PURIFY_ACTION_OBJ))
 			{
 				trace("checkPurify - finish");
 				return;
@@ -1893,6 +2191,16 @@
 			trace("checkPurify - finish");
 		}
 
+		private function updateEffectDuration(effect, effectArr):Object
+		{
+			effect["duration"]--;
+			if (effect["duration"] > 0)
+			{
+				effectArr[effect["type"]] = effect;
+			}
+			return effectArr;
+		}
+
 		public function checkBuff(obj)
 		{
 			showAllOverheadEffect(obj);
@@ -1900,11 +2208,12 @@
 			var buffArr = {};
 			for (var i in obj.getBuffArr())
 			{
-				obj.getBuffArr()[i]["duration"]--;
-				if (obj.getBuffArr()[i]["duration"] > 0)
-				{
-					buffArr[obj.getBuffArr()[i]["type"]] = (obj.getBuffArr()[i]);
-				}
+				buffArr = updateEffectDuration(obj.getBuffArr()[i], buffArr);
+				// obj.getBuffArr()[i]["duration"]--;
+				// if (obj.getBuffArr()[i]["duration"] > 0)
+				// {
+				// buffArr[obj.getBuffArr()[i]["type"]] = (obj.getBuffArr()[i]);
+				// }
 				BattleUtils.applyBuffEffects(obj.getBuffArr()[i], obj, overheadNumber, overheadEffect);
 			}
 			obj.setBuffArr(buffArr);
@@ -1920,11 +2229,12 @@
 			var debuffArr = {};
 			for (var i in obj.getDebuffArr())
 			{
-				obj.getDebuffArr()[i]["duration"]--;
-				if (obj.getDebuffArr()[i]["duration"] > 0)
-				{
-					debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
-				}
+				debuffArr = updateEffectDuration(obj.getDebuffArr()[i], debuffArr);
+				// obj.getDebuffArr()[i]["duration"]--;
+				// if (obj.getDebuffArr()[i]["duration"] > 0)
+				// {
+				// debuffArr[obj.getDebuffArr()[i]["type"]] = obj.getDebuffArr()[i];
+				// }
 				pass = pass || BattleUtils.shouldPass(obj.getDebuffArr()[i]);
 				BattleUtils.applyDebuffEffects(obj.getDebuffArr()[i], obj, overheadNumber, overheadEffect);
 			}
@@ -1972,8 +2282,8 @@
 		// FRAME 3 - TARGET FUNCTION - START
 		public function hideTarget(actionFinish:Boolean)
 		{
-			hideTargetUI(opponentNum, newEnemyArr, newPlayerArr, "enemyPetMc", actionFinish);
-			hideTargetUI(playerNum, newPlayerArr, newEnemyArr, "playerPetMc", actionFinish);
+			hideTargetUI(opponentNum, newEnemyArr, newPlayerArr, "enemyPetMc", actionFinish, "p");
+			hideTargetUI(playerNum, newPlayerArr, newEnemyArr, "playerPetMc", actionFinish, "e");
 			// for (var i = 0; i < 3; i++)
 			// {
 			// var isDead = false;
@@ -2016,7 +2326,7 @@
 			// }
 		}
 
-		private function hideTargetUI(opponentTeamNum, defenderTeamArr, attackerTeamArr, opponentMCStr, actionFinish):void
+		private function hideTargetUI(opponentTeamNum, defenderTeamArr, attackerTeamArr, opponentMCStr, actionFinish, turnStr):void
 		{
 			for (var i = 0; i < 3; i++)
 			{
@@ -2025,16 +2335,18 @@
 				{
 					isDead = defenderTeamArr[i].getIsDead();
 				}
-				if (((controlParty && nowTurnStr == "p") || attackerTeamArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
+				if (((controlParty && nowTurnStr == turnStr) || attackerTeamArr.indexOf(nowTurn) == 0) && !isDead && !actionFinish)
 				{
-					this[opponentMCStr + "_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+					// this[opponentMCStr + "_" + i]["maskMC"].addEventListener(MouseEvent.CLICK, onSelectTarget);
+					Utils.addMouseEventClick(this[opponentMCStr + "_" + i]["maskMC"], onSelectTarget);
 				}
 				else
 				{
-					if (this[opponentMCStr + "_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
-					{
-						this[opponentMCStr + "_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
-					}
+					// if (this[opponentMCStr + "_" + i]["maskMC"].hasEventListener(MouseEvent.CLICK))
+					// {
+					// this[opponentMCStr + "_" + i]["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
+					// }
+					Utils.removeMouseClickIfExist(this[opponentMCStr + "_" + i]["maskMC"], onSelectTarget);
 				}
 				this[opponentMCStr + "_" + i]["target"].visible = false;
 			}
@@ -2082,10 +2394,13 @@
 
 		private function updateCharInfoUI(mc:*, char:*)
 		{
-			mc.hpTxt.text = char.getHP() + "/" + char.getMaxHP();
+			mc["hpTxt"].text = char.getHP() + "/" + char.getMaxHP();
 			mc["hpBar"].scaleX = (char.getHP() / char.getMaxHP());
-			mc.cpTxt.text = char.getCP() + "/" + char.getMaxCP();
+			mc["cpTxt"].text = char.getCP() + "/" + char.getMaxCP();
 			mc["cpBar"].scaleX = (char.getCP() / char.getMaxCP()) * 0.8;
+			mc["turnTxt"].text = (char.totalTurn - char.missedTurn).toString() + "/" + char.totalTurn.toString();
+			updateActionBar(char);
+
 		}
 
 		public function checkHpCpZero(charStats:Pet)
@@ -2099,17 +2414,17 @@
 		{
 			if (target == "self" || target == "master")
 			{
-				showOverheadNumber("HEAL", dmg, obj);
+				showOverheadText("HEAL", dmg, obj);
 			}
 			else
 			{
 				if (isCritical)
 				{
-					showOverheadNumber("CRITICAL", dmg, obj);
+					showOverheadText("CRITICAL", dmg, obj);
 				}
 				else
 				{
-					showOverheadNumber("NORMAL", dmg, obj);
+					showOverheadText("NORMAL", dmg, obj);
 				}
 			}
 
@@ -2128,11 +2443,11 @@
 		{
 			if (txt != null)
 			{
-				showOverheadNumber(typeEffect.toUpperCase(), txt, obj);
+				showOverheadText(typeEffect.toUpperCase(), txt, obj);
 			}
 			else
 			{
-				showOverheadNumber(typeEffect.toUpperCase(), effectToStr(effect, mapEffect), obj);
+				showOverheadText(typeEffect.toUpperCase(), effectToStr(effect, mapEffect), obj);
 			}
 
 			// var color = typeEffect == BattleUtils.BUFF_TYPE ? "#00FF00" : "#FF0000";
@@ -2165,7 +2480,7 @@
 			{
 				if (effectArr[i]["duration"] > 0)
 				{
-					showOverheadNumber(effectType, effectToStr(effectArr[i], false), charObj);
+					showOverheadText(effectType, effectToStr(effectArr[i], false), charObj);
 				}
 			}
 		}
@@ -2178,7 +2493,7 @@
 			// {
 			// if (charObj.getBuffArr()[i]["duration"] > 0)
 			// {
-			// showOverheadNumber("BUFF", effectToStr(charObj.getBuffArr()[i], false), charObj);
+			// showOverheadText("BUFF", effectToStr(charObj.getBuffArr()[i], false), charObj);
 			// }
 			// }
 
@@ -2186,7 +2501,7 @@
 			// {
 			// if (charObj.getDebuffArr()[j]["duration"] > 0)
 			// {
-			// showOverheadNumber("DEBUFF", effectToStr(charObj.getDebuffArr()[j], false), charObj);
+			// showOverheadText("DEBUFF", effectToStr(charObj.getDebuffArr()[j], false), charObj);
 			// }
 			// }
 
@@ -2250,10 +2565,10 @@
 		{
 			var id = mc.name.split("_")[1];
 			var charObj:Pet = mc.name.indexOf("player") >= 0 ? newPlayerArr[id] : newEnemyArr[id];
-			var effType, amount, duration;
 			this["effectListMc"].txt.htmlText = "Effect: ";
 			setEffectListUI(charObj.getBuffArr(), true);
 			setEffectListUI(charObj.getDebuffArr(), false);
+			// var effType, amount, duration;
 			// for (var i in charObj.getBuffArr())
 			// {
 			// effType = charObj.getBuffArr()[i]["type"] != "no effect" ? (charObj.getBuffArr()[i]["type"] + " ") : "";
@@ -2324,15 +2639,20 @@
 
 		public function startBattle()
 		{
-			skillNameTxt = "";
-			this["popupInfo"].gotoAndStop("idle");
-			updateBar();
+			// skillNameTxt = "";
+			// this["popupInfo"].gotoAndStop("idle");
+			// hidePopupMessage();
 			initBattle();
+			updateBar();
 			checkDead();
 			turnVisible(false);
 			if (gameFinish)
 			{
-				onGameFinish();
+				updateBar();
+				setTimeout(function():void
+					{
+						onGameFinish();
+					}, 2500);
 				return;
 			}
 
@@ -2354,7 +2674,6 @@
 
 		private function onGameFinish()
 		{
-			updateBar();
 			if (this.gameMode == Constant.GAME_MODE_PVP)
 			{
 				this["statusTxt"].htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player 1" : "Player 2") + " Win</font><br>";
@@ -2364,19 +2683,18 @@
 				this["statusTxt"].htmlText += "<font color=\"#00FF00\">" + (winner == "p" ? "Player" : "Enemy") + " Win</font><br>";
 
 			}
+			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
 			Utils.moveToFront(this["popup"]);
 			this["popup"].visible = true;
 			if (this.gameMode == Constant.GAME_MODE_PVP)
 			{
-				this["popup"].txt.text = (winner == "p" ? "P1" : "P2") + "\nWin";
-
+				this["popup"]["txt"].text = (winner == "p" ? "P1" : "P2") + "\nWin";
 			}
 			else
 			{
-				this["popup"].txt.text = (winner == "p" ? "Player" : "Enemy") + " Win";
-
+				this["popup"]["txt"].text = (winner == "p" ? "Player" : "Enemy") + " Win";
 			}
-			this["statusTxt"].scrollV = this["statusTxt"].maxScrollV;
+			disposeBattle();
 		}
 
 		private function updateCharacterATB()
@@ -2393,6 +2711,7 @@
 					{
 						isFull = true;
 					}
+					updateActionBar(character);
 				}
 				if (isFull)
 				{
@@ -2409,9 +2728,11 @@
 			// Select the next character whose ATB is full
 			for each (var character in characterArr)
 			{
+				updateActionBar(character);
 				if (character.isATBFull() && !character.getIsDead())
 				{
 					character.resetATB();
+					updateActionBar(character);
 					nowTurn = character;
 					controlCharacter();
 					return; // Exit loop after handling one character's turn
@@ -2456,25 +2777,30 @@
 				index = isPlayerTurn ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 				Utils.addGlowFilter(this[(isPlayerTurn ? "playerPetMc_" : "enemyPetMc_") + index]["activeMc"], true);
 				attacker = nowTurn;
+				nowTurn.totalTurn += 1;
 				if (!checkDebuff(nowTurn))
 				{
 					updateBar();
 					if (this.gameMode == Constant.GAME_MODE_PVP || isPlayerTurn)
 					{
 						addSkillDisplay(nowTurn);
+						if (isPlayerTurn)
+						{
+							this["enemyPetMc_" + selectedTargetPlayer]["target"].visible = true;
+						}
+						else
+						{
+							this["playerPetMc_" + selectedTargetEnemy]["target"].visible = true;
+						}
 					}
 					else
 					{
 						AISelectSkill();
 					}
 				}
-				if (isPlayerTurn)
-				{
-					this["enemyPetMc_" + selectedTargetPlayer]["target"].visible = true;
-				}
 				else
 				{
-					this["playerPetMc_" + selectedTargetEnemy]["target"].visible = true;
+					nowTurn.missedTurn += 1;
 				}
 				updateBar();
 			}
@@ -2485,14 +2811,18 @@
 				index = isPlayerTurn ? newPlayerArr.indexOf(nowTurn) : newEnemyArr.indexOf(nowTurn);
 				Utils.addGlowFilter(this[(isPlayerTurn ? "playerPetMc_" : "enemyPetMc_") + index]["activeMc"], true);
 				attacker = nowTurn;
+				nowTurn.totalTurn += 1;
 				if (!checkDebuff(nowTurn))
 				{
 					updateBar();
 					AISelectSkill();
 				}
+				else
+				{
+					nowTurn.missedTurn += 1;
+				}
 				updateBar();
 			}
-
 			trace("controlCharacter - finish");
 		}
 
@@ -2673,6 +3003,7 @@
 				obj.setIsDead(true);
 				checkHpCpZero(obj);
 				obj.getPet().gotoDead();
+				removeActionBar(obj);
 				if (obj.getPet().parent.parent["maskMC"].hasEventListener(MouseEvent.CLICK))
 				{
 					obj.getPet().parent.parent["maskMC"].removeEventListener(MouseEvent.CLICK, onSelectTarget);
@@ -2769,8 +3100,8 @@
 
 		public function battleStatus(str:String, target:String):void
 		{
-			var attackerName:String = attacker.getPet().getPetObj()["name"];
-			var defenderName:String = defender.getPet().getPetObj()["name"];
+			var attackerName:String = attacker.getPetInfo()["name"];
+			var defenderName:String = defender.getPetInfo()["name"];
 			// trace(attackerName + " deals " + str + " damage to " + defenderName + "(" + target + ")" + "\n");
 			if (str == null)
 			{

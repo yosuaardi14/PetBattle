@@ -10,6 +10,8 @@
 		public var isHit:String = "";
 		public var isCritical:Boolean = false;
 		public var hasUseSpecial:Boolean = false;
+		public var totalTurn:int = 0;
+		public var missedTurn:int = 0;
 
 		public function Pet(statsObj: Object, petMc, iconMc, bodyMc) {
 			super(statsObj, petMc, iconMc, bodyMc);

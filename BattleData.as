@@ -26,6 +26,8 @@
 
 		public static const DAMAGE_LIMIT:uint = 4000;
 
+		public static const EFFECT_OIL_BOTTLE:String = "oil_bottle";
+
 		public static const EFFECT_STUN:String = "stun";
 
 		public static const EFFECT_SLEEP:String = "sleep";
@@ -634,7 +636,7 @@
 				case EFFECT_HAMSTRING:
 					return "Hamstring " + amount + "% " + durationDesc;
 				case EFFECT_HEAL:
-					return "Heal +" + amount + " " + durationDesc;
+					return "Heal +" + amount;
 				case EFFECT_DODGE_REDUCTION:
 					return "Numb " + amount + "% " + durationDesc;
 				case EFFECT_COILDING_WAVE:
@@ -704,7 +706,7 @@
 				case EFFECT_PET_SAVE_CP:
 					return "- CP Cost " + amount + "% " + durationDesc;
 				case EFFECT_HEAL_DAMAGE:
-					return "Heal +" + amount + ")";
+					return "Heal +" + amount + "";
 				case EFFECT_ECSTATIC_SOUND:
 					return "Ecstasy " + amount + "% " + durationDesc;
 				case EFFECT_FLAME_EATER:
@@ -719,6 +721,8 @@
 					return "Hamstring " + durationDesc;
 				case EFFECT_ADD_ALL_COOLDOWN:
 					return "All Cooldown +" + amount + "";
+				case EFFECT_OIL_BOTTLE:
+					return "Oil Bottle";
 					// /////////////////////////////////////////////////////////////////////////
 				case EFFECT_STUN:
 					return "Stun " + durationDesc;
