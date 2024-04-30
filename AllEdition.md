@@ -7,8 +7,57 @@
 - Refactor Battle and SelectCharacter to AS File (?) -> Using Linkage (?)
 - Add Battle ATB Bar (TODO ?)
 - Refactor code using Utils
+- add Match and Character Battle Stats (TODO ?)
+- add Buff and Debuff List (TODO ?)
 
 ## v0.2
+### 30 Apr
+#### Game UI
+- update Serene Mind displaytext from OverheadNumber to OverheadEffect
+#### Effect
+- update add_all_cooldown effect -> (basic attack not affected by it)
+#### Other
+- move effectArray Logic to addEffect
+- add battleStats to Pet Class
+- fix pass, missedturn
+
+### 29 Apr
+#### Game UI
+- add PlayerId to Indicate player the sequence
+- add Resisted Text in OverheadEffect
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- fix randomChar scaleX -> set selectTurn variable before selectRandom
+- remove MapEffectData (TODO ? Move it to EffectData)
+
+### 28 Apr
+#### Game UI
+- add Pet Info Dialog (WIP 80%)
+- add after battle stats (WIP 2%)
+- remove surrender button
+- add clear all and get random character (DONE)
+- update Select Map UI
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 27 Apr
+#### Game UI
+- add Pet Info Dialog (WIP)
+- add Total Turn, Damage Team (DONE)
+#### Characters
+#### Effect
+#### Feature
+- add specialSkill, attributeSkill Boolean (Maybe Switch in Future)
+#### Other
+- Refactor Warning
+- revert back duration > 1 -> duration > 0
+
 ### 26 Apr
 #### Game UI
 - add Action Bar, Total Turn / Char
@@ -192,4 +241,6 @@
 #### Game UI
 #### Characters
 #### Effect
+#### Map Effect
 #### Feature
+#### Other

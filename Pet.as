@@ -1,75 +1,113 @@
-﻿package {
+﻿package
+{
 
-	public class Pet extends Character {
-		
+	public class Pet extends Character
+	{
+
 		private var damage:int = 0;
-		private var skillData: Array = [];
-		private var allActions: Array = [];
-		private var petInfo: Object = {};
-		private var cooldown: Object = {};
+		private var skillData:Array = [];
+		private var allActions:Array = [];
+		private var petInfo:Object = {};
+		private var cooldown:Object = {};
 		public var isHit:String = "";
 		public var isCritical:Boolean = false;
 		public var hasUseSpecial:Boolean = false;
+		public var battleStats:Object = {};
 		public var totalTurn:int = 0;
 		public var missedTurn:int = 0;
+		public var totalDamage:int = 0;
+		public var totalCriticalHit:int = 0;
+		public var totalHit:int = 0;
+		public var totalDodge:int = 0;
+		public var totalPurify:int = 0;
+		public var totalPass:int = 0;
 
-		public function Pet(statsObj: Object, petMc, iconMc, bodyMc) {
+		public function Pet(statsObj:Object, petMc:*, iconMc:*, bodyMc:*)
+		{
 			super(statsObj, petMc, iconMc, bodyMc);
+			this.setDefaultBattleSTats();
 		}
 
-		public function setHit(hitVal:String):void{
+		public function setDefaultBattleSTats():void{
+			this.battleStats =  {
+				"totalTurn": 0,
+				"missedTurn": 0,
+				"totalDamage": 0,
+				"totalCriticalHit": 0,
+				"totalHit": 0,
+				"totalDodge": 0,
+				"totalPurify": 0,
+				"totalPass": 0
+			};
+		}
+
+		public function setHit(hitVal:String):void
+		{
 			this.isHit = hitVal;
 		}
 
-		public function getHit():String{
+		public function getHit():String
+		{
 			return this.isHit;
 		}
-	
-		public function setPetInfo(petInfo){
+
+		public function setPetInfo(petInfo:*):void
+		{
 			this.getPet().setPetObj(petInfo);
 		}
-		
-		public function setSkillData(skills){
+
+		public function setSkillData(skills:*):void
+		{
 			this.getPet().skillData = skills;
 		}
-		
-		public function setAllActions(actions){
+
+		public function setAllActions(actions:*):void
+		{
 			this.getPet().allActions = actions;
 		}
-		
-		public function setCooldown(cooldowns){
+
+		public function setCooldown(cooldowns:*):void
+		{
 			this.getPet().setSkillCooldown(cooldowns);
 		}
-	
-		public function getDamage(){
+
+		public function getDamage():int
+		{
 			return this.getPet().getDamage();
 		}
-		
-		public function getPetInfo(){
+
+		public function getPetInfo():*
+		{
 			return this.getPet().getPetObj();
 		}
 
-		public function getPetSwfName(){
+		public function getPetSwfName():*
+		{
 			return this.getPet().getPetObj()["swfName"];
 		}
 
-		public function getPetType(){
+		public function getPetType():*
+		{
 			return this.getPet().getPetObj()["type"];
 		}
 
-		public function getPetAttributeType(){
+		public function getPetAttributeType():*
+		{
 			return this.getPet().getPetObj()["attribute_type"];
 		}
-	
-		public function getSkillData(){
+
+		public function getSkillData():*
+		{
 			return this.getPet().skillData;
 		}
-		
-		public function getAllActions(){
+
+		public function getAllActions():*
+		{
 			return this.getPet().allActions;
 		}
-		
-		public function getCooldown(){
+
+		public function getCooldown():*
+		{
 			return this.getPet().getSkillCooldown();
 		}
 

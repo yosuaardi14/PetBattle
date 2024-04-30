@@ -17,12 +17,12 @@
 		private var buffArr:Object = {};
 		private var debuffArr:Object = {};
 		private var isDead:Boolean = false;
-		private var petMc;
-		private var iconMc;
-		private var bodyMc;
+		private var petMc:*;
+		private var iconMc:*;
+		private var bodyMc:*;
 		private var atb:int = 0;
 
-		public function Character(statsObj:Object, petMc, iconMc, bodyMc)
+		public function Character(statsObj:Object, petMc:*, iconMc:*, bodyMc:*)
 		{
 			this.name = statsObj["name"];
 			this.level = statsObj["level"];
@@ -42,52 +42,52 @@
 			this.bodyMc = bodyMc;
 		}
 
-		public function setHP(health:int)
+		public function setHP(health:int):void
 		{
 			this.hp = health;
 		}
 
-		public function setCP(chakra:int)
+		public function setCP(chakra:int):void
 		{
 			this.cp = chakra;
 		}
 
-		public function updateHP(health:int)
+		public function updateHP(health:int):void
 		{
 			this.hp += health;
 		}
 
-		public function updateCP(chakra:int)
+		public function updateCP(chakra:int):void
 		{
 			this.cp += chakra;
 		}
 
-		public function setBuffArr(buffArray:Object)
+		public function setBuffArr(buffArray:Object):void
 		{
 			this.buffArr = buffArray;
 		}
 
-		public function setDebuffArr(debuffArray:Object)
+		public function setDebuffArr(debuffArray:Object):void
 		{
 			this.debuffArr = debuffArray;
 		}
 
-		public function setIsDead(dead:Boolean)
+		public function setIsDead(dead:Boolean):void
 		{
 			this.isDead = dead;
 		}
 
-		public function getName()
+		public function getName():*
 		{
 			return this.name;
 		}
 
-		public function getLevel()
+		public function getLevel():*
 		{
 			return this.level;
 		}
 
-		public function getHP()
+		public function getHP():*
 		{
 			if (this.hp < 0)
 			{
@@ -100,7 +100,7 @@
 			return this.hp;
 		}
 
-		public function getCP()
+		public function getCP():*
 		{
 			if (this.cp < 0)
 			{
@@ -113,62 +113,62 @@
 			return this.cp;
 		}
 
-		public function getMaxHP()
+		public function getMaxHP():*
 		{
 			return this.maxHP;
 		}
 
-		public function getMaxCP()
+		public function getMaxCP():*
 		{
 			return this.maxCP;
 		}
 
-		public function getAgility()
+		public function getAgility():*
 		{
 			return this.agility;
 		}
 
-		public function getCritical()
+		public function getCritical():*
 		{
 			return this.critical;
 		}
 
-		public function getDodge()
+		public function getDodge():*
 		{
 			return this.dodge;
 		}
 
-		public function getPurify()
+		public function getPurify():*
 		{
 			return this.purify;
 		}
 
-		public function getBuffArr()
+		public function getBuffArr():*
 		{
 			return this.buffArr;
 		}
 
-		public function getDebuffArr()
+		public function getDebuffArr():*
 		{
 			return this.debuffArr;
 		}
 
-		public function getIsDead()
+		public function getIsDead():*
 		{
 			return this.isDead;
 		}
 
-		public function getBody()
+		public function getBody():*
 		{
 			return this.bodyMc;
 		}
 
-		public function getIcon()
+		public function getIcon():*
 		{
 			return this.iconMc;
 		}
 
-		public function getPet()
+		public function getPet():*
 		{
 			return this.petMc;
 		}
@@ -183,12 +183,12 @@
 			this.mcId = mcId;
 		}
 
-		public function getATB()
+		public function getATB():*
 		{
 			return this.atb;
 		}
 
-		public function setATB(atb)
+		public function setATB(atb:*):void
 		{
 			this.atb = 0;
 		}
@@ -199,7 +199,7 @@
 			// this.atb = 0;
 		}
 
-		public function updateATB(val):void
+		public function updateATB(val:*):void
 		{
 			this.atb += this.agility * val;
 		}

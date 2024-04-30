@@ -3,19 +3,19 @@
 
 	public class PetLibrary
 	{
-		public static const TYPE_OFFENSIVE = 1;
-		public static const TYPE_DEFENSIVE = 2;
-		public static const TYPE_SUPPORTIVE = 3;
-		public static const TYPE_WIND = "wind";
-		public static const TYPE_FIRE = "fire";
-		public static const TYPE_LIGHTNING = "lightning";
-		public static const TYPE_EARTH = "earth";
-		public static const TYPE_WATER = "water";
-		public static const TYPE_ELEMENT = "null";
+		public static const TYPE_OFFENSIVE:int = 1;
+		public static const TYPE_DEFENSIVE:int = 2;
+		public static const TYPE_SUPPORTIVE:int = 3;
+		public static const TYPE_WIND:String = "wind";
+		public static const TYPE_FIRE:String = "fire";
+		public static const TYPE_LIGHTNING:String = "lightning";
+		public static const TYPE_EARTH:String = "earth";
+		public static const TYPE_WATER:String = "water";
+		public static const TYPE_ELEMENT:String = "null";
 
 		public static function getSpecialSkill(petType:int):Object
 		{
-			var skillObj = {};
+			var skillObj:Object = {};
 			switch (petType)
 			{
 				case TYPE_OFFENSIVE:
@@ -62,7 +62,7 @@
 
 		public static function getAttributeSkill(attributeType:String):Object
 		{
-			var skillObj = {};
+			var skillObj:Object = {};
 			switch (attributeType)
 			{
 				case TYPE_WIND:
@@ -151,7 +151,7 @@
 
 		public static function getPetBySwfName(swfName:String):Object
 		{
-			for (var i in PET)
+			for (var i:* in PET)
 			{
 				if (PET[i]["swfName"] == swfName)
 				{
@@ -727,7 +727,7 @@
 								{
 									"type": "guard",
 									"duration": 2,
-									"amount": 100,
+									// "amount": 100,
 									"chance": 50
 								}
 							]
@@ -4776,7 +4776,7 @@
 							"cooldown": 8,
 							"target": "master",
 							"name": "RANDOM EFFECT to master",
-							"description": "<b>RANDOM EFFECT to master</b><br>Add random effect on master (Heal or Strengthen or Protection) for 4 turns.",
+							"description": "<b>RANDOM EFFECT to master</b><br>Add random effect on master (Heal or Strengthen or Protection) for 3 turns.",
 							"action": "special",
 							"animation": "attack_03",
 							"posType": "range1",
@@ -4816,7 +4816,7 @@
 							"cooldown": 15,
 							"target": "",
 							"name": "RANDOM EFFECT to defender",
-							"description": "<b>RANDOM EFFECT to defender</b><br>Add random effect on defender (Stun or Poison or Burn) for 3 turns.",
+							"description": "<b>RANDOM EFFECT to defender</b><br>Add random effect on defender (Stun or Poison or Burn) for 2 turns.",
 							"action": "attack",
 							"animation": "attack_04",
 							"posType": "range1",
@@ -5921,7 +5921,7 @@
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
-									"type": "battle_internal_injury",
+									"type": "internal_injury", // "battle_internal_injury",
 									"duration": 4
 								}]
 						}, {
@@ -6510,7 +6510,7 @@
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
-									"type": "battle_internal_injury",
+									"type": "internal_injury", // "battle_internal_injury",
 									"duration": 3
 								}]
 						}]
