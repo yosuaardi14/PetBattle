@@ -588,12 +588,12 @@
                 "sleep": "Sleep",
                 "damage_reduction": "Protection",
                 "damage_bonus": "Strengthen",
-                "agility_bonus": "agility_bonus",
+                "agility_bonus": "Agility +",
                 "dodge": "Dodge",
                 "dodge_bonus": "Flexible",
                 "pet_dodge_bonus": "Flexible",
-                "critical_chance_bonus": "critical_chance_bonus",
-                "regen_chakra": "regen_chakra",
+                "critical_chance_bonus": "Critical",
+                "regen_chakra": "Regenerate CP",
                 "regen_hp": "Regenerate HP",
                 "combustion": "Combustion",
                 "purify": "Purify",
@@ -635,7 +635,7 @@
                 "lighting_bundle_2": "lighting_bundle_2",
                 "lighting_bundle_3": "lighting_bundle_3",
                 "lighting_bundle_4": "lighting_bundle_4",
-                "among_rocks": "among_rocks",
+                "among_rocks": "Stealth",
                 "colliding_wave": "Prison",
                 "coilding_wave": "Prison",
                 "reduce_hp_cp": "HP & CP -",
@@ -652,12 +652,12 @@
                 "critical_chance_bonus_weapon": "critical_chance_bonus_weapon",
                 "damage_bonus_weapon": "damage_bonus_weapon",
                 "critical_damage_bonus_weapon": "critical_damage_bonus_weapon",
-                "blood_drinker": "blood_drinker",
-                "rewind": "rewind",
+                "blood_drinker": "Blood Drinker",
+                "rewind": "Rewind",
                 "pet_drain_hp": "Drain HP",
                 "pet_drain_cp": "Drain CP",
                 "add_cooldown": "Cooldown +",
-                "bloodlust_dedication": "Bloodlust Dedication",
+                "bloodlust_dedication": "Bloodlust",
                 "reactive_debuff": "reactive_debuff",
                 "effect_petrification": "effect_petrification",
                 "effect_extra_cp_recover": "effect_extra_cp_recover",
@@ -673,18 +673,18 @@
                 "pet_bleeding": "Bleeding",
                 "stun_random": "Stun",
                 "pet_save_cp": "- CP Cost",
-                "pet_lightning": "pet_lightning",
+                "pet_lightning": "Lightning Armor",
                 "pet_drain_hp_kekkai": "Bloodfeed",
                 "internal_injury_random": "Internal Injury",
                 "burn_hp": "HP -",
-                "complete_guard": "complete_guard",
+                "complete_guard": "Complete Guard",
                 "pet_blind": "Blind",
                 "chaos": "Chaos",
                 "pet_debuff_resist": "Debuff Resist",
-                "pet_heal": "Heal",
+                "pet_heal": "Recover HP",
                 "pet_reduce_charge": "pet_reduce_charge",
                 "burn_cp_hp": "HP & CP -",
-                "flame_eater": "flame_eater",
+                "flame_eater": "Flame Eater",
                 "pet_reflect_attack": "Fire Wall",
                 "clear_buff": "Disperse",
                 "bunny_frenzy": "Frenzy",
@@ -850,12 +850,21 @@
                 "heal_damage": "Heal"
             };
 
+        public static const TXT_FADED:String = " Faded";
+        public static const TXT_RESISTED:String = " Resisted";
+        public static const TXT_MAP:String = "Map ";
+
         public function EffectData()
         {
             super();
         }
 
-        public static function displaySpecialText(param1:Object, mapEffect:Boolean = false):String
+        public static function getText(type:String):String
+        {
+            return EFFECT_LIBRARY[type];
+        }
+
+        public static function displaySpecialText(param1:Object, mapEffect:Boolean = false, resist:Boolean = false):String
         {
             var _loc4_:String = "";
             /*if (param1.skill_hit_num >= 2) {
@@ -865,15 +874,20 @@
             var amount:String = String(param1["amount"]);
             var durationTxt:String = ""; // (int(param1["duration"]) - 1) > 1 ? " turns" : " turn";
             var durationDesc:String = "(" + duration + durationTxt + ")";
-            var txt = EFFECT_LIBRARY[param1["type"]];
+            var txt:* = getText(param1["type"]);
+            if (resist)
+            {
+                return txt + TXT_RESISTED;
+            }
             if (duration == "0")
             {
-                durationDesc = " Faded";
+                durationDesc = TXT_FADED;
                 return txt + durationDesc;
             }
             if (mapEffect)
             {
-                return MapEffectData.displaySpecialText(param1);
+                txt = TXT_MAP + txt;
+                // return MapEffectData.displaySpecialText(param1);
             }
             switch (param1["type"])
             {

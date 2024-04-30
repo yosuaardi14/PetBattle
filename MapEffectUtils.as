@@ -5,19 +5,19 @@ package
         private static function getRandomEffect(mapIndex:int):Object
         {
             // Random
-            var mapObj = MapEffect.MAP["map" + mapIndex];
+            var mapObj:Object = MapEffect.MAP["map" + mapIndex];
             if (mapObj["chance"] == 0)
             {
                 return null;
             }
-            var chance = Math.floor(Math.random() * 100);
+            var chance:int = Math.floor(Math.random() * 100);
             trace("map_effect chance:" + chance);
             if (chance <= mapObj["chance"])
             {
-                var effect = {};
+                var effect:Object = {};
                 if (mapObj["buff"].length > 0 && mapObj["debuff"].length > 0)
                 {
-                    var randomNum = Math.floor(Math.random() * 2);
+                    var randomNum:int = Math.floor(Math.random() * 2);
                     if (randomNum == 1) // add buff
                     {
                         effect = getEffect(mapObj["buff"]);
@@ -51,19 +51,19 @@ package
 
         private static function getEffect(mapEffect:Array):Object
         {
-            var random = Math.floor(Math.random() * mapEffect.length);
+            var random:int = Math.floor(Math.random() * mapEffect.length);
             return mapEffect[random];
         }
 
         public static function addRandomEffect(mapIndex:int, target:Pet, overheadEffect:Function):void
         {
-            var randomEffect = getRandomEffect(mapIndex);
+            var randomEffect:Object = getRandomEffect(mapIndex);
             if (randomEffect == null)
             {
                 return;
             }
-            var effectObj = BattleUtils.createSkillEffectObject(randomEffect);
-            var isBuff = randomEffect["effectType"] == BattleUtils.BUFF_TYPE;
+            var effectObj:Object = BattleUtils.createSkillEffectObject(randomEffect);
+            var isBuff:Boolean = randomEffect["effectType"] == BattleUtils.BUFF_TYPE;
             if (isBuff)
             {
                 target.getBuffArr()[effectObj["type"]] = (effectObj);
@@ -77,12 +77,12 @@ package
 
         public static function checkEffectResistance(mapIndex:int, effectObj:Object):Boolean
         {
-            var mapObj = MapEffect.MAP["map" + mapIndex];
+            var mapObj:Object = MapEffect.MAP["map" + mapIndex];
             if (mapObj["resistanceChance"] == 0)
             {
                 return false;
             }
-            var chance = Math.floor(Math.random() * 100);
+            var chance:int = Math.floor(Math.random() * 100);
             trace("map_effect resistance chance:" + chance);
             if (chance <= mapObj["resistanceChance"])
             {

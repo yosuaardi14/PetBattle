@@ -25,7 +25,7 @@
 			return Utils.genSwfFilePath(swfName, "pets");
 		}
 
-		public static function loadSwf(urlPath:String, callbackFunc):void
+		public static function loadSwf(urlPath:String, callbackFunc:Function):void
 		{
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, callbackFunc);
@@ -45,7 +45,18 @@
 			return obj[petName];
 		}
 
-		public static function initButton(btn, func, labelTxt = "", vis = true)
+		public static function printObject(obj:Object):void
+		{
+			var txt = "";
+			for (var key:String in obj)
+			{
+				txt += key+ ": "+ obj[key] +", ";
+				// trace("Key:", key, "Value:", obj[key]);
+			}
+			trace(txt);
+		}
+
+		public static function initButton(btn:*, func:Function, labelTxt:String = "", vis:Boolean = true):void
 		{
 			if (labelTxt != "")
 			{
@@ -76,15 +87,18 @@
 			btn["clickMask"].addEventListener(MouseEvent.MOUSE_DOWN, onPress);
 		}
 
-		public static function initSwitchButton(btn, func, labelTxt:String = "", initialValue:Boolean=true, vis:Boolean = true)
+		public static function initSwitchButton(btn:*, func:Function, labelTxt:String = "", initialValue:Boolean = true, vis:Boolean = true):void
 		{
 			btn["txt"].text = labelTxt;
 			btn.stop();
 			btn.buttonMode = true;
 			btn.visible = vis;
-			if(initialValue){
+			if (initialValue)
+			{
 				btn.gotoAndStop(2);
-			}else{
+			}
+			else
+			{
 				btn.gotoAndStop(1);
 			}
 			if (btn.hasEventListener(MouseEvent.CLICK))
@@ -94,17 +108,17 @@
 			btn.addEventListener(MouseEvent.CLICK, func);
 		}
 
-		private static function onHover(e:MouseEvent)
+		private static function onHover(e:MouseEvent):void
 		{
 			e.target.parent.gotoAndStop(2);
 		}
 
-		private static function onRollOut(e:MouseEvent)
+		private static function onRollOut(e:MouseEvent):void
 		{
 			e.target.parent.gotoAndStop(1);
 		}
 
-		private static function onPress(e:MouseEvent)
+		private static function onPress(e:MouseEvent):void
 		{
 			e.target.parent.gotoAndStop(3);
 		}
@@ -334,7 +348,7 @@
 			}
 		}
 
-		public static function addGlowFilter(mc, active = false, target = false)
+		public static function addGlowFilter(mc:*, active:Boolean = false, target:Boolean = false):void
 		{
 			var glow:GlowFilter = new GlowFilter();
 			if (target)

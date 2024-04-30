@@ -18,7 +18,7 @@
             var effectName:String = "";
             var duration:String = String(int(param1["duration"]) - 1);
             var amount:String = String(param1["amount"]);
-            var durationTxt = ""; // (int(param1["duration"]) - 1) > 1 ? " turns" : " turn";
+            var durationTxt:String = ""; // (int(param1["duration"]) - 1) > 1 ? " turns" : " turn";
             var durationDesc:String = "(" + duration + durationTxt + ")";
             if (duration == "0")
             {
