@@ -13,14 +13,6 @@
 		public var isCritical:Boolean = false;
 		public var hasUseSpecial:Boolean = false;
 		public var battleStats:Object = {};
-		public var totalTurn:int = 0;
-		public var missedTurn:int = 0;
-		public var totalDamage:int = 0;
-		public var totalCriticalHit:int = 0;
-		public var totalHit:int = 0;
-		public var totalDodge:int = 0;
-		public var totalPurify:int = 0;
-		public var totalPass:int = 0;
 
 		public function Pet(statsObj:Object, petMc:*, iconMc:*, bodyMc:*)
 		{
@@ -33,6 +25,8 @@
 				"totalTurn": 0,
 				"missedTurn": 0,
 				"totalDamage": 0,
+				"totalDamageTaken": 0,
+				"totalHeal": 0,
 				"totalCriticalHit": 0,
 				"totalHit": 0,
 				"totalDodge": 0,

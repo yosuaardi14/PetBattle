@@ -554,7 +554,7 @@
 
         public static const EFFECT_INTERNAL_INJURY_FEAR_WEAKEN:String = "battle_internal_injury_fear";
 
-        public static const EFFECT_HEAL_DAMAGE:String = "heal_damage";
+        public static const EFFECT_HEAL_FIX_NUM:String = "heal_fix_num";
 
         public static const CONSUMABLE_LIMIT:uint = 5;
 
@@ -642,7 +642,7 @@
                 "serene_mind": "Serene Mind",
                 "battle_internal_injury": "Internal Injury",
                 "internal_injury": "Internal Injury",
-                "calm_target": "calm_target",
+                "calm_target": "Calm",
                 "dark_curse": "Dark Curse",
                 "guard": "Guard",
                 "cube_illusion": "cube_illusion",
@@ -659,9 +659,9 @@
                 "add_cooldown": "Cooldown +",
                 "bloodlust_dedication": "Bloodlust",
                 "reactive_debuff": "reactive_debuff",
-                "effect_petrification": "effect_petrification",
+                "effect_petrification": "Petrify",
                 "effect_extra_cp_recover": "effect_extra_cp_recover",
-                "effect_darkness": "effect_darkness",
+                "effect_darkness": "Darkness",
                 "pet_attention": "Attention",
                 "pet_damage_bonus": "Strengthen",
                 "pet_weaken": "Weaken",
@@ -676,13 +676,13 @@
                 "pet_lightning": "Lightning Armor",
                 "pet_drain_hp_kekkai": "Bloodfeed",
                 "internal_injury_random": "Internal Injury",
-                "burn_hp": "HP -",
+                "burn_hp": "HP",
                 "complete_guard": "Complete Guard",
                 "pet_blind": "Blind",
                 "chaos": "Chaos",
                 "pet_debuff_resist": "Debuff Resist",
                 "pet_heal": "Recover HP",
-                "pet_reduce_charge": "pet_reduce_charge",
+                "pet_reduce_charge": "Charge -",
                 "burn_cp_hp": "HP & CP -",
                 "flame_eater": "Flame Eater",
                 "pet_reflect_attack": "Fire Wall",
@@ -703,7 +703,7 @@
                 "profusion_of_ghosts": "profusion_of_ghosts",
                 "pet_random_effect_on_defender": "pet_random_effect_on_defender",
                 "pet_random_effect_on_master": "pet_random_effect_on_master",
-                "effect_accurate": "effect_accurate",
+                "effect_accurate": "Accuracy +",
                 "clear_buff_no_random": "Disperse",
                 "skill_307": "skill_307",
                 "skill_310": "skill_310",
@@ -735,7 +735,7 @@
                 "effect_heal_overtime_npc": "effect_heal_overtime_npc",
                 "skill_342": "skill_342",
                 "skill_345": "skill_345",
-                "dmgbonus_fix_num": "dmgbonus_fix_num",
+                "dmgbonus_fix_num": "Strengthen",
                 "skill_359": "skill_359",
                 "skill_368": "skill_368",
                 "skill_369": "skill_369",
@@ -743,7 +743,7 @@
                 "skill_501": "skill_501",
                 "effect_pumpkin_power": "effect_pumpkin_power",
                 "skill_377": "skill_377",
-                "dot_hp": "dot_hp",
+                "dot_hp": "HP",
                 "skill_341": "skill_341",
                 "clearbuff": "Disperse",
                 "clearbuff_stun": "clearbuff_stun",
@@ -802,30 +802,30 @@
                 "attacker_bundle": "attacker_bundle",
                 "attacker_critical_damage_bonus": "attacker_critical_damage_bonus",
                 "convert_fulldmg_to_hp": "convert_fulldmg_to_hp",
-                "heal_overtime_fix_num": "heal_overtime_fix_num",
+                "heal_overtime_fix_num": "Heal",
                 "add_combustion_chance": "add_combustion_chance",
-                "all_cp_dodge_bonus": "all_cp_dodge_bonus",
-                "all_cp_drain_hp": "all_cp_drain_hp",
-                "all_cp_blind": "all_cp_blind",
-                "all_cp_guard_resist": "all_cp_guard_resist",
-                "all_cp_heal": "all_cp_heal",
+                "all_cp_dodge_bonus": "Flexible",
+                "all_cp_drain_hp": "Damage Absorption",
+                "all_cp_blind": "Blind",
+                "all_cp_guard_resist": "Debuff Resist & Guard",
+                "all_cp_heal": "Heal",
                 "hundred_percent_attack": "hundred_percent_attack",
                 "reduce_purify_chance": "reduce_purify_chance",
-                "burn_cp_fix_num": "burn_cp_fix_num",
+                "burn_cp_fix_num": "CP -",
                 "clearbuff_reduce_hp_cp": "clearbuff_reduce_hp_cp",
                 "charge_recover_hp": "charge_recover_hp",
                 "add_all_cooldown": "All Cooldown +",
-                "bleeding_fix_num": "bleeding_fix_num",
+                "bleeding_fix_num": "Bleeding",
                 "damage_bonus_weapon_fix_num": "damage_bonus_weapon_fix_num",
                 "cri_dmg_bonus_wpn_fix_num": "cri_dmg_bonus_wpn_fix_num",
                 "effect_max_hp": "effect_max_hp",
                 "effect_max_hp_present": "effect_max_hp_present",
                 "effect_max_cp": "effect_max_cp",
                 "effect_max_cp_present": "effect_max_cp_present",
-                "burn_fix_num": "burn_fix_num",
-                "pet_weaken_fix_num": "pet_weaken_fix_num",
+                "burn_fix_num": "Burn",
+                "pet_weaken_fix_num": "Weaken",
                 "reduce_hp_present": "reduce_hp_present",
-                "damage_hp_fix_num": "damage_hp_fix_num",
+                "damage_hp_fix_num": "HP",
                 "smoke": "smoke",
                 "restore_hp": "restore_hp",
                 "restore_cp": "restore_cp",
@@ -844,10 +844,10 @@
                 "resist_overtime": "resist_overtime",
                 "seal_gan": "seal_gan",
                 "spy_cp": "spy_cp",
-                "burn_protection": "burn_protection",
+                "burn_protection": "Burn Resist",
                 "burn_cp_clear_buff": "burn_cp_clear_buff",
                 "battle_internal_injury_fear_weaken": "battle_internal_injury_fear_weaken",
-                "heal_damage": "Heal"
+                "heal_fix_num": "Heal"
             };
 
         public static const TXT_FADED:String = " Faded";
@@ -887,10 +887,17 @@
             if (mapEffect)
             {
                 txt = TXT_MAP + txt;
-                // return MapEffectData.displaySpecialText(param1);
             }
             switch (param1["type"])
             {
+                case EFFECT_HUNDRED_PERCENT_ATTACK:
+                    return "";
+                case EFFECT_COOLDOWN_REDUCTION:
+                case EFFECT_BLOODLUST_DEDICATION:
+                    return txt;
+                case EFFECT_ADD_COOLDOWN:
+                case EFFECT_ADD_ALL_COOLDOWN:
+                    return txt + " " + amount;
                 default:
                     if (param1["type"] != "no effect" && txt == undefined)
                     {
@@ -900,7 +907,12 @@
                     {
                         if (param1["amount"] != undefined && param1["amount"] > 0)
                         {
-                            txt += " " + amount + "%";
+                            txt += " " + amount;
+                            if (param1["type"].indexOf("fix_num") < 0)
+                            {
+                                txt += "%";
+                            }
+
                         }
                         if (param1["duration"] != undefined)
                         {

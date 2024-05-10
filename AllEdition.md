@@ -7,10 +7,88 @@
 - Refactor Battle and SelectCharacter to AS File (?) -> Using Linkage (?)
 - Add Battle ATB Bar (TODO ?)
 - Refactor code using Utils
-- add Match and Character Battle Stats (TODO ?)
+- add Match and Character Battle Stats (WIP)
 - add Buff and Debuff List (TODO ?)
+- bug on PvP control party automatically enabled (DONE)
+- add info dialog on SelectChar (Agility System, Button) (TODO)
 
 ## v0.2
+### 11 May
+#### Game UI
+#### Characters
+- Remove Unrelease Pet
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 10 May
+#### Game UI
+- update main menu UI
+#### Characters
+- Blue Cybot, Chibi Zord (5), Gold Cybot, Chibi Intel Zord (5)
+- Mini Taiko, Inari Fox, Takoyaki Master, Mini Wishing Tree
+- Kyozan, Aomaru, Silver Monkey King, Ninja Falcon, Miko Cat
+- Origami Panda, Sakura Tori, Origami Butterfly, Origami Pegasus, Origami Kirin, Sakura Dragon Girl
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- add hundredPercentAttack Check 
+
+### 5 May
+#### Game UI
+- add info dialog on SelectChar (Agility System, Button) (WIP)
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- refactor control char function, checkDebuff
+
+### 4 May
+#### Game UI
+- update custom UI (WIP)
+- add battle mode selection (WIP)
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- add watchMode in checkGameFinish
+
+### 3 May
+#### Game UI
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- move watchMode
+
+### 2 May
+#### Game UI
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- fix Bug UI show stats button in Android (DONE)
+- Refactor create movieclip from asset
+### 1 May
+#### Game UI
+- add char Stats (WIP)
+#### Characters
+- fix Kame max level
+#### Effect
+- update EffectData displayText
+#### Map Effect
+#### Feature
+- add Watch Mode (Test mode only)
+#### Other
+- add StatsUtils
+- add Heal, DamageTaken Stats
+
 ### 30 Apr
 #### Game UI
 - update Serene Mind displaytext from OverheadNumber to OverheadEffect

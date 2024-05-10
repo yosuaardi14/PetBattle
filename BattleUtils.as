@@ -266,21 +266,6 @@
             if (checkCritical(attacker))
             {
                 damage = getCriticalDamage(damage, attacker, defender);
-                // var criticalDamageBase = 150;
-                // var criticalDamageAmount = criticalDamageBase;
-                // var critRate = hasEffect("crit_chance_dmg", attacker, true);
-                // if (critRate["has"])
-                // {
-                // criticalDamageBase += critRate["amount"];
-                // trace(criticalDamageBase + " crit_chance_dmg");
-                // }
-                // var hamstring = hasEffect("hamstring", attacker, true);
-                // if (hamstring["has"])
-                // {
-                // criticalDamageAmount -= 25;
-                // }
-                // damage *= criticalDamageAmount / 100;
-                // trace(damage + " critical strike");
             }
             // trace(Math.round(damage));
             // trace("getFinalDamage finish");
@@ -345,6 +330,11 @@
             if (bloodfeed["duration"] > 0)
             {
                 var hp:int = Math.round((bloodfeed["amount"] / 100) * dmg);
+                if (hasEffect("internal_injury", attacker, DEBUFF)["has"])
+                {
+                    hp = 0;
+                }
+                StatsUtils.handleHealStats(attacker, hp);
                 updateHP(attacker, hp);
                 return hp;
             }
@@ -483,10 +473,6 @@
                 dodgeChance += petEnergize["amount"];
                 // trace("energize");
             }
-            /*if (dodgeChance >= dodgeRandom) {
-				return true;
-			}
-			return false;*/
             return dodgeChance;
         }
 
@@ -567,6 +553,18 @@
             return false;
         }
 
+        public static function hasSkillEffect(skillEffect:Object, effectType:String):int
+        {
+            for (var i in skillEffect["effect"])
+            {
+                if (skillEffect["effect"][i]["type"] == effectType)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         public static function hasEffect(effectType:String, obj:*, isBuff:Boolean):Object
         {
             var effectArr:* = isBuff ? obj.getBuffArr() : obj.getDebuffArr();
@@ -600,16 +598,15 @@
             if (effectObj["type"] == "burn_hp")
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
-                // overheadNumber(true, "-" + burnHP, "", target);
-                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
+                overheadEffect(true, null, "debuff", target, false, "HP -" + burnHP);
+                StatsUtils.handleDamageTakenStats(target, burnHP);
                 updateHP(target, -burnHP);
                 return true;
             }
             else if (effectObj["type"] == "burn_cp")
             {
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-                // overheadNumber(true, "-" + burnCP + " CP", "", target);
-                overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
+                overheadEffect(true, null, "debuff", target, false, "CP -" + burnCP);
                 updateCP(target, -burnCP);
                 return true;
             }
@@ -617,8 +614,8 @@
             {
                 burnHP = Math.round(target.getMaxHP() * (effectObj["amount"]) / 100);
                 burnCP = Math.round(target.getMaxCP() * (effectObj["amount"]) / 100);
-                // overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", target);
-                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP & -" + burnCP + " CP");
+                overheadEffect(true, null, "debuff", target, false, "HP -" + burnHP + " & CP -" + burnCP);
+                StatsUtils.handleDamageTakenStats(target, burnHP);
                 updateHP(target, -burnHP);
                 updateCP(target, -burnCP);
                 return true;
@@ -636,10 +633,9 @@
                 {
                     burnHPMaster = 0;
                 }
-                // overheadNumber(true, "+" + burnHPMaster, "self", master);
-                // overheadNumber(true, "-" + burnHP, "", target);
-                overheadEffect(true, null, "buff", master, false, "+" + burnHPMaster + " HP");
-                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
+                overheadEffect(true, null, "buff", master, false, "HP +" + burnHPMaster);
+                overheadEffect(true, null, "debuff", target, false, "HP -" + burnHP);
+                StatsUtils.handleDamageTakenStats(target, burnHP);
                 updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
@@ -652,10 +648,9 @@
                 {
                     burnHPMaster = 0;
                 }
-                // overheadNumber(true, "+" + burnHPMaster, "self", master);
-                // overheadNumber(true, "-" + burnHP, "", target);
-                overheadEffect(true, null, "buff", master, false, "+" + burnHPMaster + " HP");
-                overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
+                overheadEffect(true, null, "buff", master, false, "HP +" + burnHPMaster);
+                overheadEffect(true, null, "debuff", target, false, "HP -" + burnHP);
+                StatsUtils.handleDamageTakenStats(target, burnHP);
                 updateHP(master, burnHPMaster);
                 updateHP(target, -burnHP);
                 return true;
@@ -668,10 +663,8 @@
                 {
                     burnCPMaster = 0;
                 }
-                // overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
-                // overheadNumber(true, "-" + burnCP + " CP", "", target);
-                overheadEffect(true, null, "buff", master, false, "+" + burnCPMaster + " CP");
-                overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
+                overheadEffect(true, null, "buff", master, false, "CP +" + burnCPMaster);
+                overheadEffect(true, null, "debuff", target, false, "CP -" + burnCP);
                 updateCP(master, burnCPMaster);
                 updateCP(target, -burnCP);
                 return true;
@@ -685,8 +678,6 @@
                 {
                     burnCPMaster = 0;
                 }
-                // overheadNumber(true, "+" + burnCPMaster + " CP", "self", master);
-                // overheadNumber(true, "-" + burnCP + " CP", "", target);
                 overheadEffect(true, null, "buff", master, false, "+" + burnCPMaster + " CP");
                 overheadEffect(true, null, "debuff", target, false, "-" + burnCP + " CP");
                 updateCP(master, burnCPMaster);
@@ -722,8 +713,8 @@
                 {
                     burnHP = Math.round(target.getMaxHP() * (1 / 100));
                 }
-                // overheadNumber(true, "-" + burnHP, "", target);
                 overheadEffect(true, null, "debuff", target, false, "-" + burnHP + " HP");
+                StatsUtils.handleDamageTakenStats(target, burnHP);
                 updateHP(target, -burnHP);
                 trace("flame_eater HP - " + burnHP);
                 return true;
@@ -767,6 +758,7 @@
                     heal = 0;
                 }
                 overheadEffect(true, null, "buff", target, false, "+" + heal + " HP");
+                StatsUtils.handleHealStats(target, heal);
                 updateHP(target, heal);
                 return true;
             }
@@ -811,7 +803,16 @@
                     heal1 = 0;
                 }
                 overheadEffect(true, null, "buff", target, false, "+" + heal1 + " HP");
+                StatsUtils.handleHealStats(target, heal1);
                 updateHP(target, heal1);
+                return true;
+            }
+            else if (effectObj["type"] == "purify")
+            {
+                cooldown = target.getPet().getSkillCooldown();
+                cooldown[0] = 0;
+                target.getPet().setSkillCooldown(cooldown);
+                target.setDebuffArr( {});
                 return true;
             }
             return false;
@@ -834,6 +835,7 @@
                         recoverHP = 0;
                     }
                     overheadNumber(true, "+" + recoverHP, "self", obj);
+                    StatsUtils.handleHealStats(obj, recoverHP);
                     updateHP(obj, recoverHP);
                     break;
                 case "catalytic_matter":
@@ -843,8 +845,8 @@
                     {
                         reduceHP = 0;
                     }
-                    // overheadNumber(true, "-" + reduceHP, "", obj);
                     overheadEffect(true, null, "debuff", obj, false, "Catalytic (-" + reduceHP + " HP)");
+                    StatsUtils.handleDamageTakenStats(obj, reduceHP);
                     updateHP(obj, -reduceHP);
                     break;
 
@@ -886,6 +888,7 @@
                     burn = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
                     // overheadNumber(true, "-" + burn, "", obj);
                     overheadEffect(true, null, "debuff", obj, false, "Burn (-" + burn + ")");
+                    StatsUtils.handleDamageTakenStats(obj, burn);
                     updateHP(obj, -burn);
                     break;
                 case "dismantle":
@@ -896,16 +899,15 @@
                 case "coilding_wave":
                     burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
                     burnCP = Math.round(obj.getMaxCP() * (debuff["amount"] / 100));
-                    // overheadNumber(true, "-" + burnHP + " HP & -" + burnCP + " CP", "", obj);
-                    overheadEffect(true, null, "debuff", obj, false, "-" + burnHP + " HP & -" + burnCP + " CP");
-                    // overheadEffect(true, debuff, "debuff", obj, false);
+                    overheadEffect(true, null, "debuff", obj, false, "HP -" + burnHP + "  & CP -" + burnCP);
+                    StatsUtils.handleDamageTakenStats(obj, burnHP);
                     updateHP(obj, -burnHP);
                     updateCP(obj, -burnCP);
                     break;
                 case "poison":
                     burnHP = Math.round(obj.getMaxHP() * (debuff["amount"] / 100));
-                    // overheadNumber(true, "-" + burnHP, "", obj);
                     overheadEffect(true, null, "debuff", obj, false, "Poison (-" + burnHP + ")");
+                    StatsUtils.handleDamageTakenStats(obj, burnHP);
                     updateHP(obj, -burnHP);
                     break;
             }
