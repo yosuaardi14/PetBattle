@@ -42,8 +42,8 @@
                             "amount": 3
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["dodge_bonus", "pet_dodge_bonus"]
                 },
                 "map2": {
                     "name": "Hidden Forest",
@@ -61,8 +61,8 @@
                             "duration": 2
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["blind", "pet_blind"]
                 },
                 "map3": {
                     "name": "Hidden Cave",
@@ -81,8 +81,8 @@
                             "amount": 5
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["pet_damage_bonus", "damage_bonus"]
                 },
                 "map4": {
                     "name": "Field",
@@ -101,8 +101,8 @@
                             "amount": 10
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["dodge_bonus", "pet_dodge_bonus"]
                 },
                 "map5": {
                     "name": "Hidden Laboratory",
@@ -115,8 +115,8 @@
                             "amount": 3
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["damage_bonus", "pet_damage_bonus"]
                 },
                 "map6": {
                     "name": "Hidden Laboratory II",
@@ -128,8 +128,8 @@
                             "duration": 3
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["chaos", "pet_debuff_resist"]
                 },
                 "map7": {
                     "name": "Arena",
@@ -147,8 +147,8 @@
                             "duration": 3
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["clear_buff", "pet_debuff_resist"]
                 },
                 "map8": {
                     "name": "Saint Palace Arena",
@@ -177,8 +177,8 @@
                             "amount": 50
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["clear_buff", "pet_debuff_resist"]
                 },
                 "map9": {
                     "name": "Soul Forest",
@@ -191,8 +191,8 @@
                         }
                     ],
                     "debuff": [],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["damage_bonus", "pet_damage_bonus"]
                 },
                 "map10": {
                     "name": "Fire Village Street",
@@ -211,8 +211,8 @@
                             "amount": 10
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["clear_buff", "pet_debuff_resist"]
                 },
                 "map11": {
                     "name": "Battle Arena II",
@@ -231,8 +231,8 @@
                             "amount": 5
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["pet_blind", "blind", "pet_dodge_bonus", "dodge_bonus"]
                 },
                 "map12": {
                     "name": "Forest",
@@ -250,8 +250,8 @@
                             "duration": 2
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["sleep", "random_sleep"]
                 },
                 "map13": {
                     "name": "Practice",
@@ -277,8 +277,8 @@
                             "duration": 2
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["stun"]
                 },
                 "map15": {
                     "name": "Volcano",
@@ -339,8 +339,8 @@
                             "duration": 2
                         }
                     ],
-                    "resistanceChance": 0,
-                    "resistance": []
+                    "resistanceChance": 100,
+                    "resistance": ["pet_blind", "blind"]
                 },
                 "map18": {
                     "name": "Thanksgiving Park",

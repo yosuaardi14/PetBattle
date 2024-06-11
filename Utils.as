@@ -50,7 +50,7 @@
 			var txt = "";
 			for (var key:String in obj)
 			{
-				txt += key+ ": "+ obj[key] +", ";
+				txt += key + ": " + obj[key] + ", ";
 				// trace("Key:", key, "Value:", obj[key]);
 			}
 			trace(txt);
@@ -209,6 +209,16 @@
 				trace("ERROR :: getAsset :: " + _cls + " ::" + e.message);
 				return null;
 			}
+		}
+
+		public static function getStaticFullBody(param1:*):*
+		{
+			return getAsset(param1, "StaticFullBody");
+		}
+
+		public static function getPetIcon(param1:*):*
+		{
+			return getAsset(param1, "icon");
 		}
 
 		public static function addMouseEvent(obj:*, mouseEvent:*, callback:*):*

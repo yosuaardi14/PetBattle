@@ -891,6 +891,7 @@
             switch (param1["type"])
             {
                 case EFFECT_HUNDRED_PERCENT_ATTACK:
+                case EFFECT_RESTORE_CP:
                     return "";
                 case EFFECT_COOLDOWN_REDUCTION:
                 case EFFECT_BLOODLUST_DEDICATION:
