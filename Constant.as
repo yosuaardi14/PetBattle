@@ -10,6 +10,11 @@
         public static const GAME_MODE_ARR:Array = [GAME_MODE_PVP, GAME_MODE_PVE];
         public static const CUSTOM_CHAR_STATS:Array = [DEFAULT_STATS, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
         public static const DEFAULT_STATS:String = "Default";
+        public static const WIN_CONDITION_DEFAULT = "Default";
+        public static const WIN_CONDITION_DEFEAT_MASTER = "Defeat Master";
+        public static const WIN_CONDITION_FIRST_DEFEAT = "First Defeat";
+        public static const WIN_CONDITION_MOST_DAMAGE = "Most Damage";
+        public static const WIN_CONDITION_ARR:Array = [WIN_CONDITION_DEFAULT, WIN_CONDITION_DEFEAT_MASTER, WIN_CONDITION_FIRST_DEFEAT, WIN_CONDITION_MOST_DAMAGE];
 
         public static const ATB_MAX_VALUE:int = 100;
 

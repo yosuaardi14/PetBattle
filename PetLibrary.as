@@ -70,9 +70,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "pet_damage_bonus",
-									"duration": 2,
-									"amount": 100
+									"type": "pet_dodge_bonus",
+									"duration": 3,
+									"amount": 50
 								}]
 						};
 					break;
@@ -81,8 +81,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "guard",
-									"duration": 2
+									"type": "pet_damage_bonus",
+									"duration": 3,
+									"amount": 50
 								}]
 						};
 					break;
@@ -91,7 +92,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "clear_buff"
+									"type": "critical_chance_bonus",
+									"duration": 3,
+									"amount": 50
 								}]
 						};
 					break;
@@ -100,7 +103,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "clear_buff"
+									"type": "damage_reduction",
+									"duration": 3,
+									"amount": 50
 								}]
 						};
 					break;
@@ -109,7 +114,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "clear_buff"
+									"type": "pet_heal",
+									"duration": 3,
+									"amount": 10
 								}]
 						};
 					break;
@@ -118,7 +125,9 @@
 							"target": "self",
 							"effect": [
 								{
-									"type": "clear_buff"
+									"type": "pet_debuff_resist",
+									"duration": 2,
+									"chance": 25
 								}]
 						};
 					break;

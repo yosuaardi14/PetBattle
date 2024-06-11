@@ -13,14 +13,47 @@
 - add info dialog on SelectChar (Agility System, Button) (TODO)
 
 ## v0.2
-### 11 May
+### 13 May
 #### Game UI
 #### Characters
-- Remove Unrelease Pet
 #### Effect
 #### Map Effect
 #### Feature
 #### Other
+- keep screen awake in Android
+
+### 11 May
+#### Game UI
+- update PetInfoDialog (DONE)
+- add ActionBar for Default Turn System (DONE)
+- add overlay loading before start battle (DONE)
+- update BattleStats (WIP)
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+- update AttributeSkill Effect
+- fix bug Limit Turn when character die before the limit game infinite loop (DONE)
+
+### 11 May
+#### Game UI
+- add Win Condition Selection
+- fix UI x, y
+- show all skill display 
+- add Limit Turn
+#### Characters
+- Remove Unrelease Pet
+- update Tamadama Skill Icon
+#### Effect
+#### Map Effect
+- add Resistance in Some Map
+#### Feature
+- add Custom Win Condition Selection
+- add Draw Condition
+- add Limit Turn System (TODO)
+#### Other
+- fix melee4
 
 ### 10 May
 #### Game UI
