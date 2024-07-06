@@ -11,6 +11,33 @@
 - add Buff and Debuff List (TODO ?)
 - bug on PvP control party automatically enabled (DONE)
 - add info dialog on SelectChar (Agility System, Button) (TODO)
+- ADD EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
+
+## v0.3
+### 6 July
+#### Characters
+- Shika, Shika (White) Need to check the animation of some skill there is no animation
+- Yukidaruma, Christmas Angel, Ninja Gingerbread
+- Kumayoshi, Devil Angel
+- Totem Bird
+#### Other
+- Burn HP/CP, Pet Freeze Display Text
+
+### 5 July
+#### Characters
+- Christmas Kyubi, Christmas Hachibi, Easter Gobi
+- Shishimai Monkey, Heart Monster, Love Fairy
+
+### 2 July
+#### Characters
+- Snow Wolf, The Gingerbread Man, Mini Polar Bear, Christmas Penguin, Christmas Fairy, Christmas Nutcracker
+- Sanbi, Nibi
+#### Other
+- Debuff Resist Display Text
+
+### 1 July
+#### Characters
+- Maple Fox, Karasu Tengu, Little Sleipnir
 
 ## v0.2
 ### 13 May
