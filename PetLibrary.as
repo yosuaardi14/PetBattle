@@ -2299,6 +2299,145 @@
 								}]
 						}]
 				},
+				"pet18": {
+					"id": "18",
+					"name": "Hiragi",
+					"description": "Hiragi is a lucky turkey who have escaped from the Thanksgiving feast with its skills!",
+					"swfName": "turkey_1",
+					"clsName": "Turkey_1",
+					"type": 3,
+					"attack_rate": 2,
+					"defend_rate": 1,
+					"support_rate": 3,
+					"attribute_type": "null",
+					"max_level": 30,
+					"gold": 0,
+					"token": 1000000,
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee2",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "First Crows",
+							"description": "<b>First Crows</b><br>Sing to wake up master if master is sleeping",
+							"action": "special",
+							"animation": "attack_02",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "wake_up"
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "",
+							"name": "Poem of Blossom",
+							"description": "<b>Poem of Blossom</b><br>75% to inflict sleep on target (2 turns)",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "random_sleep",
+									"duration": 3,
+									"chance": 75
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Poem of Bird",
+							"description": "<b>Poem of Bird</b><br>Increase master's all attack damage by 3% (3 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"duration": 4,
+									"amount": 3
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "",
+							"name": "Poem of Wind",
+							"description": "<b>Poem of Wind</b><br>Reduce critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 4% (2 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_disoriented",
+									"duration": 3,
+									"amount": 4
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 14,
+							"target": "master",
+							"name": "Poem of Moon",
+							"description": "<b>Poem of Moon</b><br>Increase critical chance, dodge chance, combustion chance, purify chance and reactive force chance of master by 4% (2 turns)",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_energize",
+									"duration": 3,
+									"amount": 4
+								}
+							]
+						}
+					]
+				},
 				"pet19": {
 					"id": "19",
 					"name": "Yukidaruma",
@@ -3903,10 +4042,132 @@
 					"defend_rate": 1,
 					"support_rate": 2,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.4,
+							"cooldown": 6,
+							"target": "",
+							"name": "Light Fire Ball",
+							"description": "<b>Light Fire Ball</b><br>Blow out a small fire ball from pet's month which causes 2% Burn. (2 turns)",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "burning",
+									"amount": 2,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Gedo Cannon",
+							"description": "<b>Gedo Cannon</b><br>Shoot out a Chakra beam, target will not allow to use any jutsu (2 turns)",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "bundle",
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "self",
+							"name": "Gedo Armor",
+							"description": "<b>Gedo Armor</b><br>Increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (4 turns)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "bunny_frenzy",
+									"duration": 5
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.2,
+							"cooldown": 12,
+							"target": "all",
+							"name": "Secret: Fire Bullet Combo",
+							"description": "<b>Secret: Fire Bullet Combo</b><br>Throw a giant fire ball out, and split into many small fire balls. All targets HP will be reduced by 2% (4 turns)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "burning",
+									"amount": 2,
+									"duration": 5
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.4,
+							"cooldown": 14,
+							"target": "all",
+							"name": "Secret: Broken Gedo World",
+							"description": "<b>Secret: Broken Gedo World</b><br>Shoot out a Chakra beam to a whole area, targets will not allow to use any jutsu (1 turn)",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "bundle",
+									"duration": 2
+								}
+							]
+						}
+					]
 				},
 				"pet66": {
 					"id": "66",
@@ -4143,10 +4404,113 @@
 					"defend_rate": 1,
 					"support_rate": 1,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {"type": "no effect"}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.4,
+							"cooldown": 6,
+							"target": "",
+							"name": "Dark Lightning Ball",
+							"description": "<b>Dark Lightning Ball</b><br>Transform Chakra into Lightning attack. Decrease target's dodge rate by 5% (2 turns).<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "dodge_reduction",
+									"duration": 3,
+									"amount": 5
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 8,
+							"target": "",
+							"name": "Destoryer Bite",
+							"description": "<b>Destoryer Bite</b><br>Use Lightning power to tear enemy into pieces. Stun target (1 turn).<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "self",
+							"name": "Raido Armor",
+							"description": "<b>Raido Armor</b><br>Increase pet's attack damage by 100% and critical chance by 25% (Side effect: take extra damage by 20%) (4 turns).<br>",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range2",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bunny_frenzy",
+									"duration": 5
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.9,
+							"cooldown": 12,
+							"target": "all",
+							"name": "Secret: Lightning Doppelganger Impulse",
+							"description": "<b>Secret: Lightning Doppelganger Impulse</b><br>Use Lightning power to produce phantom and attack all targets, all targets reduce 10% HP each turn (2 turns).<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_burn",
+									"amount": 10,
+									"duration": 3
+								}]
+						}, {
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 14,
+							"target": "all",
+							"name": "Secret: Wave of Haze Lightning",
+							"description": "<b>Secret: Wave of Haze Lightning</b><br>Focus all the Chakra in a seal, and attack all targets. Targets will not be able to use jutsu (1 turns).<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bundle",
+									"duration": 2
+								}]
+						}
+					]
 				},
 				"pet69": {
 					"id": "69",
@@ -4298,10 +4662,132 @@
 					"defend_rate": 1,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.2,
+							"cooldown": 6,
+							"target": "",
+							"name": "Rock Smash Fist",
+							"description": "<b>Rock Smash Fist</b><br>Lose target's balance by attacking the ground. Target's damage reduces 5% (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_weaken",
+									"amount": 5,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.4,
+							"cooldown": 8,
+							"target": "",
+							"name": "Rock Shells",
+							"description": "<b>Rock Shells</b><br>Throw a giant rock toward target, a random skill will enter Cooldown for 3 turns.<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "add_cooldown",
+									"amount": 4
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0.8,
+							"cooldown": 10,
+							"target": "",
+							"name": "Underground Marsh Soil Strike",
+							"description": "<b>Underground Marsh Soil Strike</b><br>Dive into the ground and summon marsh to wrap around target. Reduce 15% target's dodge rate (3 turns)<br>",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "dodge_reduction",
+									"duration": 4,
+									"amount": 15
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Secret: Underground Ferret Fist",
+							"description": "<b>Secret: Underground Ferret Fist</b><br>Dive into and assimilate the ground. Attack target with a large fist, 50% chance to clear target's positive status.<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "clear_buff",
+									"chance": 50
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.2,
+							"cooldown": 18,
+							"target": "all",
+							"name": "Secret: Heavy Rock Break Strike",
+							"description": "<b>Secret: Heavy Rock Break Strike</b><br>Use combo attack to destroy a rock, all the enemy will be stunned (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "stun",
+									"duration": 3
+								}
+							]
+						}
+					]
 				},
 				"pet72": {
 					"id": "72",
@@ -4388,10 +4874,133 @@
 					"defend_rate": 1,
 					"support_rate": 2,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack.<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.6,
+							"cooldown": 8,
+							"target": "",
+							"name": "Storm Blade",
+							"description": "<b>Storm Blade</b><br>Use tornado to make a sharp blade and attack target. Bleeding effect occur which will increase 5% extra damage (1 turn)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_bleeding",
+									"duration": 2,
+									"amount": 5,
+									"chance": 100
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.8,
+							"cooldown": 11,
+							"target": "",
+							"name": "Lightning Tornado",
+							"description": "<b>Lightning Tornado</b><br>Combine Lightning and Tornado together to stun target (1 turn)<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "stun",
+									"duration": 2
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 12,
+							"target": "master",
+							"name": "Tenarashi Armor",
+							"description": "<b>Tenarashi Armor</b><br>Inject Chakra into owner, owner's skill Cool Down - 2.<br>",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "cooldown_reduction",
+									"amount": 2
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 12,
+							"target": "all",
+							"name": "Secret: Vacuum Space",
+							"description": "<b>Secret: Vacuum Space</b><br>Trigger an explosion and create a vacuum atmosphere. Reduce 20% target's Attack Damage (5 turns)<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_weaken",
+									"duration": 6,
+									"amount": 20
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1,
+							"cooldown": 14,
+							"target": "all",
+							"name": "Secret: Dance of Storm World",
+							"description": "<b>Secret: Dance of Storm World</b><br>Summon lightning and tornado to attack all targets. Target will be restricted (1 turn)<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "bundle",
+									"duration": 2
+								}
+							]
+						}
+					]
 				},
 				"pet74": {
 					"id": "74",
@@ -4404,10 +5013,116 @@
 					"defend_rate": 1,
 					"support_rate": 2,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Wind Tag: Za",
+							"description": "<b>Wind Tag: Za</b><br>Basic wind attack. Bleed enemy 2%. (1 turn)<br>",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "bleeding",
+									"duration": 2,
+									"amount": 2
+								}]
+						}, {
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 4,
+							"target": "",
+							"name": "Lightning Tag: Tsubaki",
+							"description": "<b>Lightning Tag: Tsubaki</b><br>Lightning which induces blindness to enemy. Reduce enemy's accuracy by 10%. (2 turns)<br>",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "pet_blind",
+									"amount": 10,
+									"duration": 3
+								}]
+						}, {
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 6,
+							"target": "",
+							"name": "Fire Tag: Yakigari",
+							"description": "<b>Fire Tag: Yakigari</b><br>Burn to reduce enemy's 1% HP. (4 turns)<br>",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "burning",
+									"duration": 5,
+									"amount": 1
+								}]
+						}, {
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Earth Tag: Jin",
+							"description": "<b>Earth Tag: Jin</b><br>Protect master from all attacks. (2 turns)<br>",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "guard", // "complete_guard",
+									"duration": 3
+								}]
+						}, {
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "",
+							"name": "Water Tag: Yen",
+							"description": "<b>Water Tag: Yen</b><br>Suffocate and dizzy enemy with water ball. (1 turn)<br>",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "stun",
+									"duration": 2
+								}]
+						}, {
+							"id": 5,
+							"level": 30,
+							"damageBonus": 1.9,
+							"cooldown": 3,
+							"target": "all",
+							"name": "Secret: Five Tag Genkai",
+							"description": "<b>Secret: Five Tag Genkai</b><br>Attack all enemies with different elements. Creating massive damage.<br>",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [ {
+									"type": "no effect"
+								}]
+						}
+					]
 				},
 				"pet75": {
 					"id": "75",
@@ -4632,10 +5347,136 @@
 					"defend_rate": 1,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 6500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0,
+							"cooldown": 0,
+							"target": "master",
+							"name": "Leaf of Dark Space",
+							"description": "<b>Leaf of Dark Space</b><br>Recover master's HP by 2% for 3 turns.",
+							"action": "special",
+							"animation": "attack_01",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_heal",
+									"amount": 2,
+									"duration": 4
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1,
+							"cooldown": 4,
+							"target": "",
+							"name": "Prison of Dark Space",
+							"description": "<b>Prison of Dark Space</b><br>Surround target with a prison to drain target's 10% CP to master.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "range3",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_drain_cp",
+									"amount": 10
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "Dark Space Eye",
+							"description": "<b>Dark Space Eye</b><br>Increase master's accuracy by 10% for 2 turns.",
+							"action": "special",
+							"animation": "attack_03",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_attention",
+									"duration": 3,
+									"amount": 10
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Void of Dark Space",
+							"description": "<b>Void of Dark Space</b><br>Shift all attacks on master to the space of darkness. (2 turn)",
+							"action": "special",
+							"animation": "attack_04",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "guard", // "complete_guard",
+									"duration": 3,
+									"amount": 10
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Dark Space Shura",
+							"description": "<b>Dark Space Shura</b><br>Increase master's attack damage by 15% for 2 turns.",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_damage_bonus",
+									"duration": 3,
+									"amount": 15
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Secret: Four Eye Shura",
+							"description": "<b>Secret: Four Eye Shura</b><br>Empower master with the power to resist negative status for 2 turns.",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_debuff_resist",
+									"duration": 3,
+									"amount": 100
+								}
+							]
+						}
+					]
 				},
 				"pet87": {
 					"id": "87",
@@ -4648,10 +5489,135 @@
 					"defend_rate": 2,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 10000,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Light Beam: Penetration",
+							"description": "<b>Light Beam: Penetration</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0.5,
+							"cooldown": 3,
+							"target": "",
+							"name": "Light Beam: Radiation",
+							"description": "<b>Light Beam: Radiation</b><br>Attack enemy with radiation to reduce enemy's accuracy by 5% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 1,
+							"cooldown": 3,
+							"target": "",
+							"name": "Light Beam: Glare",
+							"description": "<b>Light Beam: Glare</b><br>Attack enemy with strong glare to reduce enemy's accuracy by 5% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1.2,
+							"cooldown": 10,
+							"target": "all",
+							"name": "Light Beam: Aurora",
+							"description": "<b>Light Beam: Aurora</b><br>Attack all enemies with aurora to reduce their accuracy by 10% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 10
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.5,
+							"cooldown": 10,
+							"target": "all",
+							"name": "Kinjutsu: Rainbow Beam",
+							"description": "<b>Kinjutsu: Rainbow Beam</b><br>Attack all enemies with rainbow beam to reduce their accuracy by 50% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 50
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 30,
+							"damageBonus": 0,
+							"cooldown": 14,
+							"target": "master",
+							"name": "Kinjutsu: Refraction",
+							"description": "<b>Kinjutsu: Refraction</b><br>Distract enemies by refraction so that master's dodge rate is increased for 100% for 1 turn.",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "range3",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_dodge_bonus",
+									"duration": 2,
+									"amount": 100
+								}
+							]
+						}
+					]
 				},
 				"pet88": {
 					"id": "88",
@@ -4664,10 +5630,114 @@
 					"defend_rate": 1,
 					"support_rate": 2,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 20,
 					"gold": 0,
 					"token": 10000,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 0.5,
+							"cooldown": 0,
+							"target": "",
+							"name": "Light Beam: Penetration",
+							"description": "<b>Light Beam: Penetration</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 0,
+							"cooldown": 3,
+							"target": "",
+							"name": "Light Beam: Radiation",
+							"description": "<b>Light Beam: Radiation</b><br>Attack enemy with radiation to reduce enemy's accuracy by 5% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0.5,
+							"cooldown": 3,
+							"target": "",
+							"name": "Light Beam: Glare",
+							"description": "<b>Light Beam: Glare</b><br>Attack enemy with strong glare to reduce enemy's accuracy by 5% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 15,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "all",
+							"name": "Light Beam: Aurora",
+							"description": "<b>Light Beam: Aurora</b><br>Attack all enemies with aurora to reduce their accuracy by 10% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 10
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 20,
+							"damageBonus": 1.2,
+							"cooldown": 10,
+							"target": "all",
+							"name": "Kinjutsu: Rainbow Beam",
+							"description": "<b>Kinjutsu: Rainbow Beam</b><br>Attack all enemies with rainbow beam to reduce their accuracy by 50% for 1 turn.",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_blind",
+									"duration": 2,
+									"amount": 50
+								}
+							]
+						}
+					]
 				},
 				"pet89": {
 					"id": "89",
@@ -5023,10 +6093,71 @@
 					"defend_rate": 1,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 10,
 					"gold": 0,
 					"token": 2500,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 5,
+							"damageBonus": 1.5,
+							"cooldown": 6,
+							"target": "",
+							"name": "Blast Inferno",
+							"description": "<b>Blast Inferno</b><br>target HP will be burnt down by 3% in each turn. (2 turns)",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_burn",
+									"amount": 3,
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 10,
+							"damageBonus": 0,
+							"cooldown": 8,
+							"target": "master",
+							"name": "Selfless dedication",
+							"description": "<b>Selfless dedication</b><br>Sacrifice itself,block attack for master,resist attack damge(1 turns)",
+							"action": "special",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "guard", // "complete_guard",
+									"duration": 2
+								}
+							]
+						}
+					]
 				},
 				"pet95": {
 					"id": "95",
@@ -5039,10 +6170,111 @@
 					"defend_rate": 1,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 30,
 					"gold": 0,
 					"token": 1000000,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Pet's basic attack",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "no effect"
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 15,
+							"damageBonus": 1.5,
+							"cooldown": 7,
+							"target": "",
+							"name": "Blast Inferno II",
+							"description": "<b>Blast Inferno II</b><br>Target HP will be burnt down by 3% in each turn. (3 turns)",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_burn",
+									"amount": 3,
+									"duration": 4
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 20,
+							"damageBonus": 0,
+							"cooldown": 9,
+							"target": "master",
+							"name": "Selfless dedication II",
+							"description": "<b>Selfless dedication II</b><br>Sacrifice itself,block attack for master,resist attack damage. (2 turns)",
+							"action": "special",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "guard", // "complete_guard",
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 25,
+							"damageBonus": 2,
+							"cooldown": 10,
+							"target": "",
+							"name": "Flames of Firewall",
+							"description": "<b>Flames of Firewall</b><br>Fell from the sky firewall makes target can not turn back and stun. (1 turn)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "stun",
+									"duration": 2
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 30,
+							"damageBonus": 1,
+							"cooldown": 10,
+							"target": "",
+							"name": "Spiraling Phoenix",
+							"description": "<b>Spiraling Phoenix</b><br>Turn the body to attack the enemy, 50% chance of getting rid of all the enemy positive status.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "clear_buff",
+									"chance": 50
+								}
+							]
+						}
+					]
 				},
 				"pet96": {
 					"id": "96",
@@ -5055,10 +6287,134 @@
 					"defend_rate": 1,
 					"support_rate": 3,
 					"attribute_type": "null",
-					"max_level": 0,
+					"max_level": 55,
 					"gold": 0,
 					"token": 1000000,
-					"skill": []
+					"skill": [
+						{
+							"id": 0,
+							"level": 1,
+							"damageBonus": 1,
+							"cooldown": 0,
+							"target": "",
+							"name": "Basic Attack",
+							"description": "<b>Basic Attack</b><br>Reduce critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 5% for 1 turn",
+							"action": "attack",
+							"animation": "attack_01",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									// "type": "no effect"
+									"type": "pet_disoriented",
+									"duration": 2,
+									"amount": 5
+								}
+							]
+						},
+						{
+							"id": 1,
+							"level": 35,
+							"damageBonus": 1.5,
+							"cooldown": 8,
+							"target": "",
+							"name": "Blast Inferno III",
+							"description": "<b>Blast Inferno III</b><br>Target HP will be burnt down by 3% in each turn. (5 turns)",
+							"action": "attack",
+							"animation": "attack_05",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_burn",
+									"amount": 3,
+									"duration": 5
+								}
+							]
+						},
+						{
+							"id": 2,
+							"level": 40,
+							"damageBonus": 0,
+							"cooldown": 10,
+							"target": "master",
+							"name": "Selfless dedication III",
+							"description": "<b>Selfless dedication III</b><br>Sacrifice itself,block attack for master,resist attack damage.(3 turns)",
+							"action": "special",
+							"animation": "attack_02",
+							"posType": "melee1",
+							"hasDamage": false,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "guard", // "complete_guard",
+									"duration": 4
+								}
+							]
+						},
+						{
+							"id": 3,
+							"level": 45,
+							"damageBonus": 2,
+							"cooldown": 11,
+							"target": "",
+							"name": "Flames of Firewall II",
+							"description": "<b>Flames of Firewall II</b><br>Fell from the sky firewall makes target can not turn back and stun.(3 turns)",
+							"action": "attack",
+							"animation": "attack_06",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "stun",
+									"duration": 3
+								}
+							]
+						},
+						{
+							"id": 4,
+							"level": 50,
+							"damageBonus": 1,
+							"cooldown": 11,
+							"target": "",
+							"name": "Spiraling Phoenix II",
+							"description": "<b>Spiraling Phoenix II</b><br>Turn the body to attack the enemy, 80% chance of getting rid of all the enemy positive status.",
+							"action": "attack",
+							"animation": "attack_03",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "clear_buff",
+									"chance": 80
+								}
+							]
+						},
+						{
+							"id": 5,
+							"level": 55,
+							"damageBonus": 1.1,
+							"cooldown": 12,
+							"target": "",
+							"name": "Caverns Catch",
+							"description": "<b>Caverns Catch</b><br>Drain 8% HP from target and recover to master.",
+							"action": "attack",
+							"animation": "attack_04",
+							"posType": "melee1",
+							"hasDamage": true,
+							"skill_cp": 0,
+							"effect": [
+								{
+									"type": "pet_drain_hp",
+									"amount": 8
+								}
+							]
+						}
+					]
 				},
 				"pet97": {
 					"id": "97",
@@ -6477,7 +7833,7 @@
 							"cooldown": 7,
 							"target": "master",
 							"name": "Wind Power",
-							"description": "<b>Wind Power</b><br>Uses the power of the wind to boost dexterity.Increases the master accuracy by 10% for 1 turn.",
+							"description": "<b>Wind Power</b><br>Uses the power of the wind to boost dexterity.Increases the master accuracy by 10% for 2 turn.",
 							"action": "special",
 							"animation": "attack_02",
 							"posType": "range2",

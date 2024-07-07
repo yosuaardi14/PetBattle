@@ -76,7 +76,7 @@
 
                 // "turkey_1",
                 "totem_bird",
-                // "tail_4", "tail_4_2",
+                "tail_4", "tail_4_2",
                 // "pet_159", "pet_160",
                 "pet_213", "pet_214",
                 "pet_145",
@@ -89,8 +89,9 @@
                 "pet_161", "pet_162", "pet_163",
                 "pet_196", "pet_197",
 
-                // "tail_10", "tail_10_2", "tail_10_3",
-                // "fox_1", "snake_0", "tail_7", "tail_6", "tail_5", "tail_4_3",
+                "tail_10", "tail_10_2", "tail_10_3",
+                "fox_1", "snake_0", //"tail_7", "tail_6", 
+                "tail_5", "tail_4_3",
                 "pet_131", "pet_141", // "pet_146",
                 "pet_216", "pet_217", // "pet_218", "pet_221",
                 "pet_222",

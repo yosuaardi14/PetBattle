@@ -12,8 +12,22 @@
 - bug on PvP control party automatically enabled (DONE)
 - add info dialog on SelectChar (Agility System, Button) (TODO)
 - ADD EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
+- ADD EFFECT: wake_up (Sing to wake up master if master is sleeping)
 
 ## v0.3
+### 8 July
+#### Game UI
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 7 July
+#### Characters
+- Little Rainbow Bird, Rainbow Bird
+- Little Jyubi, Rookie Jyubi, Jyubi, Kyubi, Hachibi, Gobi, Yobi
+
 ### 6 July
 #### Characters
 - Shika, Shika (White) Need to check the animation of some skill there is no animation
