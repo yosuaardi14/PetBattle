@@ -74,7 +74,7 @@
                 "pet_202", "pet_203", "pet_204",
                 "pet_205", "pet_206",
 
-                // "turkey_1",
+                "turkey_1",
                 "totem_bird",
                 "tail_4", "tail_4_2",
                 // "pet_159", "pet_160",
@@ -90,9 +90,8 @@
                 "pet_196", "pet_197",
 
                 "tail_10", "tail_10_2", "tail_10_3",
-                "fox_1", "snake_0", //"tail_7", "tail_6", 
-                "tail_5", "tail_4_3",
-                "pet_131", "pet_141", // "pet_146",
+                "fox_1", "snake_0", // "tail_7", "tail_6",
+                "tail_5", "tail_4_3", "pet_131", "pet_141", // "pet_146",
                 "pet_216", "pet_217", // "pet_218", "pet_221",
                 "pet_222",
 
@@ -101,6 +100,12 @@
                 "pet_103",
                 "pet_180", "pet_181",
                 "pet_201",
+
+                "pet_139",
+                "pet_147",
+                "pet_179",
+                "pet_232",
+                "pet_233",
             ];
 
         public static const PET_LIST_UNRELEASE:Array = [

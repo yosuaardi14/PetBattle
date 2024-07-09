@@ -691,7 +691,7 @@
                 "attack_mode": "attack_mode",
                 "defence_mode": "defence_mode",
                 "drain_hp_cp": "Drain HP & CP",
-                "wake_up": "wake_up",
+                "wake_up": "Wake Up",
                 "random_sleep": "Sleep",
                 "pet_disoriented": "Disoriented",
                 "pet_energize": "Energize",
@@ -898,6 +898,8 @@
                     return "";
                 case EFFECT_COOLDOWN_REDUCTION:
                 case EFFECT_BLOODLUST_DEDICATION:
+                case EFFECT_CLEAR_BUFF:
+                case EFFECT_WAKE_UP:
                     return txt;
                 case EFFECT_ADD_COOLDOWN:
                 case EFFECT_ADD_ALL_COOLDOWN:

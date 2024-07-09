@@ -15,13 +15,19 @@
 - ADD EFFECT: wake_up (Sing to wake up master if master is sleeping)
 
 ## v0.3
-### 8 July
+### 9 July
 #### Game UI
 #### Characters
 #### Effect
 #### Map Effect
 #### Feature
 #### Other
+
+### 8 July
+#### Characters
+- Hiragi, Kagami Mochi, Tanuki, Shark Ninja, Ryujin, Noppera
+#### Other
+- Update display text Bloodlust Dedication, Clear Buff, Wake Up
 
 ### 7 July
 #### Characters
