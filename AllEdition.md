@@ -19,6 +19,7 @@
 ### 10 July
 #### Game UI
 #### Characters
+- Dragon Pet (II, III) except (Helianthus Dragon)
 #### Effect
 #### Map Effect
 #### Feature
