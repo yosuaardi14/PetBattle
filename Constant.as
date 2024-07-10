@@ -106,6 +106,30 @@
                 "pet_179",
                 "pet_232",
                 "pet_233",
+
+                "pet_104", "pet_105", "pet_106", "pet_107", "pet_108",
+                "pet_142",
+                "pet_184",
+                "pet_230", "pet_231",
+
+                // "pet_109", "pet_110", "pet_111", "pet_112", "pet_113", "pet_114", "pet_115", "pet_116",
+                // "pet_140",
+                // "pet_185",
+
+                // "pet_117", "pet_118", "pet_122",
+                // "pet_138",
+                // "pet_143",
+                // "pet_151", "pet_152", "pet_153",
+                // "pet_158",
+                // "pet_178",
+                // "pet_186",
+                // "pet_189",
+
+                "pet_187",
+                "pet_192",
+                "pet_198", "pet_199",
+                "pet_215",
+                "pet_219",
             ];
 
         public static const PET_LIST_UNRELEASE:Array = [

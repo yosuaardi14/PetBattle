@@ -13,15 +13,20 @@
 - add info dialog on SelectChar (Agility System, Button) (TODO)
 - ADD EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
 - ADD EFFECT: wake_up (Sing to wake up master if master is sleeping)
+- Dragon Pet event sort by it event ex: Halloween go to halloween section?
 
 ## v0.3
-### 9 July
+### 10 July
 #### Game UI
 #### Characters
 #### Effect
 #### Map Effect
 #### Feature
 #### Other
+
+### 9 July
+#### Characters
+- Dragon Pet (I, IV)
 
 ### 8 July
 #### Characters
