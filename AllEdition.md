@@ -11,6 +11,74 @@
 - add Buff and Debuff List (TODO ?)
 - bug on PvP control party automatically enabled (DONE)
 - add info dialog on SelectChar (Agility System, Button) (TODO)
+- ADD EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
+- ADD EFFECT: wake_up (Sing to wake up master if master is sleeping)
+- Dragon Pet event sort by it event ex: Halloween go to halloween section?
+
+## v0.3
+### 15 July
+#### Game UI
+#### Characters
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 14 July
+#### Game UI
+#### Characters
+- Mercenary Turkey, Ninja Turkey
+- Nanabi, Rokubi, Ichibi, Christmas Nanabi, Easter Rokubi
+- Kumanosuke
+- Helianthus Dragon
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 10 July
+#### Characters
+- Dragon Pet (II, III) except (Helianthus Dragon)
+
+### 9 July
+#### Characters
+- Dragon Pet (I, IV)
+
+### 8 July
+#### Characters
+- Hiragi, Kagami Mochi, Tanuki, Shark Ninja, Ryujin, Noppera
+#### Other
+- Update display text Bloodlust Dedication, Clear Buff, Wake Up
+
+### 7 July
+#### Characters
+- Little Rainbow Bird, Rainbow Bird
+- Little Jyubi, Rookie Jyubi, Jyubi, Kyubi, Hachibi, Gobi, Yobi
+
+### 6 July
+#### Characters
+- Shika, Shika (White) Need to check the animation of some skill there is no animation
+- Yukidaruma, Christmas Angel, Ninja Gingerbread
+- Kumayoshi, Devil Angel
+- Totem Bird
+#### Other
+- Burn HP/CP, Pet Freeze Display Text
+
+### 5 July
+#### Characters
+- Christmas Kyubi, Christmas Hachibi, Easter Gobi
+- Shishimai Monkey, Heart Monster, Love Fairy
+
+### 2 July
+#### Characters
+- Snow Wolf, The Gingerbread Man, Mini Polar Bear, Christmas Penguin, Christmas Fairy, Christmas Nutcracker
+- Sanbi, Nibi
+#### Other
+- Debuff Resist Display Text
+
+### 1 July
+#### Characters
+- Maple Fox, Karasu Tengu, Little Sleipnir
 
 ## v0.2
 ### 13 May

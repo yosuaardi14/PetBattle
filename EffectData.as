@@ -660,7 +660,7 @@
                 "bloodlust_dedication": "Bloodlust",
                 "reactive_debuff": "reactive_debuff",
                 "effect_petrification": "Petrify",
-                "effect_extra_cp_recover": "effect_extra_cp_recover",
+                "effect_extra_cp_recover": "effect_extra_cp_recover", // TODO
                 "effect_darkness": "Darkness",
                 "pet_attention": "Attention",
                 "pet_damage_bonus": "Strengthen",
@@ -691,7 +691,7 @@
                 "attack_mode": "attack_mode",
                 "defence_mode": "defence_mode",
                 "drain_hp_cp": "Drain HP & CP",
-                "wake_up": "wake_up",
+                "wake_up": "Wake Up",
                 "random_sleep": "Sleep",
                 "pet_disoriented": "Disoriented",
                 "pet_energize": "Energize",
@@ -892,13 +892,21 @@
             {
                 case EFFECT_HUNDRED_PERCENT_ATTACK:
                 case EFFECT_RESTORE_CP:
+                case EFFECT_BURN_CP:
+                case EFFECT_BURN_HP:
+                case EFFECT_BURN_CP_HP:
                     return "";
                 case EFFECT_COOLDOWN_REDUCTION:
                 case EFFECT_BLOODLUST_DEDICATION:
+                case EFFECT_CLEAR_BUFF:
+                case EFFECT_WAKE_UP:
                     return txt;
                 case EFFECT_ADD_COOLDOWN:
                 case EFFECT_ADD_ALL_COOLDOWN:
                     return txt + " " + amount;
+                case EFFECT_PET_FREEZE:
+                case EFFECT_PET_DEBUFF_RESIST:
+                    return txt + durationDesc;
                 default:
                     if (param1["type"] != "no effect" && txt == undefined)
                     {
