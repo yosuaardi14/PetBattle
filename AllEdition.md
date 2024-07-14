@@ -16,14 +16,29 @@
 - Dragon Pet event sort by it event ex: Halloween go to halloween section?
 
 ## v0.3
-### 10 July
+### 15 July
 #### Game UI
 #### Characters
-- Dragon Pet (II, III) except (Helianthus Dragon)
 #### Effect
 #### Map Effect
 #### Feature
 #### Other
+
+### 14 July
+#### Game UI
+#### Characters
+- Mercenary Turkey, Ninja Turkey
+- Nanabi, Rokubi, Ichibi, Christmas Nanabi, Easter Rokubi
+- Kumanosuke
+- Helianthus Dragon
+#### Effect
+#### Map Effect
+#### Feature
+#### Other
+
+### 10 July
+#### Characters
+- Dragon Pet (II, III) except (Helianthus Dragon)
 
 ### 9 July
 #### Characters
