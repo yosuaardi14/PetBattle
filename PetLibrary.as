@@ -924,7 +924,7 @@
 							"description": "<b>Cleansing</b><br>Remove all negative effects on master.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -966,7 +966,7 @@
 							"description": "<b>Secret: Winter Avalanche</b><br>Summon a snowslide to inflict frozen (stun target but target damage taken will be reduced by 80%) (1 turns)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -987,7 +987,7 @@
 							"description": "<b>Secret: Smoky Snow Flower</b><br>Create a snowy screens so that master have 50% chance to resist all negative status (1 turns)",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2362,7 +2362,7 @@
 							"description": "<b>Poem of Blossom</b><br>75% to inflict sleep on target (2 turns)",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2383,7 +2383,7 @@
 							"description": "<b>Poem of Bird</b><br>Increase master's all attack damage by 3% (3 turns)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2404,7 +2404,7 @@
 							"description": "<b>Poem of Wind</b><br>Reduce critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 4% (2 turns)",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2425,7 +2425,7 @@
 							"description": "<b>Poem of Moon</b><br>Increase critical chance, dodge chance, combustion chance, purify chance and reactive force chance of master by 4% (2 turns)",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2642,7 +2642,7 @@
 							"description": "<b>Blue Ocean Star</b><br>Sprinkle ocean star blessings - master recover CP by extra 10% per charge (2 turns)",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2663,7 +2663,7 @@
 							"description": "<b>Fate Light Star</b><br>Sprinkle fate light stars to remove all negative status from master.",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -2702,7 +2702,7 @@
 							"description": "<b>White Sky Star</b><br>Sprinkle white star blessings - reduce master's jutsu CP consumption by 40% (4 turns).",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -4575,7 +4575,7 @@
 							"description": "<b>Cleansing</b><br>Remove all negative effects on master.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -4617,7 +4617,7 @@
 							"description": "<b>Secret: Winter Avalanche</b><br>Summon a snowslide to inflict frozen (stun target but target damage taken will be reduced by 80%) (1 turns)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -4638,7 +4638,7 @@
 							"description": "<b>Secret: Smoky Snow Flower</b><br>Create a snowy screens so that master have 50% chance to resist all negative status (1 turns)",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -4949,7 +4949,7 @@
 							"description": "<b>Tenarashi Armor</b><br>Inject Chakra into owner, owner's skill Cool Down - 2.<br>",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5081,7 +5081,7 @@
 							"description": "<b>Earth Tag: Jin</b><br>Protect master from all attacks. (2 turns)<br>",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -5115,7 +5115,7 @@
 							"description": "<b>Secret: Five Tag Genkai</b><br>Attack all enemies with different elements. Creating massive damage.<br>",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -5361,7 +5361,7 @@
 							"description": "<b>Leaf of Dark Space</b><br>Recover master's HP by 2% for 3 turns.",
 							"action": "special",
 							"animation": "attack_01",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5382,7 +5382,7 @@
 							"description": "<b>Prison of Dark Space</b><br>Surround target with a prison to drain target's 10% CP to master.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -5402,7 +5402,7 @@
 							"description": "<b>Dark Space Eye</b><br>Increase master's accuracy by 10% for 2 turns.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5423,7 +5423,7 @@
 							"description": "<b>Void of Dark Space</b><br>Shift all attacks on master to the space of darkness. (2 turn)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5444,7 +5444,7 @@
 							"description": "<b>Dark Space Shura</b><br>Increase master's attack damage by 15% for 2 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5465,7 +5465,7 @@
 							"description": "<b>Secret: Four Eye Shura</b><br>Empower master with the power to resist negative status for 2 turns.",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -5606,7 +5606,7 @@
 							"description": "<b>Kinjutsu: Refraction</b><br>Distract enemies by refraction so that master's dodge rate is increased for 100% for 1 turn.",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -6203,7 +6203,7 @@
 							"description": "<b>Blast Inferno II</b><br>Target HP will be burnt down by 3% in each turn. (3 turns)",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -6224,7 +6224,7 @@
 							"description": "<b>Selfless dedication II</b><br>Sacrifice itself,block attack for master,resist attack damage. (2 turns)",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -6244,7 +6244,7 @@
 							"description": "<b>Flames of Firewall</b><br>Fell from the sky firewall makes target can not turn back and stun. (1 turn)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -6264,7 +6264,7 @@
 							"description": "<b>Spiraling Phoenix</b><br>Turn the body to attack the enemy, 50% chance of getting rid of all the enemy positive status.",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -6908,7 +6908,7 @@
 							"description": "<b>Holy Blessing</b><br>Defense up, reduces Master's received damage by 15% (3 turns).",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -6929,7 +6929,7 @@
 							"description": "<b>Passion Healing</b><br>Recover Master's 5% HP.(3 turns).",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -6950,7 +6950,7 @@
 							"description": "<b>Divine Zeal</b><br>Reduce Master's skill Cool Down by 2 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -7146,7 +7146,7 @@
 							"description": "<b>Dark Love Damnation</b><br>Using extraordinary incantation, target will not allow to use any jutsu. (2 turns)",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -7166,7 +7166,7 @@
 							"description": "<b>Bloody Valentine Magic</b><br>Summoning magic which bases on its blood  heals master's HP by 6% in each turn. (3 turns)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -7404,7 +7404,7 @@
 							"description": "<b>Ice Armor Wall</b><br>Build ice wall to protect master and reduce  enemy's 5% damage(for 3 turns)",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -7522,7 +7522,7 @@
 							"description": "<b>Dark Destructive Fire</b><br>Increase master's critical, dodge, combustion, purify or reactive force chance by 4% (for 2 turns)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -7836,7 +7836,7 @@
 							"description": "<b>Wind Power</b><br>Uses the power of the wind to boost dexterity.Increases the master accuracy by 10% for 2 turn.",
 							"action": "special",
 							"animation": "attack_02",
-							"posType": "range2",
+							"posType": "melee1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -7977,7 +7977,7 @@
 							"description": "<b>Dark Chain Ritual</b><br>Summons magical chains to bind all positive status and take it away. Has 35% chance to remove all positive status to the target.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -7997,7 +7997,7 @@
 							"description": "<b>Apparition’s Curse</b><br>Calls the power of the dead to haunt the target. Inflicts chaos status for 1 turn.",
 							"action": "attack",
 							"animation": "attack_07",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8017,7 +8017,7 @@
 							"description": "<b>Sunset Breeze</b><br>Creates a chilling wind barrier which protects the master from any ominous threat. Applies debuff resist status for 3 turns (has 50% chance to resist debuffs).",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -8038,7 +8038,7 @@
 							"description": "<b>Earth Spike</b><br>Impales the target with rock spikes leaving them wounded. Inflicts weaken status to the target for 3 turns. (15% damage reduction).",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8136,7 +8136,7 @@
 							"description": "<b>Black Fire</b><br>Summons the fire from the abyss to incinerate the enemies.Inflicts chaos status for 1 turn.",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8157,7 +8157,7 @@
 							"description": "<b>Glacial Dome</b><br>Protects the master with glaciers. Reduces master’s damage taken by 5% for 6 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -8295,7 +8295,7 @@
 							"description": "<b>Ice Shield</b><br>Creates a magical shield to fortify the master’s vitality. Applies debuff resist status for 2 turn (has 50% chance to resist debuffs).",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -8336,7 +8336,7 @@
 							"description": "<b>Plasma Prison</b><br>Drain 6% HP from target and recover to master.",
 							"action": "attack",
 							"animation": "attack_07",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8411,7 +8411,7 @@
 							"description": "<b>Hell’s Chain Binding</b><br>Summon’s the power of the hell’s chain warden to bind the target. Restricts the target for 2 turns.",
 							"action": "attack",
 							"animation": "attack_07",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8529,7 +8529,7 @@
 							"description": "<b>Cyclone Miasma</b><br>Generates a whirling miasma to lower the target’s efficiency. Reduces the target’s critical damage by 25% for 2 turns.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8549,7 +8549,7 @@
 							"description": "<b>Disintegration Bolt</b><br>Fires a highly concentrated electrical discharge to disintegrate the target. Reduces the target’s CP charge recovery by 50% for 2 turns.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8570,7 +8570,7 @@
 							"description": "<b>Tempest Excitation</b><br>Absorbs the power of the wind, granting dexterity boost. Increases pet's accuracy by 8% for 2 turns.",
 							"action": "special",
 							"animation": "attack_07",
-							"posType": "range2",
+							"posType": "melee1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -8846,7 +8846,7 @@
 							"description": "<b>Ominous Black Chain</b><br>Unleashes a torrent of black chains to bind the target. Weakens the target for 1 turn (10% damage reduction).",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8943,7 +8943,7 @@
 							"description": "<b>Hypnotic Gust</b><br>Creates a powerful spinning wind to decrease the target’s battle efficiency.Reduces critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 7% for 2 turns.",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "melee2",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -8985,7 +8985,7 @@
 							"description": "<b>S Strike</b><br>A high-speed downward attack that renders the target incapacitated. Weakens the target for 2 turns (5% damage reduction).",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "melee1",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -9084,7 +9084,7 @@
 							"description": "<b>Echo Vibration</b><br>Sends out a high frequency sound that coats the master and echoes back damage. Applies serene mind buff for 1 turn.",
 							"action": "special",
 							"animation": "attack_02",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -9104,7 +9104,7 @@
 							"description": "<b>Dispel Magic</b><br>Clears any harmful magic to the master by using absorbing it. Heals 6% of master's max HP and removes all negative status.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -9124,7 +9124,7 @@
 							"description": "<b>Tempest Enchantment</b><br>Strengthens the master's physical abilities by using wind force. Increases damage by 13% for 2 turns.",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -9438,7 +9438,7 @@
 							"description": "<b>Cleansing Wind</b><br>Blows out a purifying wind to aid the master. Removes all negative status to the master.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -9457,7 +9457,7 @@
 							"description": "<b>Cursed Breath</b><br>Conjures evil energy to attack the target. Reduce 15% target's dodge rate (2 turns)",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -9499,7 +9499,7 @@
 							"description": "<b>Fiery Will</b><br>Boosts the master's will by igniting its sleeping potential. Completely blocks all incoming damage to the master for 2 turns",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -10178,7 +10178,7 @@
 							"description": "<b>Water Guardian</b><br>Guard master and reduce master's damage taken by 100% (1 turn)",
 							"action": "special",
 							"animation": "attack_02",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -10195,7 +10195,7 @@
 							"description": "<b>Secret: The Mist</b><br>75% chance to resist negative status (3 turns)",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -11135,7 +11135,7 @@
 							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
 							"action": "attack",
 							"animation": "attack_01",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -11154,7 +11154,7 @@
 							"description": "<b>Small Firecrackers</b><br>Tosses a miniature bomb that incinerates the target. Burns target HP by 1% for 2 turns.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -11175,7 +11175,7 @@
 							"description": "<b>Rotate Firecrackers</b><br>Hurls a miniature bomb that produces intense light. Blinds target by 10% for 2 turns.",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -11196,7 +11196,7 @@
 							"description": "<b>Firework</b><br>Shoot outs a firework that continuouly burns. Burns target HP by 3% for 1 turn.",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -11217,7 +11217,7 @@
 							"description": "<b>Happy New Year</b><br>Set ups a beautiful firework that shoots upward to motivate its master. Increase critical, dodge, combustion, purify & reactive force chance by 3% for 5 turns",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "melee1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -11238,7 +11238,7 @@
 							"description": "<b>New Year Big Cannon</b><br>Brings out its ultimate firework to bring forth destruction. Burns target HP by 5% for 1 turn.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -11309,7 +11309,7 @@
 							"description": "<b>Secret: Counterforce Barrier</b><br>Forms up a barrier with its tails to reflect incoming damage. Applies 'Serene Mind' status for 1 turn.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -11326,7 +11326,7 @@
 							"description": "<b>Secret: Black Coffin</b><br>Materializes a box of dark energy to raze the target. Inflicts 'Chaos' status for 2 turns. ",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -11343,7 +11343,7 @@
 							"description": "<b>Dark Heretic Armor</b><br>Nibi transforms into pure energy and empower its master. Increases damage & critical chance by 20%. Ignores 20% of target's dodge rate for 2 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -11361,7 +11361,7 @@
 							"description": "<b>Secret: Soul Liberation</b><br>Nibi achieves its ultimate technique after creating an unbreakable bond to its master. Heals 10% of master's HP and remove all negative status effect.",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -12456,7 +12456,7 @@
 							"description": "<b>Lava Meteor</b><br>Launches a molten boulder with great force. 'Stuns' the target for 2 turns.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "melee1",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -14690,7 +14690,7 @@
 							"description": "<b>Lovely Recover</b><br>Recover master 3% HP for 3 turns.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -14743,7 +14743,7 @@
 							"description": "<b>Big Tongue</b><br>Heals 3% of master's max HP and removes all negative status.",
 							"action": "special",
 							"animation": "attack_06",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -18449,7 +18449,7 @@
 							"description": "<b>Secret: Snow Bullet Combo</b><br>Throw a giant snowball out, and split into many small snowballs. Stun all targets. (2 turns)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -18466,7 +18466,7 @@
 							"description": "<b>Secret: Frozen Gedo World</b><br>Shoot out a Chakra ice beam to a whole area, reduce all target's HP & CP by 10%.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "range2",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -18513,7 +18513,7 @@
 							"description": "<b>Dark Snowball</b><br>Transform Chakra into Snowball attack. Reduces critical chance, dodge chance, combustion chance, purify chance and reactive force chance of target by 20% for 3 turns.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "melee1",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -18584,7 +18584,7 @@
 							"description": "<b>Secret: Wave of Haze Snow</b><br>Focus all the Snow Power in a seal, and attack all targets. Reduce all target's HP & CP by 10%.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -19024,7 +19024,7 @@
 							"description": "<b>Lightning Tornado</b><br>Combine Lightning and Tornado together to restricts target for 3 turns (Target cannot use the ninjutsu)",
 							"action": "attack",
 							"animation": "attack_03",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -19041,7 +19041,7 @@
 							"description": "<b>Tenarashi Armor</b><br>Inject Chakra into owner, Heal master 8% HP and remove all negative status effect",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range2",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [ {
@@ -19058,7 +19058,7 @@
 							"description": "<b>Secret: Crack Space</b><br>Trigger an explosion and create a cracking atmosphere. Reduces critical chance, dodge chance, combustion chance, purify chance and reactive force chance of all targets by 30% for 3 turns.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "melee1",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {
@@ -19076,7 +19076,7 @@
 							"description": "<b>Secret: Dance of Gale World</b><br>Summon gale force to attack all targets. Reduce all target's HP & CP by 10%.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [ {

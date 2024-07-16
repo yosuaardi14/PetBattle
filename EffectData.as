@@ -660,7 +660,7 @@
                 "bloodlust_dedication": "Bloodlust",
                 "reactive_debuff": "reactive_debuff",
                 "effect_petrification": "Petrify",
-                "effect_extra_cp_recover": "effect_extra_cp_recover", // TODO
+                "effect_extra_cp_recover": "Powerful Charge",
                 "effect_darkness": "Darkness",
                 "pet_attention": "Attention",
                 "pet_damage_bonus": "Strengthen",

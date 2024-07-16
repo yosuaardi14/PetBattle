@@ -153,6 +153,11 @@
             {
                 chargeAmount -= reduceCharge["amount"];
             }
+            var extraCPRecover:Object = hasEffect("effect_extra_cp_recover", target, BUFF);
+            if (extraCPRecover["has"])
+            {
+                chargeAmount += extraCPRecover["amount"];
+            }
             updateCP(target, chargeAmount);
         }
 
@@ -790,7 +795,7 @@
                     }
                 }
                 target.getPet().setSkillCooldown(cooldown);
-                overheadEffect(true, null, "buff", target, false, "Cooldown -" + reduceCd);
+                // overheadEffect(true, null, "buff", target, false, "Cooldown -" + reduceCd);
                 return true;
             }
             else if (effectObj["type"] == "bloodlust_dedication")
@@ -813,6 +818,18 @@
                 cooldown[0] = 0;
                 target.getPet().setSkillCooldown(cooldown);
                 target.setDebuffArr( {});
+                return true;
+            }
+            else if (effectObj["type"] == "wake_up")
+            {
+                if (hasEffect("sleep", target, DEBUFF)["has"])
+                {
+                    target.getDebuffArr()["sleep"]["duration"] = 0;
+                }
+                if (hasEffect("random_sleep", target, DEBUFF)["has"])
+                {
+                    target.getDebuffArr()["random_sleep"]["duration"] = 0;
+                }
                 return true;
             }
             return false;

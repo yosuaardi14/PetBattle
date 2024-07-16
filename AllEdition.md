@@ -4,25 +4,41 @@
 - add Effect: pet_save_cp (when CP System Added)
 
 ## TODO
+- add Buff and Debuff List (TODO ?)
+- add info dialog on SelectChar (Agility System, Button) (TODO)
 - Refactor Battle and SelectCharacter to AS File (?) -> Using Linkage (?)
-- Add Battle ATB Bar (TODO ?)
 - Refactor code using Utils
 - add Match and Character Battle Stats (WIP)
-- add Buff and Debuff List (TODO ?)
-- bug on PvP control party automatically enabled (DONE)
-- add info dialog on SelectChar (Agility System, Button) (TODO)
-- ADD EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
-- ADD EFFECT: wake_up (Sing to wake up master if master is sleeping)
+- TEST EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
+- TEST EFFECT: wake_up (Sing to wake up master if master is sleeping)
 - Dragon Pet event sort by it event ex: Halloween go to halloween section?
+- Check Dragon Pet III IV Postype
+- TODO Check Six Head Dragon onHit Animation Error
 
 ## v0.3
-### 15 July
+### 17 July
 #### Game UI
 #### Characters
 #### Effect
 #### Map Effect
 #### Feature
 #### Other
+
+### 16 July
+#### Other
+- Fix Char Position Type: Celebration Clown Dragon, Dark Clown Dragon, Ice Blue Dragon, Lightning Drake, Undead Chain Dragon, Dark Thunder Triple Dragon, Earth Lava Dragon Turtle
+- Fix Char Position Type: Gold Clown Dragon, Jade Cosmic Dragon, Golden Skeletal Dragon
+
+### 15 July
+#### Effect
+- Add Effect Logic: effect_extra_cp_recover, wake_up
+#### Other
+- Fix Char Position Type: Hiragi, Rainbow Bird, Shika, Christmas Angel, 
+- Fix Char Position Type: Rookie Jyubi, Rokubi, Gobi, Yobi, Sanbi, Nibi,
+- Fix Char Position Type: Christmas Kyubi, Christmas Hachibi, Easter Rokubi
+- Fix Char Position Type: Kumayoshi, Devil Angel, Heart Monster
+- Fix Char Position Type: Little Blue Dragon, Fossil Dragon
+- Update Display Text effect_extra_cp_recover
 
 ### 14 July
 #### Game UI
@@ -35,6 +51,7 @@
 #### Map Effect
 #### Feature
 #### Other
+- Update Display Text cooldown_reduction
 
 ### 10 July
 #### Characters
