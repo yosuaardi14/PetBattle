@@ -11,9 +11,8 @@
 - add Match and Character Battle Stats (WIP)
 - TEST EFFECT: effect_extra_cp_recover (Increases target’s CP charge recovery by x% for y turns.)
 - TEST EFFECT: wake_up (Sing to wake up master if master is sleeping)
-- Dragon Pet event sort by it event ex: Halloween go to halloween section?
-- Check Dragon Pet III IV Postype
-- TODO Check Six Head Dragon onHit Animation Error
+- Dragon Pet event sort by it event ex: Halloween go to halloween section (DONE)
+- Cross Check all animation postype
 
 ## v0.3
 ### 17 July
@@ -28,6 +27,8 @@
 #### Other
 - Fix Char Position Type: Celebration Clown Dragon, Dark Clown Dragon, Ice Blue Dragon, Lightning Drake, Undead Chain Dragon, Dark Thunder Triple Dragon, Earth Lava Dragon Turtle
 - Fix Char Position Type: Gold Clown Dragon, Jade Cosmic Dragon, Golden Skeletal Dragon
+- Fix Char Position Type: Six Head Dragon, Flare Dragon, Sacred Dragon
+- Fix Char Position Type: Mini Dark Kirin, Ultimate Kirin, Crystal Dragon, Black Feather Dragon, Chocolate Dragon
 
 ### 15 July
 #### Effect

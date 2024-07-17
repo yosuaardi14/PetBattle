@@ -21,7 +21,7 @@
         public static const PLAYER:String = "p";
         public static const ENEMY:String = "e";
 
-        public static const PET_LIST:Array = [
+        public static const PET_LIST_OLD:Array = [
                 "bird_1", "cat_1", "dog_1", "snake_1", "pig_1", "pig_2",
                 "bat_1", "bunny_1", "snake_2",
                 "toad_1",
@@ -130,6 +130,97 @@
                 "pet_198", "pet_199",
                 "pet_215",
                 "pet_219",
+            ];
+
+        public static const PET_LIST:Array = [
+                "bird_1", "cat_1", "dog_1", "snake_1", "pig_1", "pig_2",
+                "bat_1", "bunny_1", "snake_2",
+                "toad_1",
+                "turtle_1", "pig_3",
+                "bird_4", "pet_123",
+
+                "tail_10", "tail_10_2", "tail_10_3",
+                "fox_1", "snake_0", "tail_7", "tail_6",
+                "tail_5", "tail_4_3", "pet_131", "pet_141", "pet_146",
+                "pet_216", "pet_217", "pet_218", "pet_221",
+                "pet_222",
+
+                "pet_191",
+                "pet_195",
+                "pet_200",
+                "pet_212",
+                "pet_228",
+
+                "bunny_easter_free",
+                "bunny_5", "bunny_6",
+                "bunny_2", "bunny_4",
+                "dragon_2",
+                "pet_104", "pet_105", "pet_106", "pet_107", "pet_108", "pet_109", "pet_110", "pet_111", "pet_112", "pet_113", "pet_114", "pet_115", "pet_116", "pet_117", "pet_118", "pet_122",
+                "pet_182", "pet_183",
+                "pet_208",
+
+                "dog_2", "dummy_pet",
+                "bird_8",
+                "egg_01", "egg_02",
+                "pet_124", "pet_125", "pet_126", "pet_127", "pet_128", "pet_129", "pet_130", "pet_136", "pet_132", "pet_133", "pet_134", "pet_135",
+                "pet_148", "pet_149", "pet_150", "pet_151", "pet_152", "pet_153", "pet_156",
+                "pet_184", "pet_185", "pet_186", "pet_187", "pet_192",
+                "pet_202", "pet_203", "pet_204",
+                "pet_205", "pet_206",
+
+                "bat_2",
+                "pet_157", "fox_2",
+                "pet_155", "pet_165", "pet_158",
+                "pumpkin_1", "pumpkin_2",
+                "pet_154", "pet_194",
+                "pet_210", "pet_211",
+
+                "turkey_1",
+                "totem_bird",
+                "tail_4", "tail_4_2",
+                "pet_159", "pet_160",
+                "pet_213", "pet_214", "pet_215",
+
+                "reindeer_1",
+                "snowman_1",
+                "reindeer_2",
+                "pet_101", "pet_102",
+                "pet_137", "pet_138",
+                "pet_161", "pet_162", "pet_163",
+                "pet_196", "pet_197",
+
+                "festival_1",
+                "valentinebear",
+                "pet_103",
+                "pet_142", "pet_143",
+                "pet_180", "pet_181",
+                "pet_201",
+                "pet_219",
+                "pet_230", "pet_231",
+
+                "raccoon_1",
+                "panda_1",
+                "pet_119",
+                "pet_144",
+                "pet_188",
+                "pet_164",
+                "pet_220",
+
+                "dog_7",
+                "pet_121",
+                "pet_190",
+                "pet_227",
+
+                "pet_139", "pet_140",
+                "pet_145",
+                "pet_147",
+                "pet_178",
+                "pet_179",
+                "pet_189",
+                "pet_193",
+                "pet_198", "pet_199",
+                "pet_232",
+                "pet_233",
             ];
 
         public static const PET_LIST_UNRELEASE:Array = [

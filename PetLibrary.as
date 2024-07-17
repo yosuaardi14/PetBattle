@@ -12456,7 +12456,7 @@
 							"description": "<b>Lava Meteor</b><br>Launches a molten boulder with great force. 'Stuns' the target for 2 turns.",
 							"action": "attack",
 							"animation": "attack_02",
-							"posType": "range1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -12476,7 +12476,7 @@
 							"description": "<b>Glacial Immunity</b><br>Creates a protective layer of ice to its master. Has 60% chance to cast 'Debuff Resist' status for 3 turns.",
 							"action": "special",
 							"animation": "attack_03",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -12497,7 +12497,7 @@
 							"description": "<b>Floral Boon</b><br>Harnesses the power of the earth. Heals 5% of master's max HP for 3 turns.",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -12518,7 +12518,7 @@
 							"description": "<b>Positive Discharge</b><br>Sends out a powerful electric dischage to purge all positive status to the target. Has 50% chance to remove all positive status.",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -12538,7 +12538,7 @@
 							"description": "<b>Void Barrage</b><br>Fires a barrage of dark energy to debilitate its target. Reduces target's critical, dodge, combustion, purify and reactive force chance by 12% for 3 turns.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -12576,7 +12576,7 @@
 							"description": "<b>Basic Attack</b><br>Pet's basic attack.",
 							"action": "attack",
 							"animation": "attack_01",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -12637,7 +12637,7 @@
 							"description": "<b>Light Resonance</b><br>Applies 'Sleep' to the target for 3 turns. ",
 							"action": "attack",
 							"animation": "attack_04",
-							"posType": "range3",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -12678,7 +12678,7 @@
 							"description": "<b>Zenith Solar Wave</b><br>Stuns target for 2 turns.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range2",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -14301,7 +14301,7 @@
 							"description": "<b>Wings of Dragon</b><br>Create light of dragon wings to master. Increase master's accuracy by 20% (2 turns)",
 							"action": "special",
 							"animation": "attack_02",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -14342,7 +14342,7 @@
 							"description": "<b>Heal of Dragon</b><br>Spit a light ball to heal master. Recover Master's HP by 5%. (2 turns)",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -14384,7 +14384,7 @@
 							"description": "<b>Light Rising</b><br>Transform to light and rise up, fall from the sky attack target. Has 45% chance to remove all positive status.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee1",
+							"posType": "range1",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -15247,7 +15247,7 @@
 							"description": "<b>Kirin Bagger Technique</b><br>Increase master's accuracy by 35% for 3 turns.",
 							"action": "special",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "melee1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -15364,7 +15364,7 @@
 							"description": "<b>Super Kirin Bagger Technique</b><br>Increase master's accuracy by 50% for 3 turns.",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "melee1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -16762,7 +16762,7 @@
 							"description": "<b>Crystal Wall</b><br>Guard master and reduce master's damage taken by 100% (3 turns).",
 							"action": "special",
 							"animation": "attack_04",
-							"posType": "range2",
+							"posType": "range1",
 							"hasDamage": false,
 							"skill_cp": 0,
 							"effect": [
@@ -16803,7 +16803,7 @@
 							"description": "<b>Crystal Light</b><br>Weakens all the targets for 3 turns (100% damage reduction).",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "melee4",
+							"posType": "melee3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -18347,7 +18347,7 @@
 							"description": "<b>Lightning Feathers</b><br>Stun all the targets for 2 turns.",
 							"action": "attack",
 							"animation": "attack_06",
-							"posType": "range2",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
@@ -18816,7 +18816,7 @@
 							"description": "<b>Chocolate Storm</b><br>Bleeding effect occur which will increase 100% extra damage (1 turn)",
 							"action": "attack",
 							"animation": "attack_05",
-							"posType": "range2",
+							"posType": "range3",
 							"hasDamage": true,
 							"skill_cp": 0,
 							"effect": [
